@@ -24,14 +24,7 @@ class _HomeState extends State<Home> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        'Hi, SDurian User',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      _buildGreeting("SDurian User"),
                       // Shopping Cart --> Pending
                       Icon(
                         Icons.shopping_cart,
@@ -44,29 +37,7 @@ class _HomeState extends State<Home> {
                   SizedBox(height: 20),
 
                   // Search Bar
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.yellow[300],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal:5.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.search),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Search',
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(color: Colors.black),
-                            ),
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  _buildSearchBar(),
                 ],
               ),
             ),
@@ -91,20 +62,56 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildCategoryHeader(String title) {
+  Widget _buildGreeting(String username) {
     return Container(
-      alignment: Alignment.topLeft,
       child: Text(
-        title,
+        'Hi, ' + username,
         style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold
+          color: Colors.black,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  // Category 
+  Widget _buildSearchBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.yellow[300],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 5.0),
+      child: Row(
+        children: [
+          Icon(Icons.search),
+          SizedBox(width: 5),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search',
+                border: InputBorder.none,
+                hintStyle: TextStyle(color: Colors.black),
+              ),
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategoryHeader(String title) {
+    return Container(
+      alignment: Alignment.topLeft,
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  // Category
   Widget _buildCategory() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -165,5 +172,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
 }

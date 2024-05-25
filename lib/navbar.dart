@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/pages/home.dart';
+import 'package:sdurian/pages/poodak.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _NavBarState extends State<NavBar> {
   final PageController _pageController = PageController();
   final List<Widget> screens = [
     Home(),
-    Home(),
+    Poodak(),
     Home(),
     Home(),
   ];
