@@ -10,9 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: OpeningPage(),
+      theme: theme(),
     );
   }
 }
@@ -40,8 +41,8 @@ class _OpeningPageState extends State<OpeningPage> {
                     "Universal\nPoodak Studio",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 36,
+                      fontWeight: FontWeight.w800,
                       color: Color(0xFFFFBF00),
                     ),
                   ),
@@ -59,10 +60,11 @@ class _OpeningPageState extends State<OpeningPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
+                      "Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w300,
                         color: Colors.black,
                       ),
                     ),
@@ -87,11 +89,11 @@ class _OpeningPageState extends State<OpeningPage> {
                       height: 50,
                       child: Center(
                         child: Text(
-                          "Let's explore",
+                          "Let's explore!",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -105,4 +107,10 @@ class _OpeningPageState extends State<OpeningPage> {
       ),
     );
   }
+}
+
+ThemeData theme() {
+  return ThemeData(
+    fontFamily: "Poppins",
+  );
 }
