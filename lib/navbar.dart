@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/pages/home.dart';
+import 'package:sdurian/pages/uss_page.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class _NavBarState extends State<NavBar> {
   final List<Widget> screens = [
     Home(),
     Home(),
-    Home(),
+    USSState(),
     Home(),
   ];
 
@@ -67,7 +68,7 @@ class _NavBarState extends State<NavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            label: 'USS', // --> Sementara
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
