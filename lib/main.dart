@@ -1,173 +1,85 @@
 import 'package:flutter/material.dart';
-import 'package:sdurian/navbar.dart';
+import 'package:sdurian/pages/splash/splash_screen.dart';
+import 'package:sdurian/routs.dart';
+import 'package:sdurian/size_config.dart';
+import 'package:sdurian/constants.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: OpeningPage(),
       theme: theme(),
+      initialRoute: SplashScreen.routeName,
+      routes: routes,
     );
   }
 }
 
-class OpeningPage extends StatefulWidget {
-  const OpeningPage({Key? key}) : super(key: key);
-
-  @override
-  _OpeningPageState createState() => _OpeningPageState();
-}
-
-class _OpeningPageState extends State<OpeningPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 600),
-          child: SafeArea(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Universal\nPoodak Studio",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFFFFBF00),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Image.asset(
-                    "lib/assets/durian_king.png",
-                    width: 300,
-                    height: 300,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      "We provide the most unique experience with combination of vehicle and durian",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Navigate to a different page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NavBar()),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFBF00),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      width: 200,
-                      height: 50,
-                      child: Center(
-                        child: Text(
-                          "Let's explore!",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black,
-                        ),
-                        children: _buildDeveloperText(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-
-
-  List<TextSpan> _buildDeveloperText() {
-    return [
-      TextSpan(text: "Developed by "),
-      _highlightedText("SDurian\n"),
-      _highlightedText("JASON"),
-      _normalText("Permana"),
-      _highlightedText("ARYA"),
-      _normalText("Wira Kristanto"),
-      _highlightedText("DEVIN"),
-      _normalText("Saputra Wijaya \n"),
-      _highlightedText("NICHOLAS"),
-      _normalText("Martin"),
-      _highlightedText("KEVIN"),
-      _normalText("Jonathan JM"),
-    ];
-  }
-
-  TextSpan _highlightedText(String text) {
-    return TextSpan(
-      text: text + " ",
-      style: TextStyle(
-        fontSize: 14,
-        color: Color(0xFFFFBF00),
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
-  TextSpan _normalText(String text) {
-    return TextSpan(
-      text: text + " ",
-      style: TextStyle(
-        fontSize: 10,
-      ),
-    );
-  }
-}
-
+// ThemeData theme() {
+//   return ThemeData(
+//     fontFamily: "Poppins",
+//   );
+// }
 
 ThemeData theme() {
   return ThemeData(
+    scaffoldBackgroundColor: Colors.white,
+    unselectedWidgetColor: Colors.black,
     fontFamily: "Poppins",
+    appBarTheme: appBarTheme(),
+    textTheme: textTheme(),
+    inputDecorationTheme: inputDecorationTheme(),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
+}
+
+InputDecorationTheme inputDecorationTheme() {
+  OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(24),
+      borderSide: BorderSide(color: kPrimaryColor),
+      gapPadding: 10,
+    );
+  return InputDecorationTheme(
+    contentPadding: EdgeInsets.symmetric(
+      horizontal: 28,
+      vertical: 15,
+    ),
+    enabledBorder: outlineInputBorder,
+    focusedBorder: outlineInputBorder,
+    border: outlineInputBorder,
+  );
+}
+
+TextTheme textTheme() {
+  return TextTheme(
+    bodyText1: TextStyle(color: kTextColor),
+    bodyText2: TextStyle(color: kTextColor),
+  );
+}
+
+AppBarTheme appBarTheme() {
+  return AppBarTheme(
+    color: kPrimaryColor,
+    elevation: 0,
+    iconTheme: IconThemeData(color: Colors.white),
+    titleTextStyle: TextStyle(
+      color: Color(0XFFF8F9FA), 
+      fontSize: 18,
+      fontFamily: "Poppins",
+      fontWeight: FontWeight.w700,
+    )
   );
 }

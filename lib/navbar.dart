@@ -3,9 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdurian/pages/home.dart';
 import 'package:sdurian/pages/uss_page.dart';
 import 'package:sdurian/pages/poodak.dart';
+import 'package:sdurian/pages/login/login.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
+  
+  static String routeName = "/navbar";
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -18,7 +21,7 @@ class _NavBarState extends State<NavBar> {
     Home(),
     Poodak(),
     USSState(),
-    Home(),
+    LogInScreen()
   ];
 
   @override

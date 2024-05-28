@@ -1,5 +1,7 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:sdurian/pages/edit_profile.dart';
+import 'package:sdurian/size_config.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -11,6 +13,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 229),
       body: SafeArea(
@@ -25,11 +28,18 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildGreeting("SDurian User"),
-                      // Shopping Cart --> Pending
-                      Icon(
-                        Icons.shopping_cart,
-                        color: Colors.black,
-                      )
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfile()),
+                            );
+                          },
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.black,
+                          ))
                     ],
                   ),
 
@@ -79,18 +89,19 @@ class _HomeState extends State<Home> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.yellow[300],
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(20),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 5.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
         children: [
           Icon(Icons.search),
-          SizedBox(width: 5),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search',
                 border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
                 hintStyle: TextStyle(color: Colors.black),
               ),
               style: TextStyle(color: Colors.black),
