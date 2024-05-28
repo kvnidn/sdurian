@@ -1,5 +1,6 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:sdurian/pages/edit_profile.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -25,11 +26,18 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildGreeting("SDurian User"),
-                      // Shopping Cart --> Pending
-                      Icon(
-                        Icons.shopping_cart,
-                        color: Colors.black,
-                      )
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfile()),
+                            );
+                          },
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.black,
+                          ))
                     ],
                   ),
 
