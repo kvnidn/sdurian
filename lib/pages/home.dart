@@ -1,6 +1,7 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sdurian/pages/edit_profile.dart';
+import 'package:sdurian/size_config.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 248, 229),
       body: SafeArea(
