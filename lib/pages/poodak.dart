@@ -132,15 +132,16 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
             ),
           ),
           Positioned(
-            bottom: 10,
-            left: 10,
+            bottom: 1.2,
+            left: 0,
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius:
-                    BorderRadius.circular(10), // Adjust border radius as needed
-              ),
+                color: Color(0xFFFFBF00),
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    topRight: Radius.circular(30),
+                  )),
               child: Text(
                 offer,
                 style: TextStyle(
