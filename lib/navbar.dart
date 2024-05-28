@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/pages/home.dart';
+import 'package:sdurian/pages/uss_page.dart';
+import 'package:sdurian/pages/poodak.dart';
 import 'package:sdurian/pages/login/login.dart';
 
 class NavBar extends StatefulWidget {
@@ -16,8 +18,8 @@ class _NavBarState extends State<NavBar> {
   final PageController _pageController = PageController();
   final List<Widget> screens = [
     Home(),
-    Home(),
-    Home(),
+    Poodak(),
+    USSState(),
     LogInScreen()
   ];
 
@@ -70,7 +72,7 @@ class _NavBarState extends State<NavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            label: 'USS', // --> Sementara
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
