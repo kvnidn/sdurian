@@ -12,8 +12,8 @@ class USSState extends StatefulWidget {
 
 class _USSState extends State<USSState> with TickerProviderStateMixin {
   late TabController _tabController;
-
-  DateTime? selectedDate;
+  
+  DateTime selectedDate = DateTime.now();
   DateTime today = DateTime.now();
   bool showCalendar = false; // POP CALENDAR
 
@@ -21,22 +21,50 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
     setState(() {
       selectedDate = day;
       today = day;
+      _tabController.animateTo(0);
     });
   }
 
-  void _showTickets() {
-    setState(() {
-      selectedDate = null;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5 , vsync: this);
+    _tabController = TabController(length: 9, vsync: this, initialIndex: 1);
   }
 
-  
+   List<Widget> generateTabs() {
+    List<Widget> tabs = [
+      Tab(child: _buildCalendarCategory("calendar")),
+      Tab(child: _buildDate("Hari Ini", DateFormat("dd MMM").format(today))),
+    ];
+    for (int i = 1; i <= 7; i++) {
+      DateTime day = today.add(Duration(days: i));
+      String dayName = DateFormat('EEEE', 'id_ID').format(day);
+      String formattedDate = DateFormat('dd MMM').format(day);
+      tabs.add(Tab(child: _buildDate(dayName, formattedDate)));
+    }
+    return tabs;
+  }
+
+  //===== Buat harga weekend atau enggak 
+  bool isWeekend(DateTime date) {
+    return date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
+  }
+  int adjustPrice(double price, bool isWeekend) {
+    if (isWeekend) {
+      return (1.5 * price).toInt();
+    } else {
+      return price.toInt();
+    }
+  }
+  // ======
+
+  // Supaya tanggal sebelumnya tidak bisa diclick
+  bool isBeforeToday(DateTime day) {
+    final now = DateTime.now();
+    return day.isBefore(DateTime(now.year, now.month, now.day));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,46 +74,38 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             return [
               SliverToBoxAdapter(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    
-                    // if (!showCalendar)
-                    //   SizedBox(
-                    //     height: 21.5,
-                    //   ),
-                    if (showCalendar) 
-                    _buildCalendar()
-                    else
-                    _buildOfferCarousel([
-                      _buildOffers("Special Deals 1", "lib/assets/uss.jpg"),
-                      _buildOffers("Special Deals 2", "lib/assets/uss.jpg"),
-                      _buildOffers("Special Deals 3", "lib/assets/uss.jpg"),
-                    ]),
-                    if (!showCalendar)
-                      SizedBox(
-                        height: 16,
-                      ),
-
-                    
-                    if (!showCalendar)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 15),
-                          child: Text(
-                            "Tiket yang tersedia",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (showCalendar)
+                        _buildCalendar()
+                      else
+                        _buildOfferCarousel([
+                          _buildOffers("Special Deals 1", "lib/assets/uss.jpg"),
+                          _buildOffers("Special Deals 2", "lib/assets/uss.jpg"),
+                          _buildOffers("Special Deals 3", "lib/assets/uss.jpg"),
+                        ]),
+                      if (!showCalendar)
+                        SizedBox(
+                          height: 15,
                         ),
-                      ],
-                    ),
-                  ]
-                ),
+                      if (!showCalendar)
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 15),
+                              child: Text(
+                                "Tiket yang tersedia",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                    ]),
               ),
               SliverPersistentHeader(
                 pinned: true,
@@ -105,74 +125,46 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                     child: TabBar(
                       controller: _tabController,
                       isScrollable: true,
-                      indicator:
-                          BoxDecoration(),
+                      indicator: BoxDecoration(),
                       tabs: <Widget>[
                         Tab(
                           child: _buildCalendarCategory("calendar"),
                         ),
+                        for (int i = 0; i <= 7; i++)
                         Tab(
-                          child: _buildDate("Hari Ini", "21 Mei"),
-                        ),
-                        Tab(
-                          child: _buildDate("Rabu", "22 Mei"),
-                        ),
-                        Tab(
-                          child: _buildDate("Kamis", "23 Mei"),
-                        ),
-                        Tab(
-                          child: _buildDate("Jumat", "24 Mei"),
+                          child: _buildDate(
+                            i == 0 ? "Today" : DateFormat('EEEE').format(DateTime.now().add(Duration(days: i))),
+                            DateFormat("dd MMM").format(DateTime.now().add(Duration(days: i))),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              SliverToBoxAdapter(child: SizedBox(height: 10),),
+              SliverToBoxAdapter(
+                child: SizedBox(height: 10),
+              ),
             ];
           },
+          // Tab bar calendar
           body: TabBarView(
             controller: _tabController,
             children: <Widget>[
               _buildItemList([
-                _buildTabContent("tx", "description", 123),
-                _buildTabContent("topxic", "description", 123),
-                _buildTabContent("toxxxxpic", "description", 123),
-                _buildTabContent("topxxxic", "description", 123),
-                _buildTabContent("topxxxic", "description", 123),
-                _buildTabContent("topxxic", "description", 123),
+                _buildTabContent("Ticket A, ${DateFormat("dd MMM").format(selectedDate)}", "Standard Adult", adjustPrice(150000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket B, ${DateFormat("dd MMM").format(selectedDate)}", "Standard Children", adjustPrice(100000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket C, ${DateFormat("dd MMM").format(selectedDate)}", "Family Pack (up to 4 people)", adjustPrice(300000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket D, ${DateFormat("dd MMM").format(selectedDate)}", "Couples Special (2 adults)", adjustPrice(250000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket E, ${DateFormat("dd MMM").format(selectedDate)}", "Luxury Pack (includes hotel stay, meals, and more)", adjustPrice(500000, isWeekend(selectedDate))),
               ]),
+              for (int i = 0; i <= 7; i++)
               _buildItemList([
-                _buildTabContent("topic", "description", 123),
-                _buildTabContent("topic", "description", 123),
-                _buildTabContent("topic", "description", 123),
-                _buildTabContent("topic", "description", 123),
-                _buildTabContent("topic", "description", 123),
-                _buildTabContent("topic", "description", 123),
-              ]),
-              _buildItemList([
-                _buildTabContent("topicB", "description", 123),
-                _buildTabContent("topicB", "description", 123),
-                _buildTabContent("topicB", "description", 123),
-                _buildTabContent("topicB", "description", 123),
-                _buildTabContent("topicB", "description", 123),
-                _buildTabContent("topicB", "description", 123),
-              ]),
-              _buildItemList([
-                _buildTabContent("topicC", "description", 123),
-                _buildTabContent("topicC", "description", 123),
-                _buildTabContent("topicC", "description", 123),
-                _buildTabContent("topicC", "description", 123),
-                _buildTabContent("topicC", "description", 123),
-                _buildTabContent("topicC", "description", 123),
-              ]),
-              _buildItemList([
-                _buildTabContent("topicD", "description", 123),
-                _buildTabContent("topicD", "description", 123),
-                _buildTabContent("topicD", "description", 123),
-                _buildTabContent("topicD", "description", 123),
-                _buildTabContent("topicD", "description", 123),
-                _buildTabContent("topicD", "description", 123),
+                _buildTabContent("Ticket A, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Standard Adult", adjustPrice(150000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket B, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Standard Children", adjustPrice(100000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket C, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Family Pack (up to 4 people)", adjustPrice(300000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket D, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Couples Special (2 adults)", adjustPrice(250000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket E, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Luxury Pack (includes hotel stay, meals, and more)", adjustPrice(500000, isWeekend(today.add(Duration(days: i))))),
               ]),
             ],
           ),
@@ -210,7 +202,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color:Color(0xFFFFBF00),
+                  color: Color(0xFFFFBF00),
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topRight: Radius.circular(30),
@@ -245,17 +237,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
     );
   }
 
-  void _showCalendarDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: _buildCalendar(),
-        );
-      },
-    );
-  }
-  
+  // Button ICON calendar
   Widget _buildCalendarCategory(String name) {
     return GestureDetector(
       onTap: () {
@@ -267,16 +249,15 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xFFF6F6F6),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 5.0,
-              spreadRadius: 0.1,
-              offset: Offset(0, 4.0),
-            )
-          ]
-        ),
+            color: Color(0xFFF6F6F6),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 5.0,
+                spreadRadius: 0.1,
+                offset: Offset(0, 4.0),
+              )
+            ]),
         padding: EdgeInsets.all(5),
         alignment: Alignment.center,
         child: Row(
@@ -292,11 +273,10 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
     );
   }
 
-
+  // buat table calendar
   Widget _buildCalendar() {
     return Column(
       children: [
-        // Text(today.toString().split(" ")[0]),
         Container(
           height: 260,
           child: TableCalendar(
@@ -326,20 +306,26 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             onDaySelected: (selectedDay, focusedDay) {
               _onDaySelected(selectedDay, focusedDay);
             },
+            enabledDayPredicate: (day) => !isBeforeToday(day),
           ),
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFFFFBF00),
+          ),
           onPressed: () {
             setState(() {
-            showCalendar = false;
+              showCalendar = false;
             });
           },
-          child: Text('OK'),
+          child: 
+          Text('OK'),
         ),
       ],
     );
   }
 
+  // Tab bar
   Widget _buildDate(String day, String date) {
     return Container(
       decoration: BoxDecoration(
@@ -373,7 +359,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                   style: TextStyle(
                     height: 1,
                     fontSize: 13,
-                    color: Color(0xFFFFBF00),
+                    color: Color.fromARGB(255, 139, 137, 132),
                   ),
                 ),
               ],
@@ -481,7 +467,6 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
   }
 }
 
-
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
     required this.child,
@@ -495,8 +480,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => child.preferredSize.height;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return SizedBox.expand(child: child);
   }
 
@@ -511,4 +495,3 @@ extension on Widget {
       ? (this as PreferredSizeWidget).preferredSize
       : Size(double.infinity, kToolbarHeight);
 }
-
