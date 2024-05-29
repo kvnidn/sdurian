@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "906057060128",
+    "project_id": "sdurian-2ef74",
+    "storage_bucket": "sdurian-2ef74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906057060128:android:accd9be111c8bee2275145",
+        "android_client_info": {
+          "package_name": "com.example.sdurian"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOdO1C2QFWr9oJcliE_x39P1ihiTQG2OY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

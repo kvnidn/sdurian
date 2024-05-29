@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:sdurian/pages/data.dart';
 
 class Poodak extends StatefulWidget {
   const Poodak({Key? key}) : super(key: key);
@@ -11,11 +12,19 @@ class Poodak extends StatefulWidget {
 
 class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
   late TabController _tabController;
+  late List<List<ShopItem>> poodakItems = ShopItem.combinedList;
+  List<String> categoryNames = [
+    "Dessert",
+    "Dooren",
+    "Paket Nasi",
+    "Snack",
+  ];
 
   @override
   void initState() {
+    ShopItem.fetchData("poodak");
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: poodakItems.length, vsync: this);
   }
 
   @override
@@ -56,10 +65,12 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2), // Shadow color and opacity
+                          color: Colors.black
+                              .withOpacity(0.2), // Shadow color and opacity
                           spreadRadius: 1, // Spread radius
                           blurRadius: 3, // Blur radius
-                          offset: Offset(0, 3), // Offset from the container (horizontal, vertical)
+                          offset: Offset(0,
+                              3), // Offset from the container (horizontal, vertical)
                         ),
                       ],
                       color: Colors.white,
@@ -70,15 +81,10 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
                       indicator:
                           BoxDecoration(), // Empty box decoration to remove indicator line below tab
                       tabs: <Widget>[
-                        Tab(
-                          child: _buildCategory("Ice Creams"),
-                        ),
-                        Tab(
-                          child: _buildCategory("Drinks"),
-                        ),
-                        Tab(
-                          child: _buildCategory("Food"),
-                        ),
+                        for (var i = 0; i < poodakItems.length; i++)
+                          Tab(
+                            child: _buildCategory(categoryNames[i]),
+                          ),
                       ],
                     ),
                   ),
@@ -89,27 +95,8 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
           body: TabBarView(
             controller: _tabController,
             children: <Widget>[
-              _buildItemList([
-                _buildItemCard("lib/assets/poodak.jpeg", "Ice Cream 1", 10000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Ice Cream 2", 15000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Ice Cream 3", 12000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Ice Cream 4", 13000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Ice Cream 5", 14000),
-              ]),
-              _buildItemList([
-                _buildItemCard("lib/assets/poodak.jpeg", "Drink 1", 5000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Drink 2", 8000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Drink 3", 7000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Drink 4", 6000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Drink 5", 9000),
-              ]),
-              _buildItemList([
-                _buildItemCard("lib/assets/poodak.jpeg", "Food 1", 20000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Food 2", 25000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Food 3", 22000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Food 4", 21000),
-                _buildItemCard("lib/assets/poodak.jpeg", "Food 5", 23000),
-              ]),
+              for (var i = 0; i < poodakItems.length; i++)
+                _buildItemList(poodakItems[i]),
             ],
           ),
         ),
@@ -132,13 +119,13 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
             ),
           ),
           Positioned(
-            bottom: 1.2,
+            bottom: 0,
             left: 0,
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Color(0xFFFFBF00),
-                borderRadius: const BorderRadius.only(
+                  color: Color(0xFFFFBF00),
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topRight: Radius.circular(30),
                   )),
@@ -194,7 +181,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildItemCard(String imagePath, String name, int price) {
+  Widget _buildItemCard(String imagePath, String name, double price) {
     // Create a NumberFormat instance
     final NumberFormat currencyFormatter = NumberFormat.currency(
       locale: 'id_ID',
@@ -291,7 +278,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildItemList(List<Widget> cards) {
+  Widget _buildItemList(List<ShopItem> items) {
     return GridView.builder(
       padding: EdgeInsets.all(10.0),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -301,9 +288,13 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
         childAspectRatio:
             0.68, // Adjust this ratio to fit your card height/width
       ),
-      itemCount: cards.length,
+      itemCount: items.length,
       itemBuilder: (context, index) {
-        return cards[index];
+        return _buildItemCard(
+          items[index].imgPath,
+          items[index].name,
+          items[index].price,
+        );
       },
       shrinkWrap: true,
       physics:

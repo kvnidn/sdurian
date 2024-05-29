@@ -37,7 +37,7 @@ class _BodyState extends State<Body> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "We proide the most unique experience\nwith combination of vehicle and durian",
+                "We provide the most unique experience\nwith combination of vehicle and durian",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,

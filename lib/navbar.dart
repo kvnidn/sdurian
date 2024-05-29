@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sdurian/pages/cart.dart';
 import 'package:sdurian/pages/home.dart';
 import 'package:sdurian/pages/uss_page.dart';
 import 'package:sdurian/pages/poodak.dart';
@@ -21,7 +22,7 @@ class _NavBarState extends State<NavBar> {
     Home(),
     Poodak(),
     USSState(),
-    LogInScreen()
+    Cart()
   ];
 
   @override
