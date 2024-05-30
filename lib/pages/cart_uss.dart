@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sdurian/pages/data.dart';
+import 'package:sdurian/pages/history_uss.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/components/default_button.dart';
 
@@ -10,14 +13,77 @@ class CartUSS extends StatefulWidget {
 }
 
 class _CartUSSState extends State<CartUSS> {
+  List<CartItemUSS> ussCart = [];
+
+  Future<void> _fetchCartData() async {
+    await CartItemUSS.fetchCartData("uss_cart");
+    setState(() {
+      ussCart = CartItemUSS.cartList;
+    });
+  }
+
+  final NumberFormat currencyFormatter = NumberFormat.currency(
+    locale: 'id_ID',
+    symbol: 'Rp. ',
+    decimalDigits: 2,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCartData();
+  }
+
+  @override
+  void dispose() {
+    ussCart.clear(); // Clear the list when the page is disposed
+    super.dispose();
+  }
+
+  void _updateCart() {
+    setState(() {
+      ussCart = CartItemUSS.cartList;
+    });
+  }
+
+  void _clearCart() {
+    for (var item in ussCart) {
+      _removeItem(item);
+    }
+    setState(() {
+      ussCart.clear();
+    });
+  }
+
+  void _incrementItem(CartItemUSS item) {
+    setState(() {
+      item.amount++;
+    });
+    CartItemUSS.updateItemAmount(item.name, 1).then((_) => _updateCart());
+  }
+
+  void _decrementItem(CartItemUSS item) {
+    setState(() {
+      if (item.amount > 0) {
+        item.amount--;
+        if (item.amount == 0) {
+          ussCart.remove(item);
+        }
+      }
+    });
+    CartItemUSS.updateItemAmount(item.name, -1).then((_) => _updateCart());
+  }
+
+  void _removeItem(CartItemUSS item) {
+    CartItemUSS.removeItemFromCart(item.name).then((_) => _updateCart());
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFFFBF00),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              color: Colors.black), // Change arrow color here
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -30,10 +96,10 @@ class _CartUSSState extends State<CartUSS> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.history,
-                color: Colors.black), // Replace with your desired icon
+            icon: Icon(Icons.history, color: Colors.black),
             onPressed: () {
-              // Add your onPressed code here
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HistoryUSS()));
             },
           ),
         ],
@@ -42,11 +108,13 @@ class _CartUSSState extends State<CartUSS> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildItemCard(
-              "Holiday in Universal Studio Singapore",
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus laoreet, mauris eu efficitur ullamcorper, nunc elit maximus justo, lacinia finibus dui tellus ut felis.",
-              123000,
-              1,
+            Expanded(
+              child: ListView.builder(
+                itemCount: ussCart.length,
+                itemBuilder: (context, index) {
+                  return _buildItemCard(ussCart, index);
+                },
+              ),
             ),
             _checkoutButton(),
           ],
@@ -55,13 +123,15 @@ class _CartUSSState extends State<CartUSS> {
     );
   }
 
-  Widget _buildItemCard(
-      String topic, String description, double price, int amount) {
+  Widget _buildItemCard(List<CartItemUSS> list, int index) {
+
+    double amount = list[index].amount;
+
     return Container(
       padding: EdgeInsets.only(top: 10),
-      margin: EdgeInsets.all(18),
+      margin: EdgeInsets.only(top: 14, left: 10, right: 10),
       width: 360,
-      height: 120,
+      height: 130,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -77,125 +147,113 @@ class _CartUSSState extends State<CartUSS> {
       child: Stack(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                constraints:
-                    BoxConstraints(maxWidth: 250), // Set maximum width here
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 2.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            topic,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          SizedBox(height: 2),
-                          Container(
-                            child: Text(
-                              description,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
-                            ),
-                          ),
-                          // Add space between text
-                          Text(
-                            "Lihat Detail",
-                            style: TextStyle(
-                              color: Color(0xFFFFBF00),
-                            ),
-                          )
-                        ],
+                    Text(
+                      list[index].name,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 6), // Add space between columns
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Expanded(
-                  child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.end, // Align elements to the end
-                    children: [
-                      Positioned(
-                        top: 2,
-                        right: 10,
-                        child: Center(
-                          child: Icon(
-                            Icons.delete_forever_outlined,
-                            size: 24,
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                amount--;
-                              });
-                            },
-                            child: const Icon(
-                              Icons.remove,
-                              size: 22,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text('${amount}',
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500)),
-                          const SizedBox(width: 8),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                amount++;
-                              });
-                            },
-                            child: const Icon(
-                              Icons.add,
-                              size: 22,
-                            ),
-                          ),
-                        ],
-                      ),
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 350),
+                      child: 
                       Text(
-                        'Rp ${price.toStringAsFixed(0)}',
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green),
+                        list[index].description,
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
                 ),
               ),
             ],
           ),
+            Positioned(
+              bottom: 10,
+              left: 20,
+              child: 
+              Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    _decrementItem(list[index]);
+                    setState(() {
+                      amount--;
+                    });
+                  },
+                  child: Icon(Icons.remove_circle),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  (amount.toInt()).toString(),
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(width: 10),
+                InkWell(
+                  onTap: () {
+                    _incrementItem(list[index]);
+                    setState(() {
+                      amount++;
+                    });
+                  },
+                  child: Icon(Icons.add_circle),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: Text(
+              '${currencyFormatter.format((list[index].price * list[index].amount))}',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 2,
+            right: 10,
+            child: InkWell(
+              onTap: () {
+                _removeItem(list[index]);
+                ussCart.remove(list[index]);
+              },
+              child: Container(
+                width: 35,
+                height: 35,
+                decoration: BoxDecoration(
+                  color: Colors.red[50],
+                  borderRadius: BorderRadius.circular(9),
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.delete_forever_outlined,
+                    size: 24,
+                    color: Colors.redAccent,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
-    );
-  }
+        );
+      }
 
   Widget _checkoutButton() {
+    double totalPrice = ussCart.fold(0, (sum, item) => sum + item.price * item.amount);
+
     return Container(
       height: 120,
       child: Stack(
@@ -221,13 +279,12 @@ class _CartUSSState extends State<CartUSS> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0), // Add padding here
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: EdgeInsets.only(
-                      left: 16.0, bottom: 20.0), // Add margin to total price
+                  margin: EdgeInsets.only(left: 16.0, bottom: 20.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,7 +297,7 @@ class _CartUSSState extends State<CartUSS> {
                         ),
                       ),
                       Text(
-                        'Rp 123 .000',
+                        '${currencyFormatter.format(totalPrice)}',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w900,
@@ -250,7 +307,7 @@ class _CartUSSState extends State<CartUSS> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 16.0), // Add margin to button
+                  margin: EdgeInsets.only(right: 16.0),
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -264,7 +321,15 @@ class _CartUSSState extends State<CartUSS> {
                   ),
                   child: DefaultButton(
                     text: "Checkout",
-                    press: () {},
+                    press: () {
+                      if (ussCart.length > 0) {
+                      CartItemUSS.saveCartDataToHistory(totalPrice).then((_) =>
+                          CartItemUSS.clearCartDataInFirebase().then((_) =>
+                              _clearCart()));
+                      } else {
+                        print("Cart Empty");
+                      }
+                    },
                   ),
                 ),
               ],

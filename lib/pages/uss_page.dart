@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sdurian/pages/data.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class USSState extends StatefulWidget {
@@ -12,10 +13,11 @@ class USSState extends StatefulWidget {
 
 class _USSState extends State<USSState> with TickerProviderStateMixin {
   late TabController _tabController;
-  
   DateTime selectedDate = DateTime.now();
   DateTime today = DateTime.now();
   bool showCalendar = false; // POP CALENDAR
+
+  String dateFormat = 'dd MMM yyyy';
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
@@ -30,20 +32,6 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 9, vsync: this, initialIndex: 1);
-  }
-
-   List<Widget> generateTabs() {
-    List<Widget> tabs = [
-      Tab(child: _buildCalendarCategory("calendar")),
-      Tab(child: _buildDate("Hari Ini", DateFormat("dd MMM").format(today))),
-    ];
-    for (int i = 1; i <= 7; i++) {
-      DateTime day = today.add(Duration(days: i));
-      String dayName = DateFormat('EEEE', 'id_ID').format(day);
-      String formattedDate = DateFormat('dd MMM').format(day);
-      tabs.add(Tab(child: _buildDate(dayName, formattedDate)));
-    }
-    return tabs;
   }
 
   //===== Buat harga weekend atau enggak 
@@ -95,7 +83,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                             Container(
                               margin: EdgeInsets.only(left: 15),
                               child: Text(
-                                "Tiket yang tersedia",
+                                "Available Tickets",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 22,
@@ -152,19 +140,19 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             controller: _tabController,
             children: <Widget>[
               _buildItemList([
-                _buildTabContent("Ticket A, ${DateFormat("dd MMM").format(selectedDate)}", "Standard Adult", adjustPrice(150000, isWeekend(selectedDate))),
-                _buildTabContent("Ticket B, ${DateFormat("dd MMM").format(selectedDate)}", "Standard Children", adjustPrice(100000, isWeekend(selectedDate))),
-                _buildTabContent("Ticket C, ${DateFormat("dd MMM").format(selectedDate)}", "Family Pack (up to 4 people)", adjustPrice(300000, isWeekend(selectedDate))),
-                _buildTabContent("Ticket D, ${DateFormat("dd MMM").format(selectedDate)}", "Couples Special (2 adults)", adjustPrice(250000, isWeekend(selectedDate))),
-                _buildTabContent("Ticket E, ${DateFormat("dd MMM").format(selectedDate)}", "Luxury Pack (includes hotel stay, meals, and more)", adjustPrice(500000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket A, ${DateFormat(dateFormat).format(selectedDate)}", "Standard Adult", adjustPrice(150000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket B, ${DateFormat(dateFormat).format(selectedDate)}", "Standard Children", adjustPrice(100000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket C, ${DateFormat(dateFormat).format(selectedDate)}", "Family Pack (up to 4 people)", adjustPrice(300000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket D, ${DateFormat(dateFormat).format(selectedDate)}", "Couples Special (2 adults)", adjustPrice(250000, isWeekend(selectedDate))),
+                _buildTabContent("Ticket E, ${DateFormat(dateFormat).format(selectedDate)}", "Luxury Pack (includes hotel stay, meals, and more)", adjustPrice(500000, isWeekend(selectedDate))),
               ]),
               for (int i = 0; i <= 7; i++)
               _buildItemList([
-                _buildTabContent("Ticket A, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Standard Adult", adjustPrice(150000, isWeekend(today.add(Duration(days: i))))),
-                _buildTabContent("Ticket B, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Standard Children", adjustPrice(100000, isWeekend(today.add(Duration(days: i))))),
-                _buildTabContent("Ticket C, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Family Pack (up to 4 people)", adjustPrice(300000, isWeekend(today.add(Duration(days: i))))),
-                _buildTabContent("Ticket D, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Couples Special (2 adults)", adjustPrice(250000, isWeekend(today.add(Duration(days: i))))),
-                _buildTabContent("Ticket E, ${DateFormat("dd MMM").format(today.add(Duration(days: i)))}", "Luxury Pack (includes hotel stay, meals, and more)", adjustPrice(500000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket A, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}", "Standard Adult", adjustPrice(150000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket B, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}", "Standard Children", adjustPrice(100000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket C, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}", "Family Pack (up to 4 people)", adjustPrice(300000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket D, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}", "Couples Special (2 adults)", adjustPrice(250000, isWeekend(today.add(Duration(days: i))))),
+                _buildTabContent("Ticket E, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}", "Luxury Pack (includes hotel stay, meals, and more)", adjustPrice(500000, isWeekend(today.add(Duration(days: i))))),
               ]),
             ],
           ),
@@ -428,7 +416,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
               ),
               onPressed: () {},
               child: Text(
-                "Lihat Detail",
+                "See Details",
                 style: TextStyle(
                   color: Color(0xFFFFBF00),
                 ),
@@ -454,9 +442,14 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                     primary: Color(0xFFFFBF00),
                   ),
                   onPressed: () {
-                    setState(() {});
+                    CartItemUSS.addItemToCart(
+                      name: topic,
+                      price: price.toDouble(), 
+                      description: description, 
+                      amount: 1.0,
+                    );
                   },
-                  child: Text("Pilih Ticket"),
+                  child: Text("Buy ticket"),
                 ),
               ],
             ),

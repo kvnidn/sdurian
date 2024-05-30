@@ -184,7 +184,7 @@ class _CartPoodakState extends State<CartPoodak> {
                           onTap: () {
                             _decrementItem(list[index]);
                             setState(() {
-                              amount++;
+                              amount--;
                             });
                           },
                           child: Icon(Icons.remove_circle),
@@ -200,7 +200,7 @@ class _CartPoodakState extends State<CartPoodak> {
                           onTap: () {
                             _incrementItem(list[index]);
                             setState(() {
-                              amount--;
+                              amount++;
                             });
                           },
                           child: Icon(Icons.add_circle),
@@ -326,9 +326,13 @@ class _CartPoodakState extends State<CartPoodak> {
                   child: DefaultButton(
                     text: "Checkout",
                     press: () {
+                      if (poodakCart.length > 0) {
                       CartItem.saveCartDataToHistory(totalPrice).then((_) =>
                           CartItem.clearCartDataInFirebase().then((_) =>
                               _clearCart())); // Save cart data to history
+                      } else {
+                        print("Cart is Empty");
+                      }
                     },
                   ),
                 ),
