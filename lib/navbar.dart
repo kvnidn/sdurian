@@ -4,7 +4,6 @@ import 'package:sdurian/pages/cart.dart';
 import 'package:sdurian/pages/home.dart';
 import 'package:sdurian/pages/uss_page.dart';
 import 'package:sdurian/pages/poodak.dart';
-import 'package:sdurian/pages/login/login.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);

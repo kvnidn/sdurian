@@ -181,7 +181,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildItemCard(String imagePath, String name, double price) {
+  Widget _buildItemCard(String imagePath, String name, double price, String description) {
     // Create a NumberFormat instance
     final NumberFormat currencyFormatter = NumberFormat.currency(
       locale: 'id_ID',
@@ -257,7 +257,18 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
           Positioned(
             bottom: 10,
             right: 10,
-            child: Container(
+            child: GestureDetector(
+              onTap: () {
+                CartItem.addItemToPoodakCart(
+                  imgPath: imagePath,
+                  name: name,
+                  price: price,
+                  description: description,
+                  amount: 1.0, //Set as 1 for now
+                );
+              },
+              child: 
+            Container(
               width: 40,
               height: 40,
               decoration: BoxDecoration(
@@ -272,6 +283,8 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
                 ),
               ),
             ),
+
+            )
           ),
         ],
       ),
@@ -294,6 +307,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
           items[index].imgPath,
           items[index].name,
           items[index].price,
+          items[index].description,
         );
       },
       shrinkWrap: true,
