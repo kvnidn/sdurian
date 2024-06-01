@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sdurian/pages/data.dart';
+import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/splash/splash_screen.dart';
 import 'package:sdurian/routs.dart';
 import 'package:sdurian/size_config.dart';

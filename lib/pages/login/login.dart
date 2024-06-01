@@ -14,7 +14,7 @@ class LogInScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, NavBar.routeName);
+            // Navigator.pushNamed(context, NavBar.routeName);
           },
         ),
       ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/pages/cart_poodak.dart';
 import 'package:sdurian/pages/cart_uss.dart';
+import 'package:sdurian/data.dart';
 
 class Cart extends StatefulWidget {
-  const Cart({Key? key}) : super(key: key);
+  final User user;
+  const Cart({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Cart> createState() => _CartState();
@@ -24,7 +26,7 @@ class _CartState extends State<Cart> {
             // ),
             _buildGreeting(),
             _buildCartCategory(
-                "lib/assets/poodak.jpeg", "Poodak's Cart", CartPoodak()),
+                "lib/assets/poodak.jpeg", "Poodak's Cart", CartPoodak(user: widget.user)),
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: Text(
@@ -32,7 +34,7 @@ class _CartState extends State<Cart> {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
-            _buildCartCategory("lib/assets/uss.jpg", "USS's Cart", CartUSS()),
+            _buildCartCategory("lib/assets/uss.jpg", "USS's Cart", CartUSS(user: widget.user,)),
           ]),
         )),
       )),

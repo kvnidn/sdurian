@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sdurian/pages/data.dart';
+import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/history_uss.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/components/default_button.dart';
 
 class CartUSS extends StatefulWidget {
-  const CartUSS({Key? key}) : super(key: key);
+  final User user;
+  const CartUSS({Key? key, required this.user}) : super(key: key);
 
   @override
   State<CartUSS> createState() => _CartUSSState();
@@ -16,7 +17,7 @@ class _CartUSSState extends State<CartUSS> {
   List<CartItemUSS> ussCart = [];
 
   Future<void> _fetchCartData() async {
-    await CartItemUSS.fetchCartData("uss_cart");
+    await CartItemUSS.fetchCartData(widget.user.email);
     setState(() {
       ussCart = CartItemUSS.cartList;
     });
@@ -59,7 +60,7 @@ class _CartUSSState extends State<CartUSS> {
     setState(() {
       item.amount++;
     });
-    CartItemUSS.updateItemAmount(item.name, 1).then((_) => _updateCart());
+    CartItemUSS.updateItemAmount(item.name, 1, widget.user.email).then((_) => _updateCart());
   }
 
   void _decrementItem(CartItemUSS item) {
@@ -71,12 +72,13 @@ class _CartUSSState extends State<CartUSS> {
         }
       }
     });
-    CartItemUSS.updateItemAmount(item.name, -1).then((_) => _updateCart());
+    CartItemUSS.updateItemAmount(item.name, -1, widget.user.email).then((_) => _updateCart());
   }
 
   void _removeItem(CartItemUSS item) {
-    CartItemUSS.removeItemFromCart(item.name).then((_) => _updateCart());
+    CartItemUSS.removeItemFromCart(item.name, widget.user.email).then((_) => _updateCart());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +101,7 @@ class _CartUSSState extends State<CartUSS> {
             icon: Icon(Icons.history, color: Colors.black),
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HistoryUSS()));
+                  MaterialPageRoute(builder: (context) => HistoryUSS(user: widget.user,)));
             },
           ),
         ],
@@ -124,7 +126,6 @@ class _CartUSSState extends State<CartUSS> {
   }
 
   Widget _buildItemCard(List<CartItemUSS> list, int index) {
-
     double amount = list[index].amount;
 
     return Container(
@@ -164,8 +165,7 @@ class _CartUSSState extends State<CartUSS> {
                     ),
                     Container(
                       constraints: BoxConstraints(maxWidth: 350),
-                      child: 
-                      Text(
+                      child: Text(
                         list[index].description,
                       ),
                     ),
@@ -175,11 +175,10 @@ class _CartUSSState extends State<CartUSS> {
               ),
             ],
           ),
-            Positioned(
-              bottom: 10,
-              left: 20,
-              child: 
-              Row(
+          Positioned(
+            bottom: 10,
+            left: 20,
+            child: Row(
               children: [
                 InkWell(
                   onTap: () {
@@ -193,8 +192,7 @@ class _CartUSSState extends State<CartUSS> {
                 SizedBox(width: 10),
                 Text(
                   (amount.toInt()).toString(),
-                  style: TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 SizedBox(width: 10),
                 InkWell(
@@ -248,11 +246,12 @@ class _CartUSSState extends State<CartUSS> {
           ),
         ],
       ),
-        );
-      }
+    );
+  }
 
   Widget _checkoutButton() {
-    double totalPrice = ussCart.fold(0, (sum, item) => sum + item.price * item.amount);
+    double totalPrice =
+        ussCart.fold(0, (sum, item) => sum + item.price * item.amount);
 
     return Container(
       height: 120,
@@ -323,9 +322,9 @@ class _CartUSSState extends State<CartUSS> {
                     text: "Checkout",
                     press: () {
                       if (ussCart.length > 0) {
-                      CartItemUSS.saveCartDataToHistory(totalPrice).then((_) =>
-                          CartItemUSS.clearCartDataInFirebase().then((_) =>
-                              _clearCart()));
+                        CartItemUSS.saveCartDataToHistory(totalPrice, widget.user.email).then(
+                            (_) => CartItemUSS.clearCartDataInFirebase(widget.user.email)
+                                .then((_) => _clearCart()));
                       } else {
                         print("Cart Empty");
                       }

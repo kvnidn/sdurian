@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdurian/pages/cart.dart';
+import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/home.dart';
+import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/pages/uss_page.dart';
 import 'package:sdurian/pages/poodak.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({Key? key}) : super(key: key);
-  
+  User user;
+  NavBar({Key? key, required this.user}) : super(key: key);
+
   static String routeName = "/navbar";
 
   @override
@@ -15,14 +18,22 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
+  Future<void> fetchUserData() async {
+    await User.fetchUserByEmail(widget.user.email).then((_) {
+      setState(() {
+        widget.user = User.currentUser[0];
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
   int _index = 0;
   final PageController _pageController = PageController();
-  final List<Widget> screens = [
-    Home(),
-    Poodak(),
-    USSState(),
-    Cart()
-  ];
 
   @override
   void dispose() {
@@ -32,6 +43,21 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> screens = [
+      Home(
+        user: widget.user,
+      ),
+      Poodak(
+        user: widget.user,
+      ),
+      USSState(
+        user: widget.user,
+      ),
+      Cart(
+        user: widget.user,
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: PageView.builder(

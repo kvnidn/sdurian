@@ -13,10 +13,8 @@ class Body extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: 
-            EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(20)
-          ),
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -36,10 +34,10 @@ class Body extends StatelessWidget {
                 SizedBox(height: getProportionateScreenHeight(10)),
                 Text(
                   "Please enter your email and we will send \nyou a link to reset your password",
-                  textAlign: TextAlign.center, 
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: kTextLightColor,
-                  ), 
+                  ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(25)),
                 Padding(
@@ -75,51 +73,52 @@ class _ForgotPwFormState extends State<ForgotPwForm> {
         children: [
           SizedBox(height: getProportionateScreenHeight(20)),
           TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            onSaved: (newValue) => email = newValue!,
-            onChanged: (value) {
-              if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.remove(kEmailNullError);
-                });
-              }
-              else if (value.isEmpty || emailValidatorRegExp.hasMatch(value) && errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.remove(kInvalidEmailError);
-                });
-              }
-              return null;
-            },
-            style: TextStyle(
-              color: kTextLightColor,
-            ),
-            validator: (value) {
-              if ((value == null || value.isEmpty) && !errors.contains(kEmailNullError)) {
-                setState(() {
-                  errors.add(kEmailNullError);
-                });
-              }
-              else if ((value != null && !value.isEmpty) && !emailValidatorRegExp.hasMatch(value) && !errors.contains(kInvalidEmailError)) {
-                setState(() {
-                  errors.add(kInvalidEmailError);
-                });
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-              labelText: "Email",
-              labelStyle: TextStyle(
+              keyboardType: TextInputType.emailAddress,
+              onSaved: (newValue) => email = newValue!,
+              onChanged: (value) {
+                if (value.isNotEmpty && errors.contains(kEmailNullError)) {
+                  setState(() {
+                    errors.remove(kEmailNullError);
+                  });
+                } else if (value.isEmpty ||
+                    emailValidatorRegExp.hasMatch(value) &&
+                        errors.contains(kInvalidEmailError)) {
+                  setState(() {
+                    errors.remove(kInvalidEmailError);
+                  });
+                }
+                return null;
+              },
+              style: TextStyle(
                 color: kTextLightColor,
               ),
-              hintText: "Enter your email",
-              hintStyle: TextStyle(
-                color: kTextLightColor,
-                fontWeight: FontWeight.w300,
-                fontSize: 14
-              ),
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-            )
-          ),
+              validator: (value) {
+                if ((value == null || value.isEmpty) &&
+                    !errors.contains(kEmailNullError)) {
+                  setState(() {
+                    errors.add(kEmailNullError);
+                  });
+                } else if ((value != null && !value.isEmpty) &&
+                    !emailValidatorRegExp.hasMatch(value) &&
+                    !errors.contains(kInvalidEmailError)) {
+                  setState(() {
+                    errors.add(kInvalidEmailError);
+                  });
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                labelText: "Email",
+                labelStyle: TextStyle(
+                  color: kTextLightColor,
+                ),
+                hintText: "Enter your email",
+                hintStyle: TextStyle(
+                    color: kTextLightColor,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+              )),
           SizedBox(height: getProportionateScreenHeight(20)),
           Padding(
             padding: EdgeInsets.symmetric(
@@ -131,9 +130,7 @@ class _ForgotPwFormState extends State<ForgotPwForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              if (_formKey.currentState?.validate() ?? false) {
-
-              }
+              if (_formKey.currentState?.validate() ?? false) {}
             },
           ),
           SizedBox(height: getProportionateScreenHeight(35)),

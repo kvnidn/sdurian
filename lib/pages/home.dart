@@ -1,16 +1,31 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:sdurian/authentication.dart';
+import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/edit_profile.dart';
+import 'package:sdurian/pages/login/login.dart';
+import 'package:sdurian/pages/settings.dart';
 import 'package:sdurian/size_config.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final User user;
+  const Home({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -27,17 +42,18 @@ class _HomeState extends State<Home> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildGreeting("SDurian User"),
+                      _buildGreeting(),
                       GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EditProfile()),
+                                  builder: (context) =>
+                                      Settings(user: widget.user)),
                             );
                           },
                           child: Icon(
-                            Icons.edit,
+                            Icons.settings,
                             color: Colors.black,
                           ))
                     ],
@@ -72,10 +88,10 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildGreeting(String username) {
+  Widget _buildGreeting() {
     return Container(
       child: Text(
-        'Hi, ' + username,
+        'Hi, ${widget.user.username}',
         style: TextStyle(
           color: Colors.black,
           fontSize: 24,

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/constants.dart';
+import 'package:sdurian/data.dart';
 import 'package:sdurian/size_config.dart';
 
 import '../../../components/default_button.dart';
 import 'package:sdurian/navbar.dart';
 
 class Body extends StatelessWidget {
-  const Body({super.key});
+  final User user;
+  const Body({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,9 @@ class Body extends StatelessWidget {
           DefaultButton(
             text: "Let's explore!",
             press: () {
-              Navigator.pushNamed(context, NavBar.routeName);
+              // Navigator.pushNamed(context, NavBar.routeName);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => NavBar(user: user)));
             },
           ),
         ],

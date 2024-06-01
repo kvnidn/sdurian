@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sdurian/pages/data.dart';
+import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/history_poodak.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/components/default_button.dart';
 
 class CartPoodak extends StatefulWidget {
-  const CartPoodak({Key? key}) : super(key: key);
+  final User user;
+  const CartPoodak({Key? key, required this.user}) : super(key: key);
 
   @override
   State<CartPoodak> createState() => _CartPoodakState();
@@ -16,7 +17,7 @@ class _CartPoodakState extends State<CartPoodak> {
   List<CartItem> poodakCart = [];
 
   Future<void> _fetchCartData() async {
-    await CartItem.fetchCartData("poodak_cart");
+    await CartItem.fetchCartData(widget.user.email);
     setState(() {
       poodakCart = CartItem.cartList;
     });
@@ -59,7 +60,8 @@ class _CartPoodakState extends State<CartPoodak> {
     setState(() {
       item.amount++; // Update the amount directly
     });
-    CartItem.updateItemAmount(item.name, 1).then((_) => _updateCart());
+    CartItem.updateItemAmount(item.name, 1, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   void _decrementItem(CartItem item) {
@@ -72,11 +74,13 @@ class _CartPoodakState extends State<CartPoodak> {
         }
       }
     });
-    CartItem.updateItemAmount(item.name, -1).then((_) => _updateCart());
+    CartItem.updateItemAmount(item.name, -1, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   void _removeItem(CartItem item) {
-    CartItem.removeItemFromCart(item.name).then((_) => _updateCart());
+    CartItem.removeItemFromCart(item.name, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   @override
@@ -100,8 +104,12 @@ class _CartPoodakState extends State<CartPoodak> {
           IconButton(
             icon: const Icon(Icons.history, color: Colors.black),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HistoryPoodak()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HistoryPoodak(
+                            user: widget.user,
+                          )));
             },
           ),
         ],
@@ -327,9 +335,12 @@ class _CartPoodakState extends State<CartPoodak> {
                     text: "Checkout",
                     press: () {
                       if (poodakCart.length > 0) {
-                      CartItem.saveCartDataToHistory(totalPrice).then((_) =>
-                          CartItem.clearCartDataInFirebase().then((_) =>
-                              _clearCart())); // Save cart data to history
+                        CartItem.saveCartDataToHistory(
+                                totalPrice, widget.user.email)
+                            .then((_) => CartItem.clearCartDataInFirebase(
+                                    widget.user.email)
+                                .then((_) =>
+                                    _clearCart())); // Save cart data to history
                       } else {
                         print("Cart is Empty");
                       }

@@ -4,7 +4,9 @@ import 'package:sdurian/components/have_account.dart';
 import 'package:sdurian/components/social_card.dart';
 import 'package:sdurian/constants.dart';
 import 'package:sdurian/pages/complete_profile/cpscreen.dart';
+import 'package:sdurian/data.dart';
 import 'package:sdurian/size_config.dart';
+import 'package:random_string/random_string.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -13,11 +15,17 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  
+
   String? email;
   String? password;
   String? confirm_password;
   final List<String> errors = [];
+
+  // String hashPassword(String password, String salt) {
+  //   var bytes = utf8.encode(password + salt);
+  //   var digest = sha256.convert(bytes);
+  //   return digest.toString();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +68,20 @@ class _SignUpFormState extends State<SignUpForm> {
             text: "Continue",
             press: () {
               if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                _formKey.currentState!.save();
+
+                String salt = randomAlphaNumeric(16);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CompleteProfileScreen(
+                      email: email!,
+                      hashedPassword: User.hashPassword(password!, salt),
+                      salt: salt,
+                    ),
+                  ),
+                );
               }
             },
           ),
@@ -102,70 +123,66 @@ class _SignUpFormState extends State<SignUpForm> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          onSaved: (newValue) => email = newValue!,
-          style: TextStyle(
+        keyboardType: TextInputType.emailAddress,
+        onSaved: (newValue) => email = newValue!,
+        style: TextStyle(
+          color: kTextLightColor,
+        ),
+        decoration: InputDecoration(
+          labelText: "Email",
+          labelStyle: TextStyle(
             color: kTextLightColor,
           ),
-          decoration: InputDecoration(
-            labelText: "Email",
-            labelStyle: TextStyle(
-              color: kTextLightColor,
-            ),
-            hintText: "Enter your email",
-            hintStyle: TextStyle(
+          hintText: "Enter your email",
+          hintStyle: TextStyle(
               color: kTextLightColor,
               fontWeight: FontWeight.w300,
-              fontSize: 14
-            ),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-          )
-        );
+              fontSize: 14),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ));
   }
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
-          obscureText: true,
-          onSaved:(newValue) => password = newValue!,
-          style: TextStyle(
+        obscureText: true,
+        onSaved: (newValue) => password = newValue!,
+        style: TextStyle(
+          color: kTextLightColor,
+        ),
+        decoration: InputDecoration(
+          labelText: "Password",
+          labelStyle: TextStyle(
             color: kTextLightColor,
           ),
-          decoration: InputDecoration(
-            labelText: "Password",
-            labelStyle: TextStyle(
-              color: kTextLightColor,
-            ),
-            hintText: "Enter your password",
-            hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14,
-            ),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-          )
-        );
+          hintText: "Enter your password",
+          hintStyle: TextStyle(
+            color: kTextLightColor,
+            fontWeight: FontWeight.w300,
+            fontSize: 14,
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ));
   }
 
   TextFormField buildConfirmPwFormField() {
     return TextFormField(
-          obscureText: true,
-          onSaved:(newValue) => confirm_password = newValue!,
-          style: TextStyle(
+        obscureText: true,
+        onSaved: (newValue) => confirm_password = newValue!,
+        style: TextStyle(
+          color: kTextLightColor,
+        ),
+        decoration: InputDecoration(
+          labelText: "Confirm Password",
+          labelStyle: TextStyle(
             color: kTextLightColor,
           ),
-          decoration: InputDecoration(
-            labelText: "Confirm Password",
-            labelStyle: TextStyle(
-              color: kTextLightColor,
-            ),
-            hintText: "Re-enter your password",
-            hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14,
-            ),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-          )
-        );
+          hintText: "Re-enter your password",
+          hintStyle: TextStyle(
+            color: kTextLightColor,
+            fontWeight: FontWeight.w300,
+            fontSize: 14,
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+        ));
   }
 }

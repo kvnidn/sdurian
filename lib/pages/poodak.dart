@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:sdurian/pages/data.dart';
+import 'package:sdurian/data.dart';
 
 class Poodak extends StatefulWidget {
-  const Poodak({Key? key}) : super(key: key);
+  final User user;
+  const Poodak({Key? key, required this.user}) : super(key: key);
 
   @override
   State<Poodak> createState() => _PoodakState();
@@ -22,8 +23,8 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    ShopItem.fetchData("poodak");
     super.initState();
+    ShopItem.fetchData("poodak");
     _tabController = TabController(length: poodakItems.length, vsync: this);
   }
 
@@ -181,7 +182,8 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildItemCard(String imagePath, String name, double price, String description) {
+  Widget _buildItemCard(String imagePath, String name, double price,
+      String description, String email) {
     // Create a NumberFormat instance
     final NumberFormat currencyFormatter = NumberFormat.currency(
       locale: 'id_ID',
@@ -255,37 +257,35 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
             ],
           ),
           Positioned(
-            bottom: 10,
-            right: 10,
-            child: GestureDetector(
-              onTap: () {
-                CartItem.addItemToPoodakCart(
-                  imgPath: imagePath,
-                  name: name,
-                  price: price,
-                  description: description,
-                  amount: 1.0, //Set as 1 for now
-                );
-              },
-              child: 
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.add_shopping_cart,
-                  size: 24,
-                  color: Colors.black,
+              bottom: 10,
+              right: 10,
+              child: GestureDetector(
+                onTap: () {
+                  CartItem.addItemToPoodakCart(
+                    imgPath: imagePath,
+                    name: name,
+                    price: price,
+                    description: description,
+                    amount: 1.0,
+                    email: email, //Set as 1 for now
+                  );
+                },
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.add_shopping_cart,
+                      size: 24,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-
-            )
-          ),
+              )),
         ],
       ),
     );
@@ -308,6 +308,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
           items[index].name,
           items[index].price,
           items[index].description,
+          widget.user.email
         );
       },
       shrinkWrap: true,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sdurian/pages/data.dart';
+import 'package:sdurian/data.dart';
 
 class HistoryPoodak extends StatefulWidget {
-  const HistoryPoodak({Key? key}) : super(key: key);
+  final User user;
+  const HistoryPoodak({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HistoryPoodak> createState() => _HistoryPoodakState();
@@ -20,7 +21,7 @@ class _HistoryPoodakState extends State<HistoryPoodak> {
   );
 
   Future<void> _fetchHistoryData() async {
-    await HistoryItem.fetchHistoryData();
+    await HistoryItem.fetchHistoryData(widget.user.email);
     setState(() {
       poodakHistory = HistoryItem.historyList;
       // Sort by timestamp in descending order

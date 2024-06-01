@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/components/default_button.dart';
 import 'package:sdurian/constants.dart';
+import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/signupsuccess/signupscs.dart';
 import 'package:sdurian/size_config.dart';
 
 class Body extends StatelessWidget {
-  const Body({super.key});
+  final String email;
+  final String hashedPassword;
+  final String salt;
+
+  const Body({
+    Key? key,
+    required this.email,
+    required this.hashedPassword,
+    required this.salt,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +23,7 @@ class Body extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: 
-          EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: getProportionateScreenWidth(20),
           ),
           child: SingleChildScrollView(
@@ -48,7 +57,11 @@ class Body extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(25)),
-                CompleteProfileForm(),
+                CompleteProfileForm(
+                  email: email,
+                  hashedPassword: hashedPassword,
+                  salt: salt,
+                ),
               ],
             ),
           ),
@@ -59,18 +72,51 @@ class Body extends StatelessWidget {
 }
 
 class CompleteProfileForm extends StatefulWidget {
+  final String email;
+  final String hashedPassword;
+  final String salt;
+
+  CompleteProfileForm({
+    required this.email,
+    required this.hashedPassword,
+    required this.salt,
+  });
+
   @override
   State<CompleteProfileForm> createState() => _CompleteProfileFormState();
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
-  
+
   late String username;
   late String firstName;
   late String lastName;
   late String phoneNumber;
   late String address;
+
+  Future<void> _createUser() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      try {
+        await User.createUser(
+          email: widget.email,
+          password: widget.hashedPassword,
+          salt: widget.salt,
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          address: address,
+        );
+        print("User Added");
+        Navigator.pushNamed(context, SignUpScsScreen.routeName);
+      } catch (error) {
+        print("Failed to add user: $error");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,14 +172,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(
             height: getProportionateScreenHeight(40),
           ),
-          // SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, SignUpScsScreen.routeName);
-              }
-            },
+            press: _createUser,
           ),
           SizedBox(
             height: getProportionateScreenHeight(25),
@@ -158,10 +199,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         hintStyle: TextStyle(
           color: kTextLightColor,
           fontWeight: FontWeight.w300,
-          fontSize: 14
+          fontSize: 14,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-      )
+      ),
     );
   }
 
@@ -180,10 +221,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         hintStyle: TextStyle(
           color: kTextLightColor,
           fontWeight: FontWeight.w300,
-          fontSize: 14
+          fontSize: 14,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-      )
+      ),
     );
   }
 
@@ -202,10 +243,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         hintStyle: TextStyle(
           color: kTextLightColor,
           fontWeight: FontWeight.w300,
-          fontSize: 14
+          fontSize: 14,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-      )
+      ),
     );
   }
 
@@ -225,10 +266,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         hintStyle: TextStyle(
           color: kTextLightColor,
           fontWeight: FontWeight.w300,
-          fontSize: 14
+          fontSize: 14,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-      )
+      ),
     );
   }
 
@@ -248,10 +289,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         hintStyle: TextStyle(
           color: kTextLightColor,
           fontWeight: FontWeight.w300,
-          fontSize: 14
+          fontSize: 14,
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-      )
+      ),
     );
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sdurian/pages/data.dart';
+import 'package:sdurian/data.dart';
 
 class HistoryUSS extends StatefulWidget {
-  const HistoryUSS({Key? key}) : super(key: key);
+  final User user;
+  const HistoryUSS({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HistoryUSS> createState() => _HistoryUSSState();
@@ -20,7 +21,7 @@ class _HistoryUSSState extends State<HistoryUSS> {
   );
 
   Future<void> _fetchHistoryData() async {
-    await HistoryItemUSS.fetchHistoryData();
+    await HistoryItemUSS.fetchHistoryData(widget.user.email);
     setState(() {
       ussHistory = HistoryItemUSS.historyList;
       ussHistory.sort((a, b) => b.timestamp.compareTo(a.timestamp));

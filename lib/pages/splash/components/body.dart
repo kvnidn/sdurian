@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sdurian/authentication.dart';
 import 'package:sdurian/navbar.dart';
+import 'package:sdurian/data.dart';
+import 'package:sdurian/pages/login/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -7,6 +11,46 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  bool _isLoggedIn = false;
+
+  User? user;
+
+  Future<void> _loadUserData() async {
+    try {
+      String? email = await Auth().fetchEmail();
+      if (email != null) {
+        print(email.toString());
+        await User.fetchUserByEmail(email).then((_) {
+          setState(() {
+            user = User.currentUser.isNotEmpty ? User.currentUser.first : null;
+          });
+        });
+      }
+    } catch (e) {
+      print('Error loading user data: $e');
+      // Handle error (e.g., navigate to login screen, show error message, etc.)
+    }
+    await checkLoggedInStatus();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Check authentication state when the widget initializes
+    _loadUserData();
+    // checkLoggedInStatus();
+  }
+
+  // Function to check authentication state
+  Future<void> checkLoggedInStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final authToken = prefs.getString('authToken');
+    setState(() {
+      _isLoggedIn = authToken != null;
+    });
+    print(user?.email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,11 +95,20 @@ class _BodyState extends State<Body> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigate to a different page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NavBar()),
-                );
+                // Auth().logout();
+                // Navigate based on authentication state
+                if (_isLoggedIn && user != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NavBar(user: user!)),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LogInScreen()),
+                  );
+                }
               },
               child: Container(
                 decoration: BoxDecoration(
