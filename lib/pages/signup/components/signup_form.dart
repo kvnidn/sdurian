@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/components/default_button.dart';
 import 'package:sdurian/components/have_account.dart';
-import 'package:sdurian/components/social_card.dart';
+// import 'package:sdurian/components/social_card.dart';
 import 'package:sdurian/constants.dart';
 import 'package:sdurian/pages/complete_profile/cpscreen.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:random_string/random_string.dart';
+import 'package:sdurian/components/form_error.dart';
+import 'package:collection/collection.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -26,6 +28,104 @@ class _SignUpFormState extends State<SignUpForm> {
   //   var digest = sha256.convert(bytes);
   //   return digest.toString();
   // }
+
+  void addError({required String error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({required String error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  bool isEmailExist = false;
+
+  void validateUserCredentials(String email, String password) async {
+    // Clear previous errors
+    setState(() {
+      errors.clear();
+    });
+
+    try {
+      // Fetch user data
+      await User.fetchUserData();
+      
+      // Check if user exists with entered email
+      User? user = User.userList.firstWhereOrNull((user) => user.email == email);
+      if (user != null) {
+        // User found, email is registered
+        // Proceed with your logic, e.g., show error or navigate to login screen
+        // isEmailExist = true;
+        setState(() {
+          errors.add(kEmailExistError);
+          // errors.add("ini true");
+        });
+
+      } else {
+        // User not found, email is not registered
+        // Proceed with your logic, e.g., allow user to register or show error
+      }
+    } catch (error) {
+      print("Error fetching user data: $error");
+      setState(() {
+        errors.add("Error fetching user data: $error");
+      });
+    }
+  }
+
+  bool ValidateEmailNull() {
+    if (email == null || email!.isEmpty) {
+      addError(error: kEmailNullError);
+      return false;
+    }
+    return true;
+  }
+
+  bool ValidateEmailValid() {
+    if ((email != null || email!.isNotEmpty) && !emailValidatorRegExp.hasMatch(email!)) {
+      addError(error: kInvalidEmailError);
+      return false;
+    }
+    return true;
+  }
+
+  // bool ValidateEmailExist() {
+  //   if (!isEmailExist){
+  //     addError(error: kEmailExistError);
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+  // bool ValidateEmailExist() {
+  //   if (errors.contains(kEmailExistError)) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+  bool ValidatePasswordNull() {
+    if (password == null || password!.isEmpty) {
+      addError(error: kPassNullError);
+      return false;
+    }
+    return true;
+  }
+
+  bool validatePasswordMatch() {
+    if (password != confirm_password) {
+      addError(error: kMatchPassError);
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,58 +161,79 @@ class _SignUpFormState extends State<SignUpForm> {
             child: buildConfirmPwFormField(),
           ),
           SizedBox(
-            height: getProportionateScreenHeight(40),
+            height: getProportionateScreenHeight(20),
           ),
-          // SizedBox(height: getProportionateScreenHeight(20)),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(62),
+            ),
+            child: FormError(errors: errors),
+          ),
+          SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
+                removeError(error: kInvalidEmailError);
+                removeError(error: kEmailNullError);
+                removeError(error: kEmailExistError);
+                removeError(error: kPassNullError);
+                removeError(error: kMatchPassError);
+                if (ValidateEmailNull()){
+                  if (ValidateEmailValid()) {
+                    validateUserCredentials(email!, password!);
+                    // if (ValidateEmailExist()){
+                      if (ValidatePasswordNull()){
+                        if (validatePasswordMatch()){
+                          String salt = randomAlphaNumeric(16);
 
-                String salt = randomAlphaNumeric(16);
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CompleteProfileScreen(
-                      email: email!,
-                      hashedPassword: User.hashPassword(password!, salt),
-                      salt: salt,
-                    ),
-                  ),
-                );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CompleteProfileScreen(
+                                email: email!,
+                                hashedPassword: User.hashPassword(password!, salt),
+                                salt: salt,
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                    // }
+                  }
+                }
               }
             },
           ),
-          SizedBox(
-            height: getProportionateScreenHeight(25),
-          ),
-          Text(
-            "or using",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: kTextLightColor,
-            ),
-          ),
-          SizedBox(height: getProportionateScreenHeight(25)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SocialCard(
-                icon: "lib/icons/facebook.png",
-                press: () {},
-              ),
-              SocialCard(
-                icon: "lib/icons/google.png",
-                press: () {},
-              ),
-              SocialCard(
-                icon: "lib/icons/instagram.png",
-                press: () {},
-              ),
-            ],
-          ),
+          // SizedBox(
+          //   height: getProportionateScreenHeight(25),
+          // ),
+          // Text(
+          //   "or using",
+          //   textAlign: TextAlign.center,
+          //   style: TextStyle(
+          //     color: kTextLightColor,
+          //   ),
+          // ),
+          // SizedBox(height: getProportionateScreenHeight(25)),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     SocialCard(
+          //       icon: "lib/icons/facebook.png",
+          //       press: () {},
+          //     ),
+          //     SocialCard(
+          //       icon: "lib/icons/google.png",
+          //       press: () {},
+          //     ),
+          //     SocialCard(
+          //       icon: "lib/icons/instagram.png",
+          //       press: () {},
+          //     ),
+          //   ],
+          // ),
           SizedBox(height: getProportionateScreenHeight(30)),
           haveAccount(),
           SizedBox(height: getProportionateScreenHeight(30)),

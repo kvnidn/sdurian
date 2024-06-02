@@ -43,32 +43,32 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: getProportionateScreenHeight(25)),
                 LogInForm(),
-                SizedBox(height: getProportionateScreenHeight(25)),
-                Text(
-                  "or using",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: kTextLightColor,
-                  ),
-                ),
-                SizedBox(height: getProportionateScreenHeight(25)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocialCard(
-                      icon: "lib/icons/facebook.png",
-                      press: () {},
-                    ),
-                    SocialCard(
-                      icon: "lib/icons/google.png",
-                      press: () {},
-                    ),
-                    SocialCard(
-                      icon: "lib/icons/instagram.png",
-                      press: () {},
-                    ),
-                  ],
-                ),
+                // SizedBox(height: getProportionateScreenHeight(25)),
+                // Text(
+                //   "or using",
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //     color: kTextLightColor,
+                //   ),
+                // ),
+                // SizedBox(height: getProportionateScreenHeight(25)),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     SocialCard(
+                //       icon: "lib/icons/facebook.png",
+                //       press: () {},
+                //     ),
+                //     SocialCard(
+                //       icon: "lib/icons/google.png",
+                //       press: () {},
+                //     ),
+                //     SocialCard(
+                //       icon: "lib/icons/instagram.png",
+                //       press: () {},
+                //     ),
+                //   ],
+                // ),
                 SizedBox(height: getProportionateScreenHeight(30)),
                 noAccount(),
                 SizedBox(height: getProportionateScreenHeight(38)),

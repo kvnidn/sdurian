@@ -4,6 +4,7 @@ import 'package:sdurian/constants.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/signupsuccess/signupscs.dart';
 import 'package:sdurian/size_config.dart';
+import 'package:sdurian/components/form_error.dart';
 
 class Body extends StatelessWidget {
   final String email;
@@ -94,6 +95,76 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   late String lastName;
   late String phoneNumber;
   late String address;
+  final List<String> errors = [];
+
+  void addError({required String error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({required String error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  bool ValidateUsernameNull() {
+    if (username == null || username!.isEmpty) {
+      addError(error: kProfileNotCompleted);
+      return false;
+    }
+    return true;
+  }
+
+  bool ValidateFNNull() {
+    if (firstName == null || firstName!.isEmpty) {
+      addError(error: kProfileNotCompleted);
+      return false;
+    }
+    return true;
+  }
+
+  bool ValidateLNNull() {
+    if (lastName == null || lastName!.isEmpty) {
+      addError(error: kProfileNotCompleted);
+      return false;
+    }
+    return true;
+  }
+
+  bool ValidatePNNull() {
+    if (phoneNumber == null || phoneNumber!.isEmpty) {
+      addError(error: kProfileNotCompleted);
+      return false;
+    }
+    return true;
+  }
+
+  bool ValidateAddressNull() {
+    if (address == null || address!.isEmpty) {
+      addError(error: kProfileNotCompleted);
+      return false;
+    }
+    return true;
+  }
+
+  // bool ValidateFormNull() {
+  //   if ((username == null || username!.isEmpty) || 
+  //       (firstName == null || firstName!.isEmpty) ||
+  //       (lastName == null || lastName!.isEmpty) ||
+  //       (phoneNumber == null || phoneNumber!.isEmpty) ||
+  //       (address == null || address!.isEmpty)) {
+  //         addError(error: kProfileNotCompleted);
+  //         return false;
+  //       }
+
+  //   return true;
+  // }
 
   Future<void> _createUser() async {
     if (_formKey.currentState!.validate()) {
@@ -170,11 +241,36 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             child: buildAddressFormField(),
           ),
           SizedBox(
-            height: getProportionateScreenHeight(40),
+            height: getProportionateScreenHeight(20),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(62),
+            ),
+            child: FormError(errors: errors),
+          ),
+          SizedBox(
+            height: getProportionateScreenHeight(20),
           ),
           DefaultButton(
             text: "Continue",
-            press: _createUser,
+            press: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                removeError(error: kProfileNotCompleted);
+                if (ValidateUsernameNull()) {
+                  if (ValidateFNNull()) {
+                    if (ValidateLNNull()) {
+                      if (ValidatePNNull()) {
+                        if (ValidateAddressNull()) {
+                          _createUser();
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
           ),
           SizedBox(
             height: getProportionateScreenHeight(25),

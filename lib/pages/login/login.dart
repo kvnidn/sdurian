@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/pages/login/components/body.dart';
-import 'package:sdurian/navbar.dart';
+import 'package:sdurian/pages/splash/splash_screen.dart';
 
 class LogInScreen extends StatelessWidget {
   static String routeName = "/login";
@@ -14,7 +14,7 @@ class LogInScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Navigator.pushNamed(context, NavBar.routeName);
+            Navigator.pushNamed(context, SplashScreen.routeName);
           },
         ),
       ),
