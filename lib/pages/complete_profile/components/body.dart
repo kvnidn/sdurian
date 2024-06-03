@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sdurian/components/default_button.dart';
 import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/data.dart';
@@ -340,25 +341,43 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         ));
   }
 
-  TextFormField buildPNFormField() {
-    return TextFormField(
-        keyboardType: TextInputType.phone,
-        onSaved: (newValue) => phoneNumber = newValue!,
-        style: TextStyle(
+  IntlPhoneField buildPNFormField() {
+    // return TextFormField(
+    //     keyboardType: TextInputType.phone,
+    //     onSaved: (newValue) => phoneNumber = newValue!,
+    //     style: TextStyle(
+    //       color: kTextLightColor,
+    //     ),
+    //     decoration: InputDecoration(
+    //       labelText: "Phone Number",
+    //       labelStyle: TextStyle(
+    //         color: kTextLightColor,
+    //       ),
+    //       hintText: "Enter your phone number",
+    //       hintStyle: TextStyle(
+    //           color: kTextLightColor,
+    //           fontWeight: FontWeight.w300,
+    //           fontSize: 14),
+    //       floatingLabelBehavior: FloatingLabelBehavior.always,
+    //     ));
+
+    return IntlPhoneField(
+      decoration: InputDecoration(
+        labelText: "Phone Number",
+        labelStyle: TextStyle(
           color: kTextLightColor,
         ),
-        decoration: InputDecoration(
-          labelText: "Phone Number",
-          labelStyle: TextStyle(
-            color: kTextLightColor,
-          ),
-          hintText: "Enter your phone number",
-          hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14),
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-        ));
+        hintText: "Enter your phone number",
+        hintStyle: TextStyle(
+          color: kTextLightColor,
+          fontWeight: FontWeight.w300,
+          fontSize: 14,
+        ),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        counterText: '',
+      ),
+      initialCountryCode: 'ID',
+    );
   }
 
   TextFormField buildAddressFormField() {

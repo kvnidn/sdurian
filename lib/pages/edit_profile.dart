@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/navbar.dart';
 
@@ -129,7 +130,7 @@ class _EditProfileState extends State<EditProfile> {
                     "Enter your full name",
                     controller: _lastNameController,
                   ),
-                  _buildEditForm(
+                  _buildEditPNForm(
                     "Phone Number",
                     "Enter your phone number",
                     controller: _phoneNumberController,
@@ -201,6 +202,47 @@ class _EditProfileState extends State<EditProfile> {
               labelStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
               floatingLabelStyle: TextStyle(color: Colors.black),
             ),
+          ),
+          SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEditPNForm(String label, String hint,
+      {TextEditingController? controller}) {
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        children: [
+          IntlPhoneField(
+            controller: controller,
+            style: TextStyle(fontSize: 16),
+            decoration: InputDecoration(
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              labelText: label,
+              hintText: hint,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: Color(0xFFFFBF00),
+                    width: 2.0), // Color of the enabled border
+                borderRadius: BorderRadius.circular(30),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: Color(0xFFFFBF00),
+                    width: 2.0), // Color of the focused border
+                borderRadius: BorderRadius.circular(30),
+              ),
+              labelStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
+              floatingLabelStyle: TextStyle(color: Colors.black),
+              counterText: '',
+            ),
+            initialCountryCode: 'ID',
           ),
           SizedBox(height: 20),
         ],
