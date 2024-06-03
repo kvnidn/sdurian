@@ -33,7 +33,7 @@ class Body extends StatelessWidget {
               ),
               SizedBox(height: getProportionateScreenHeight(10)),
               Text(
-                "Log in with your email and password\n or continue with social media",
+                "Log in with your email and password",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: kTextLightColor,

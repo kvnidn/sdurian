@@ -38,7 +38,7 @@ class Body extends StatelessWidget {
                   height: getProportionateScreenHeight(10),
                 ),
                 Text(
-                  "Sign up with your email \nor continue with social media",
+                  "Sign up with your email",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: kTextLightColor,
