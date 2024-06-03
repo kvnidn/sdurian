@@ -41,46 +41,50 @@ class _LogInFormState extends State<LogInForm> {
       if (user != null) {
         print("User found with email: $email");
 
-        // Hash the entered password with the stored salt
-        String hashedPassword = User.hashPassword(password, user.salt);
-        await UserLogin.createUser(
-            email: email, password: hashedPassword, salt: user.salt);
-        print("Password hashed: $hashedPassword");
-        print("Stored password: ${user.password}");
-        print("Salt used: ${user.salt}");
+        if (ValidatePasswordNull()){
+          // Hash the entered password with the stored salt
+          String hashedPassword = User.hashPassword(password, user.salt);
+          await UserLogin.createUser(
+              email: email, password: hashedPassword, salt: user.salt);
+          print("Password hashed: $hashedPassword");
+          print("Stored password: ${user.password}");
+          print("Salt used: ${user.salt}");
 
-        // Fetch the stored password for this email from Firebase
-        String? fetchedPassword = await UserLogin.fetchPasswordByEmail(email);
-        if (fetchedPassword != null) {
-          print("Fetched password from Firebase: $fetchedPassword");
+          // Fetch the stored password for this email from Firebase
+          String? fetchedPassword = await UserLogin.fetchPasswordByEmail(email);
+          if (fetchedPassword != null) {
+            print("Fetched password from Firebase: $fetchedPassword");
 
-          // Check if the entered hashed password matches the stored password
-          if (user.password == fetchedPassword) {
-            print("Password matched, navigating to success screen");
+            // Check if the entered hashed password matches the stored password
+            if (user.password == fetchedPassword) {
+              print("Password matched, navigating to success screen");
 
-            // Passwords match, navigate to success screen
-            // Navigator.pushNamed(context, LogInScsScreen.routeName);
-            await Auth().storeUserData(email).then((_) async{
-              await UserLogin.deleteDocumentWithEmail(email).then((_) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => LogInScsScreen(user: user))));
+              // Passwords match, navigate to success screen
+              // Navigator.pushNamed(context, LogInScsScreen.routeName);
+              await Auth().storeUserData(email).then((_) async{
+                await UserLogin.deleteDocumentWithEmail(email).then((_) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: ((context) => LogInScsScreen(user: user))));
+                });
               });
-            });
-            return;
+              return;
+            } else {
+              print("Password did not match");
+              await UserLogin.deleteDocumentWithEmail(email);
+              // Passwords don't match
+              setState(() {
+                errors.add("Incorrect password.");
+              });
+            }
           } else {
-            print("Password did not match");
-            await UserLogin.deleteDocumentWithEmail(email);
-            // Passwords don't match
+            print("No user found with email: $email");
             setState(() {
-              errors.add("Incorrect password.");
+              errors.add("User not found.");
             });
           }
-        } else {
-          print("No user found with email: $email");
-          setState(() {
-            errors.add("User not found.");
-          });
+
         }
+
       } else {
         print("User not found with email: $email");
         // User doesn't exist
@@ -94,6 +98,46 @@ class _LogInFormState extends State<LogInForm> {
         errors.add("Error fetching user data: $error");
       });
     }
+  }
+
+  void addError({required String error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({required String error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  bool ValidateEmailNull() {
+    if (email == null || email!.isEmpty) {
+      addError(error: kEmailNullError);
+      return false;
+    }
+    return true;
+  }
+
+  bool ValidateEmailValid() {
+    if ((email != null || email!.isNotEmpty) && !emailValidatorRegExp.hasMatch(email!)) {
+      addError(error: kInvalidEmailError);
+      return false;
+    }
+    return true;
+  }
+
+  bool ValidatePasswordNull() {
+    if (password == null || password!.isEmpty) {
+      addError(error: kPassNullError);
+      return false;
+    }
+    return true;
   }
 
   late String email;
@@ -176,7 +220,12 @@ class _LogInFormState extends State<LogInForm> {
                   _formKey.currentState!.save();
                   // Setelah data divalidasi dan valid, akan didirect ke tampilan login success
                   // Navigator.pushNamed(context, LogInScsScreen.routeName);
-                  validateUserCredentials(email, password);
+                  errors.clear();
+                  if (ValidateEmailNull()){
+                    if (ValidateEmailValid()){
+                      validateUserCredentials(email, password);
+                    }
+                  }
                 }
               },
             ),

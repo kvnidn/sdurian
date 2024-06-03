@@ -214,11 +214,12 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                removeError(error: kInvalidEmailError);
-                removeError(error: kEmailNullError);
-                removeError(error: kEmailExistError);
-                removeError(error: kPassNullError);
-                removeError(error: kMatchPassError);
+                // removeError(error: kInvalidEmailError);
+                // removeError(error: kEmailNullError);
+                // removeError(error: kEmailExistError);
+                // removeError(error: kPassNullError);
+                // removeError(error: kMatchPassError);
+                errors.clear();
                 if (ValidateEmailNull()){
                   if (ValidateEmailValid()) {
                     validateUserCredentials(email!, password!);
