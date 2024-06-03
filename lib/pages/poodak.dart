@@ -24,7 +24,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    ShopItem.fetchData("poodak");
+    // ShopItem.fetchData("poodak");
     _tabController = TabController(length: poodakItems.length, vsync: this);
   }
 
@@ -303,13 +303,8 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return _buildItemCard(
-          items[index].imgPath,
-          items[index].name,
-          items[index].price,
-          items[index].description,
-          widget.user.email
-        );
+        return _buildItemCard(items[index].imgPath, items[index].name,
+            items[index].price, items[index].description, widget.user.email);
       },
       shrinkWrap: true,
       physics:
