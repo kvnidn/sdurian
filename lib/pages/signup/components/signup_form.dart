@@ -287,18 +287,16 @@ class _SignUpFormState extends State<SignUpForm> {
         keyboardType: TextInputType.emailAddress,
         onSaved: (newValue) => email = newValue!,
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: "Email",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Enter your email",
           hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14),
+              color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ));
   }
@@ -308,16 +306,16 @@ class _SignUpFormState extends State<SignUpForm> {
         obscureText: true,
         onSaved: (newValue) => password = newValue!,
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: "Password",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Enter your password",
           hintStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
             fontWeight: FontWeight.w300,
             fontSize: 14,
           ),
@@ -330,16 +328,16 @@ class _SignUpFormState extends State<SignUpForm> {
         obscureText: true,
         onSaved: (newValue) => confirm_password = newValue!,
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: "Confirm Password",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Re-enter your password",
           hintStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
             fontWeight: FontWeight.w300,
             fontSize: 14,
           ),

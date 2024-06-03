@@ -6,6 +6,7 @@ import 'package:sdurian/pages/about.dart';
 import 'package:sdurian/pages/edit_profile.dart';
 import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/pages/splash/splash_screen.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class Settings extends StatefulWidget {
   final User user;
@@ -20,7 +21,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
@@ -77,7 +78,7 @@ class _SettingsState extends State<Settings> {
               offset: Offset(0, 3),
             )
           ],
-          color: Color(0xFFFFBF00),
+          color: TColors.primary,
         ),
         width: 300,
         height: 80,
@@ -134,7 +135,7 @@ class _SettingsState extends State<Settings> {
               offset: Offset(0, 3),
             )
           ],
-          color: Color(0xFFFFBF00),
+          color: TColors.primary,
         ),
         width: 300,
         height: 80,

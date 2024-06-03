@@ -4,6 +4,7 @@ import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/history_poodak.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/components/default_button.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class CartPoodak extends StatefulWidget {
   final User user;
@@ -87,7 +88,7 @@ class _CartPoodakState extends State<CartPoodak> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {

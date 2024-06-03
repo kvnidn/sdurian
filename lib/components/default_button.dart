@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/size_config.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 import 'package:sdurian/utils/constants/constants.dart';
 
 class DefaultButton extends StatelessWidget {
@@ -21,7 +22,7 @@ class DefaultButton extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           primary: Colors.white,
-          backgroundColor: kPrimaryColor,
+          backgroundColor: TColors.primary,
         ),
         onPressed: press as void Function()?,
         child: Text(

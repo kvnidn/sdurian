@@ -41,7 +41,7 @@ class Body extends StatelessWidget {
                   "Sign up with your email",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: kTextLightColor,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(25)),

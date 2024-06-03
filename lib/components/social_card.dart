@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 import 'package:sdurian/utils/constants/constants.dart';
 
 import '../size_config.dart';
@@ -23,7 +24,7 @@ class SocialCard extends StatelessWidget {
       height: getProportionateScreenHeight(40),
       width: getProportionateScreenWidth(40),
       decoration: BoxDecoration(
-        color: kPrimaryColor,
+        color: TColors.primary,
         shape: BoxShape.circle,
       ),
       child: Image.asset(icon),

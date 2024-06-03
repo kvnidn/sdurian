@@ -55,7 +55,7 @@ class Body extends StatelessWidget {
                   "Complete your details \nor continue with social media",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: kTextLightColor,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(25)),
@@ -285,18 +285,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     return TextFormField(
         onSaved: (newValue) => username = newValue!,
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: "Username",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Enter your username",
           hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14),
+              color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ));
   }
@@ -305,18 +303,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     return TextFormField(
         onSaved: (newValue) => firstName = newValue!,
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: "First Name",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Enter your first name",
           hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14),
+              color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ));
   }
@@ -325,18 +321,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     return TextFormField(
         onSaved: (newValue) => lastName = newValue!,
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: "Last Name",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Enter your last name",
           hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14),
+              color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ));
   }
@@ -346,30 +340,35 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     //     keyboardType: TextInputType.phone,
     //     onSaved: (newValue) => phoneNumber = newValue!,
     //     style: TextStyle(
-    //       color: kTextLightColor,
+    //       color: Colors.black,
     //     ),
     //     decoration: InputDecoration(
     //       labelText: "Phone Number",
     //       labelStyle: TextStyle(
-    //         color: kTextLightColor,
+    //         color: Colors.black,
     //       ),
     //       hintText: "Enter your phone number",
     //       hintStyle: TextStyle(
-    //           color: kTextLightColor,
+    //           color: Colors.black,
     //           fontWeight: FontWeight.w300,
     //           fontSize: 14),
     //       floatingLabelBehavior: FloatingLabelBehavior.always,
     //     ));
 
     return IntlPhoneField(
+      keyboardType: TextInputType.phone,
+      onSaved: (newValue) => phoneNumber = newValue?.completeNumber ?? '',
+      style: TextStyle(
+        color: Colors.black,
+      ),
       decoration: InputDecoration(
         labelText: "Phone Number",
         labelStyle: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         hintText: "Enter your phone number",
         hintStyle: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
           fontWeight: FontWeight.w300,
           fontSize: 14,
         ),
@@ -385,18 +384,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         keyboardType: TextInputType.streetAddress,
         onSaved: (newValue) => address = newValue!,
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: "Address",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Enter your address",
           hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14),
+              color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ));
   }

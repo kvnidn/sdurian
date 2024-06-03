@@ -6,6 +6,7 @@ import 'package:sdurian/pages/home.dart';
 import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/pages/uss_page.dart';
 import 'package:sdurian/pages/poodak.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class NavBar extends StatefulWidget {
   User user;
@@ -83,7 +84,7 @@ class _NavBarState extends State<NavBar> {
             curve: Curves.easeInOut,
           );
         },
-        backgroundColor: Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
         unselectedItemColor: Colors.white70,
         selectedItemColor: Colors.white,
         currentIndex: _index,

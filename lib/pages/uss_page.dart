@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sdurian/data.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class USSState extends StatefulWidget {
@@ -230,7 +231,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xFFFFBF00),
+                  color: TColors.primary,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topRight: Radius.circular(30),
@@ -290,7 +291,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
           children: [
             Icon(
               Icons.calendar_month_outlined,
-              color: Color(0xFFFFBF00),
+              color: TColors.primary,
               size: 40,
             ),
           ],
@@ -315,7 +316,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             focusedDay: today,
             calendarStyle: CalendarStyle(
               selectedDecoration: BoxDecoration(
-                color: Color(0xFFFFBF00),
+                color: TColors.primary,
                 shape: BoxShape.circle,
               ),
               todayDecoration: BoxDecoration(
@@ -335,7 +336,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Color(0xFFFFBF00),
+            primary: TColors.primary,
           ),
           onPressed: () {
             setState(() {
@@ -372,7 +373,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                   day,
                   style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xFFFFBF00),
+                    color: TColors.primary,
                   ),
                 ),
                 Text(
@@ -449,7 +450,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
               child: Text(
                 "See Details",
                 style: TextStyle(
-                  color: Color(0xFFFFBF00),
+                  color: TColors.primary,
                 ),
               ),
             ),
@@ -470,16 +471,15 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFFFBF00),
+                    primary: TColors.primary,
                   ),
                   onPressed: () {
                     CartItemUSS.addItemToCart(
-                      name: topic,
-                      price: price.toDouble(),
-                      description: description,
-                      amount: 1.0,
-                      email: widget.user.email
-                    );
+                        name: topic,
+                        price: price.toDouble(),
+                        description: description,
+                        amount: 1.0,
+                        email: widget.user.email);
                   },
                   child: Text("Buy ticket"),
                 ),

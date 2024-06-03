@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:sdurian/data.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class Poodak extends StatefulWidget {
   final User user;
@@ -125,7 +126,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xFFFFBF00),
+                  color: TColors.primary,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topRight: Radius.circular(30),
@@ -163,7 +164,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
   Widget _buildCategory(String name) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xFFFFBF00),
+        color: TColors.primary,
         borderRadius: BorderRadius.circular(15),
       ),
       padding: EdgeInsets.symmetric(horizontal: 30),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
@@ -31,12 +32,10 @@ class _AboutState extends State<About> {
         child: SafeArea(
             child: Container(
           child: Column(children: [
-            Text("This app was developed by\n• Jason Permana\n•Arya Wira Kristanto\n•Nicholas Martin\n•Kevin Jonathan JM",
-            style: TextStyle(
-              fontSize: 20
-            ),
+            Text(
+              "This app was developed by\n• Jason Permana\n•Arya Wira Kristanto\n•Nicholas Martin\n•Kevin Jonathan JM",
+              style: TextStyle(fontSize: 20),
             )
-            
           ]),
         )),
       )),

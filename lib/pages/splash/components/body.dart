@@ -3,6 +3,7 @@ import 'package:sdurian/authentication.dart';
 import 'package:sdurian/navbar.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/login/login.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
@@ -64,7 +65,7 @@ class _BodyState extends State<Body> {
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFFFFBF00),
+                color: TColors.primary,
               ),
             ),
             SizedBox(
@@ -112,7 +113,7 @@ class _BodyState extends State<Body> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFBF00),
+                  color: TColors.primary,
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 width: 200,

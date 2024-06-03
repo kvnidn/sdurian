@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/navbar.dart';
+import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/theme/custom_themes/text_theme.dart';
 
 class EditProfile extends StatefulWidget {
   User user;
@@ -85,7 +87,7 @@ class _EditProfileState extends State<EditProfile> {
       resizeToAvoidBottomInset:
           true, // Allow the screen to resize when the keyboard appears
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
         leading: IconButton(
           icon: Icon(Icons.arrow_back,
               color: Colors.black), // Change arrow color here
@@ -95,8 +97,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
         title: Text(
           "Edit Profile",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
+          style: TTextTheme.textTheme.headlineMedium,
         ),
         centerTitle: true,
       ),
@@ -162,10 +163,13 @@ class _EditProfileState extends State<EditProfile> {
         ),
         Text(
           "Edit Profile",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          style: TTextTheme.textTheme.headlineLarge,
         ),
-        Text("Make sure to save your changes before leaving",
-            style: TextStyle(fontSize: 18), textAlign: TextAlign.center)
+        Text(
+          "Make sure to save your changes before leaving",
+          textAlign: TextAlign.center,
+          style: TTextTheme.textTheme.bodyMedium,
+        )
       ]),
     );
   }
@@ -178,7 +182,7 @@ class _EditProfileState extends State<EditProfile> {
         children: [
           TextFormField(
             controller: controller,
-            style: TextStyle(fontSize: 16),
+            style: TTextTheme.textTheme.bodyLarge,
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -189,13 +193,13 @@ class _EditProfileState extends State<EditProfile> {
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Color(0xFFFFBF00),
+                    color: TColors.primary,
                     width: 2.0), // Color of the enabled border
                 borderRadius: BorderRadius.circular(30),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Color(0xFFFFBF00),
+                    color: TColors.primary,
                     width: 2.0), // Color of the focused border
                 borderRadius: BorderRadius.circular(30),
               ),
@@ -217,7 +221,7 @@ class _EditProfileState extends State<EditProfile> {
         children: [
           IntlPhoneField(
             controller: controller,
-            style: TextStyle(fontSize: 16),
+            style: TTextTheme.textTheme.bodyLarge,
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -228,13 +232,13 @@ class _EditProfileState extends State<EditProfile> {
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Color(0xFFFFBF00),
+                    color: TColors.primary,
                     width: 2.0), // Color of the enabled border
                 borderRadius: BorderRadius.circular(30),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: Color(0xFFFFBF00),
+                    color: TColors.primary,
                     width: 2.0), // Color of the focused border
                 borderRadius: BorderRadius.circular(30),
               ),
@@ -257,7 +261,7 @@ class _EditProfileState extends State<EditProfile> {
       height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: Color(0xFFFFBF00),
+        color: TColors.primary,
       ),
       child: GestureDetector(
         onTap: () async {

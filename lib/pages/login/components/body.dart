@@ -36,7 +36,7 @@ class Body extends StatelessWidget {
                 "Log in with your email and password",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: kTextLightColor,
+                  color: Colors.black,
                 ),
               ),
               SizedBox(height: getProportionateScreenHeight(25)),

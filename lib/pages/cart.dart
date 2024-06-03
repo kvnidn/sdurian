@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sdurian/pages/cart_poodak.dart';
 import 'package:sdurian/pages/cart_uss.dart';
 import 'package:sdurian/data.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class Cart extends StatefulWidget {
   final User user;
@@ -25,8 +26,8 @@ class _CartState extends State<Cart> {
             //   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             // ),
             _buildGreeting(),
-            _buildCartCategory(
-                "lib/assets/poodak.jpeg", "Poodak's Cart", CartPoodak(user: widget.user)),
+            _buildCartCategory("lib/assets/poodak.jpeg", "Poodak's Cart",
+                CartPoodak(user: widget.user)),
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: Text(
@@ -34,7 +35,12 @@ class _CartState extends State<Cart> {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
-            _buildCartCategory("lib/assets/uss.jpg", "USS's Cart", CartUSS(user: widget.user,)),
+            _buildCartCategory(
+                "lib/assets/uss.jpg",
+                "USS's Cart",
+                CartUSS(
+                  user: widget.user,
+                )),
           ]),
         )),
       )),
@@ -96,7 +102,7 @@ class _CartState extends State<Cart> {
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xFFFFBF00),
+                  color: TColors.primary,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topRight: Radius.circular(30),
