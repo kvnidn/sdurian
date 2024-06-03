@@ -69,6 +69,25 @@ class _SignUpFormState extends State<SignUpForm> {
         });
 
       } else {
+        if (ValidatePasswordNull()){
+          if (ValidatePasswordShort()){
+            
+            if (validatePasswordMatch()){
+              String salt = randomAlphaNumeric(16);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CompleteProfileScreen(
+                    email: email!,
+                    hashedPassword: User.hashPassword(password!, salt),
+                    salt: salt,
+                  ),
+                ),
+              );
+            }
+          }
+        }
         // User not found, email is not registered
         // Proceed with your logic, e.g., allow user to register or show error
       }
@@ -97,10 +116,22 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   // bool ValidateEmailExist() {
-  //   if (!isEmailExist){
-  //     addError(error: kEmailExistError);
-  //     return false;
-  //   }
+    // if (!isEmailExist){
+      // addError(error: kEmailExistError);
+      // return false;
+    // }
+    // if (errors.isNotEmpty) {
+    //   addError(error: "Ada error");
+    //   return false;
+    // }
+    // if (errors.contains(kEmailExistError)) {
+    //   addError(error: "Error bang");
+    //   return false;
+    // }
+    // User? user = User.userList.firstWhereOrNull((user) => user.email == email);
+    // if (user != null) {
+    //   addError(error: "Error bang");
+    // }
   //   return true;
   // }
 
@@ -114,6 +145,14 @@ class _SignUpFormState extends State<SignUpForm> {
   bool ValidatePasswordNull() {
     if (password == null || password!.isEmpty) {
       addError(error: kPassNullError);
+      return false;
+    }
+    return true;
+  }
+
+  bool ValidatePasswordShort() {
+    if (password!.length < 8) {
+      addError(error: kShortPassError);
       return false;
     }
     return true;
@@ -172,7 +211,7 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 removeError(error: kInvalidEmailError);
@@ -184,22 +223,22 @@ class _SignUpFormState extends State<SignUpForm> {
                   if (ValidateEmailValid()) {
                     validateUserCredentials(email!, password!);
                     // if (ValidateEmailExist()){
-                      if (ValidatePasswordNull()){
-                        if (validatePasswordMatch()){
-                          String salt = randomAlphaNumeric(16);
+                      // if (ValidatePasswordNull()){
+                      //   if (validatePasswordMatch()){
+                      //     String salt = randomAlphaNumeric(16);
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CompleteProfileScreen(
-                                email: email!,
-                                hashedPassword: User.hashPassword(password!, salt),
-                                salt: salt,
-                              ),
-                            ),
-                          );
-                        }
-                      }
+                      //     Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (context) => CompleteProfileScreen(
+                      //           email: email!,
+                      //           hashedPassword: User.hashPassword(password!, salt),
+                      //           salt: salt,
+                      //         ),
+                      //       ),
+                      //     );
+                      //   }
+                      // }
                     // }
                   }
                 }
