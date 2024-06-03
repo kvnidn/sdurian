@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sdurian/components/default_button.dart';
 import 'package:sdurian/components/have_account.dart';
 // import 'package:sdurian/components/social_card.dart';
-import 'package:sdurian/constants.dart';
+import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/pages/complete_profile/cpscreen.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/size_config.dart';
@@ -56,9 +56,10 @@ class _SignUpFormState extends State<SignUpForm> {
     try {
       // Fetch user data
       await User.fetchUserData();
-      
+
       // Check if user exists with entered email
-      User? user = User.userList.firstWhereOrNull((user) => user.email == email);
+      User? user =
+          User.userList.firstWhereOrNull((user) => user.email == email);
       if (user != null) {
         // User found, email is registered
         // Proceed with your logic, e.g., show error or navigate to login screen
@@ -67,12 +68,10 @@ class _SignUpFormState extends State<SignUpForm> {
           errors.add(kEmailExistError);
           // errors.add("ini true");
         });
-
       } else {
-        if (ValidatePasswordNull()){
-          if (ValidatePasswordShort()){
-            
-            if (validatePasswordMatch()){
+        if (ValidatePasswordNull()) {
+          if (ValidatePasswordShort()) {
+            if (validatePasswordMatch()) {
               String salt = randomAlphaNumeric(16);
 
               Navigator.push(
@@ -108,7 +107,8 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   bool ValidateEmailValid() {
-    if ((email != null || email!.isNotEmpty) && !emailValidatorRegExp.hasMatch(email!)) {
+    if ((email != null || email!.isNotEmpty) &&
+        !emailValidatorRegExp.hasMatch(email!)) {
       addError(error: kInvalidEmailError);
       return false;
     }
@@ -116,22 +116,22 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   // bool ValidateEmailExist() {
-    // if (!isEmailExist){
-      // addError(error: kEmailExistError);
-      // return false;
-    // }
-    // if (errors.isNotEmpty) {
-    //   addError(error: "Ada error");
-    //   return false;
-    // }
-    // if (errors.contains(kEmailExistError)) {
-    //   addError(error: "Error bang");
-    //   return false;
-    // }
-    // User? user = User.userList.firstWhereOrNull((user) => user.email == email);
-    // if (user != null) {
-    //   addError(error: "Error bang");
-    // }
+  // if (!isEmailExist){
+  // addError(error: kEmailExistError);
+  // return false;
+  // }
+  // if (errors.isNotEmpty) {
+  //   addError(error: "Ada error");
+  //   return false;
+  // }
+  // if (errors.contains(kEmailExistError)) {
+  //   addError(error: "Error bang");
+  //   return false;
+  // }
+  // User? user = User.userList.firstWhereOrNull((user) => user.email == email);
+  // if (user != null) {
+  //   addError(error: "Error bang");
+  // }
   //   return true;
   // }
 
@@ -220,26 +220,26 @@ class _SignUpFormState extends State<SignUpForm> {
                 // removeError(error: kPassNullError);
                 // removeError(error: kMatchPassError);
                 errors.clear();
-                if (ValidateEmailNull()){
+                if (ValidateEmailNull()) {
                   if (ValidateEmailValid()) {
                     validateUserCredentials(email!, password!);
                     // if (ValidateEmailExist()){
-                      // if (ValidatePasswordNull()){
-                      //   if (validatePasswordMatch()){
-                      //     String salt = randomAlphaNumeric(16);
+                    // if (ValidatePasswordNull()){
+                    //   if (validatePasswordMatch()){
+                    //     String salt = randomAlphaNumeric(16);
 
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) => CompleteProfileScreen(
-                      //           email: email!,
-                      //           hashedPassword: User.hashPassword(password!, salt),
-                      //           salt: salt,
-                      //         ),
-                      //       ),
-                      //     );
-                      //   }
-                      // }
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => CompleteProfileScreen(
+                    //           email: email!,
+                    //           hashedPassword: User.hashPassword(password!, salt),
+                    //           salt: salt,
+                    //         ),
+                    //       ),
+                    //     );
+                    //   }
+                    // }
                     // }
                   }
                 }

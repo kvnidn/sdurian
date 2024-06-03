@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/components/form_error.dart';
 import 'package:sdurian/components/no_account.dart';
-import 'package:sdurian/constants.dart';
+import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/size_config.dart';
 
 import '../../../components/default_button.dart';

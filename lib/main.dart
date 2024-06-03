@@ -1,10 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sdurian/data.dart';
-import 'package:sdurian/pages/splash/splash_screen.dart';
+import 'package:sdurian/pages/onboarding/screen/onboarding.dart';
+// import 'package:sdurian/pages/splash/splash_screen.dart';
 import 'package:sdurian/routs.dart';
 import 'package:sdurian/size_config.dart';
-import 'package:sdurian/constants.dart';
+// import 'package:sdurian/utils/constants/constants.dart';
+// import 'package:sdurian/utils/theme/custom_themes/appbar_theme.dart';
+// import 'package:sdurian/utils/theme/custom_themes/text_theme.dart';
+import 'package:sdurian/utils/theme/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +32,8 @@ class _MyAppState extends State<MyApp> {
     SizeConfig().init(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: theme(),
-      initialRoute: SplashScreen.routeName,
+      theme: TAppTheme.poodakTheme,
+      initialRoute: OnBoardingScreen.routeName,
       routes: routes,
     );
   }
@@ -41,51 +45,51 @@ class _MyAppState extends State<MyApp> {
 //   );
 // }
 
-ThemeData theme() {
-  return ThemeData(
-    scaffoldBackgroundColor: Colors.white,
-    unselectedWidgetColor: Colors.black,
-    fontFamily: "Poppins",
-    appBarTheme: appBarTheme(),
-    textTheme: textTheme(),
-    inputDecorationTheme: inputDecorationTheme(),
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-  );
-}
+// ThemeData theme() {
+//   return ThemeData(
+//     scaffoldBackgroundColor: Colors.white,
+//     unselectedWidgetColor: Colors.black,
+//     fontFamily: "Poppins",
+//     appBarTheme: TAppBarTheme.appBarTheme,
+//     textTheme: TTextTheme.textTheme,
+//     inputDecorationTheme: inputDecorationTheme(),
+//     visualDensity: VisualDensity.adaptivePlatformDensity,
+//   );
+// }
 
-InputDecorationTheme inputDecorationTheme() {
-  OutlineInputBorder outlineInputBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(24),
-    borderSide: BorderSide(color: kPrimaryColor),
-    gapPadding: 10,
-  );
-  return InputDecorationTheme(
-    contentPadding: EdgeInsets.symmetric(
-      horizontal: 28,
-      vertical: 15,
-    ),
-    enabledBorder: outlineInputBorder,
-    focusedBorder: outlineInputBorder,
-    border: outlineInputBorder,
-  );
-}
+// InputDecorationTheme inputDecorationTheme() {
+//   OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+//     borderRadius: BorderRadius.circular(24),
+//     borderSide: BorderSide(color: kPrimaryColor),
+//     gapPadding: 10,
+//   );
+//   return InputDecorationTheme(
+//     contentPadding: EdgeInsets.symmetric(
+//       horizontal: 28,
+//       vertical: 15,
+//     ),
+//     enabledBorder: outlineInputBorder,
+//     focusedBorder: outlineInputBorder,
+//     border: outlineInputBorder,
+//   );
+// }
 
-TextTheme textTheme() {
-  return TextTheme(
-    bodyText1: TextStyle(color: kTextColor),
-    bodyText2: TextStyle(color: kTextColor),
-  );
-}
+// TextTheme textTheme() {
+//   return TextTheme(
+//     bodyText1: TextStyle(color: kTextColor),
+//     bodyText2: TextStyle(color: kTextColor),
+//   );
+// }
 
-AppBarTheme appBarTheme() {
-  return AppBarTheme(
-      color: kPrimaryColor,
-      elevation: 0,
-      iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(
-        color: Color(0XFFF8F9FA),
-        fontSize: 18,
-        fontFamily: "Poppins",
-        fontWeight: FontWeight.w700,
-      ));
-}
+// AppBarTheme appBarTheme() {
+//   return AppBarTheme(
+//       color: kPrimaryColor,
+//       elevation: 0,
+//       iconTheme: IconThemeData(color: Colors.white),
+//       titleTextStyle: TextStyle(
+//         color: Color(0XFFF8F9FA),
+//         fontSize: 18,
+//         fontFamily: "Poppins",
+//         fontWeight: FontWeight.w700,
+//       ));
+// }

@@ -1,0 +1,9 @@
+flutter_native_splash:
+  color: "#ffffff"
+  image: lib/assets/durian_king.png
+
+  android_12:
+    color: "#ffffff"
+    image: lib/assets/durian_king.png
+
+  web: false

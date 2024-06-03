@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sdurian/constants.dart';
+import 'package:sdurian/utils/constants/constants.dart';
 
 import '../size_config.dart';
 
@@ -16,10 +16,9 @@ class SocialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: 
-        EdgeInsets.symmetric(
-          horizontal: getProportionateScreenWidth(10),
-        ),
+      margin: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(10),
+      ),
       padding: EdgeInsets.all(getProportionateScreenWidth(12)),
       height: getProportionateScreenHeight(40),
       width: getProportionateScreenWidth(40),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sdurian/constants.dart';
+import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/size_config.dart';
 
@@ -38,8 +38,8 @@ class Body extends StatelessWidget {
             text: "Let's explore!",
             press: () {
               // Navigator.pushNamed(context, NavBar.routeName);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => NavBar(user: user)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => NavBar(user: user)));
             },
           ),
         ],

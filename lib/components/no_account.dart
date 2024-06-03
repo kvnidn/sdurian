@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sdurian/constants.dart';
+import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/pages/signup/signup.dart';
 import '../size_config.dart';
 

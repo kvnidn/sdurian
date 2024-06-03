@@ -60,7 +60,8 @@ class _CartUSSState extends State<CartUSS> {
     setState(() {
       item.amount++;
     });
-    CartItemUSS.updateItemAmount(item.name, 1, widget.user.email).then((_) => _updateCart());
+    CartItemUSS.updateItemAmount(item.name, 1, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   void _decrementItem(CartItemUSS item) {
@@ -72,11 +73,13 @@ class _CartUSSState extends State<CartUSS> {
         }
       }
     });
-    CartItemUSS.updateItemAmount(item.name, -1, widget.user.email).then((_) => _updateCart());
+    CartItemUSS.updateItemAmount(item.name, -1, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   void _removeItem(CartItemUSS item) {
-    CartItemUSS.removeItemFromCart(item.name, widget.user.email).then((_) => _updateCart());
+    CartItemUSS.removeItemFromCart(item.name, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   @override
@@ -100,8 +103,12 @@ class _CartUSSState extends State<CartUSS> {
           IconButton(
             icon: Icon(Icons.history, color: Colors.black),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HistoryUSS(user: widget.user,)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HistoryUSS(
+                            user: widget.user,
+                          )));
             },
           ),
         ],
@@ -322,8 +329,10 @@ class _CartUSSState extends State<CartUSS> {
                     text: "Checkout",
                     press: () {
                       if (ussCart.length > 0) {
-                        CartItemUSS.saveCartDataToHistory(totalPrice, widget.user.email).then(
-                            (_) => CartItemUSS.clearCartDataInFirebase(widget.user.email)
+                        CartItemUSS.saveCartDataToHistory(
+                                totalPrice, widget.user.email)
+                            .then((_) => CartItemUSS.clearCartDataInFirebase(
+                                    widget.user.email)
                                 .then((_) => _clearCart()));
                       } else {
                         print("Cart Empty");

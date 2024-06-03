@@ -6,7 +6,7 @@ import 'package:sdurian/pages/loginsuccess/loginscs.dart';
 
 import '../../../components/default_button.dart';
 import '../../../components/form_error.dart';
-import '../../../constants.dart';
+import '../../../utils/constants/constants.dart';
 import '../../../size_config.dart';
 
 import 'package:collection/collection.dart';
@@ -41,7 +41,7 @@ class _LogInFormState extends State<LogInForm> {
       if (user != null) {
         print("User found with email: $email");
 
-        if (ValidatePasswordNull()){
+        if (ValidatePasswordNull()) {
           // Hash the entered password with the stored salt
           String hashedPassword = User.hashPassword(password, user.salt);
           await UserLogin.createUser(
@@ -61,10 +61,12 @@ class _LogInFormState extends State<LogInForm> {
 
               // Passwords match, navigate to success screen
               // Navigator.pushNamed(context, LogInScsScreen.routeName);
-              await Auth().storeUserData(email).then((_) async{
+              await Auth().storeUserData(email).then((_) async {
                 await UserLogin.deleteDocumentWithEmail(email).then((_) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => LogInScsScreen(user: user))));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => LogInScsScreen(user: user))));
                 });
               });
               return;
@@ -82,9 +84,7 @@ class _LogInFormState extends State<LogInForm> {
               errors.add("User not found.");
             });
           }
-
         }
-
       } else {
         print("User not found with email: $email");
         // User doesn't exist
@@ -125,7 +125,8 @@ class _LogInFormState extends State<LogInForm> {
   }
 
   bool ValidateEmailValid() {
-    if ((email != null || email!.isNotEmpty) && !emailValidatorRegExp.hasMatch(email!)) {
+    if ((email != null || email!.isNotEmpty) &&
+        !emailValidatorRegExp.hasMatch(email!)) {
       addError(error: kInvalidEmailError);
       return false;
     }
@@ -221,8 +222,8 @@ class _LogInFormState extends State<LogInForm> {
                   // Setelah data divalidasi dan valid, akan didirect ke tampilan login success
                   // Navigator.pushNamed(context, LogInScsScreen.routeName);
                   errors.clear();
-                  if (ValidateEmailNull()){
-                    if (ValidateEmailValid()){
+                  if (ValidateEmailNull()) {
+                    if (ValidateEmailValid()) {
                       validateUserCredentials(email, password);
                     }
                   }

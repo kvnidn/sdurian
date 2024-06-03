@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utils/constants/constants.dart';
 import '../pages/login/login.dart';
 import '../size_config.dart';
 
