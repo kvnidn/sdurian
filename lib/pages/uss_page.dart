@@ -401,7 +401,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
     return Container(
       margin: EdgeInsets.all(10),
       width: 380,
-      height: 170,
+      height: 140,
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
           color: Colors.grey,

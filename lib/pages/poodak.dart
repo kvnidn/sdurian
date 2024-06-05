@@ -259,8 +259,16 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
           Positioned(
               bottom: 10,
               right: 10,
-              child: GestureDetector(
-                onTap: () {
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.yellow,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: Size(40, 40),
+                  padding: EdgeInsets.zero,
+                ),
+                onPressed: () {
                   CartItem.addItemToPoodakCart(
                     imgPath: imagePath,
                     name: name,
@@ -270,22 +278,13 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
                     email: email, //Set as 1 for now
                   );
                 },
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.add_shopping_cart,
-                      size: 24,
-                      color: Colors.black,
-                    ),
-                  ),
+                child: Icon(
+                  Icons.add_shopping_cart,
+                  size: 24,
+                  color: Colors.black,
                 ),
-              )),
+              ),
+            ),
         ],
       ),
     );

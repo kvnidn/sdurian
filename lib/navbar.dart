@@ -41,11 +41,23 @@ class _NavBarState extends State<NavBar> {
     super.dispose();
   }
 
+  void setPage(int index) {
+    setState(() {
+      _index = index;
+    });
+    _pageController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
       Home(
         user: widget.user,
+        onTabSelected: setPage,
       ),
       Poodak(
         user: widget.user,
@@ -99,7 +111,7 @@ class _NavBarState extends State<NavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.earthAsia),
-            label: 'USS', // --> Sementara
+            label: 'USS',
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.cartShopping),
