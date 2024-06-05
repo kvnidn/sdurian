@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdurian/pages/cart.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/home.dart';
-import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/pages/uss_page.dart';
 import 'package:sdurian/pages/poodak.dart';
 

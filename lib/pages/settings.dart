@@ -4,7 +4,6 @@ import 'package:sdurian/authentication.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/about.dart';
 import 'package:sdurian/pages/edit_profile.dart';
-import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/pages/splash/splash_screen.dart';
 
 class Settings extends StatefulWidget {

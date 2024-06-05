@@ -232,10 +232,9 @@ class _HomeState extends State<Home> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildCategoryItem("Poodak", "lib/assets/poodak.jpeg", 1),
-          SizedBox(width: 20),
           _buildCategoryItem("USS", "lib/assets/uss.jpg", 2),
         ],
       ),

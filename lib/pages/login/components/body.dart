@@ -3,7 +3,6 @@ import 'package:sdurian/constants.dart';
 import 'package:sdurian/size_config.dart';
 
 import '../../../components/no_account.dart';
-import '../../../components/social_card.dart';
 import 'login_form.dart';
 
 class Body extends StatelessWidget {
