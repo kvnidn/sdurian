@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdurian/pages/cart.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/home.dart';
-import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/pages/uss_page.dart';
 import 'package:sdurian/pages/poodak.dart';
 import 'package:sdurian/utils/constants/colors.dart';
@@ -42,11 +41,23 @@ class _NavBarState extends State<NavBar> {
     super.dispose();
   }
 
+  void setPage(int index) {
+    setState(() {
+      _index = index;
+    });
+    _pageController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
       Home(
         user: widget.user,
+        onTabSelected: setPage,
       ),
       Poodak(
         user: widget.user,
@@ -100,7 +111,7 @@ class _NavBarState extends State<NavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.earthAsia),
-            label: 'USS', // --> Sementara
+            label: 'USS',
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.cartShopping),

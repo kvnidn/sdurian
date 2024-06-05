@@ -336,8 +336,8 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: TColors.primary,
-          ),
+              // primary: TColors.primary,
+              ),
           onPressed: () {
             setState(() {
               showCalendar = false;
@@ -402,7 +402,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
     return Container(
       margin: EdgeInsets.all(10),
       width: 380,
-      height: 170,
+      height: 140,
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
           color: Colors.grey,
@@ -443,7 +443,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
 
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.transparent,
+                backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
               onPressed: () {},

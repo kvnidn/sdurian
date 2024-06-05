@@ -3,11 +3,8 @@ import 'package:sdurian/pages/onboarding/screen/onboarding.dart';
 import 'package:sdurian/pages/splash/splash_screen.dart';
 import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/pages/forgotpw/forgotpw.dart';
-import 'package:sdurian/pages/loginsuccess/loginscs.dart';
 import 'package:sdurian/pages/signup/signup.dart';
-import 'package:sdurian/pages/complete_profile/cpscreen.dart';
 import 'package:sdurian/pages/signupsuccess/signupscs.dart';
-import 'navbar.dart';
 
 final Map<String, WidgetBuilder> routes = {
   OnBoardingScreen.routeName: (context) => OnBoardingScreen(),
