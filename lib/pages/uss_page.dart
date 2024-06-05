@@ -335,8 +335,8 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Color(0xFFFFBF00),
-          ),
+              // primary: Color(0xFFFFBF00),
+              ),
           onPressed: () {
             setState(() {
               showCalendar = false;
@@ -442,7 +442,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
 
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.transparent,
+                backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
               onPressed: () {},
@@ -470,16 +470,15 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFFFBF00),
+                    backgroundColor: Color(0xFFFFBF00),
                   ),
                   onPressed: () {
                     CartItemUSS.addItemToCart(
-                      name: topic,
-                      price: price.toDouble(),
-                      description: description,
-                      amount: 1.0,
-                      email: widget.user.email
-                    );
+                        name: topic,
+                        price: price.toDouble(),
+                        description: description,
+                        amount: 1.0,
+                        email: widget.user.email);
                   },
                   child: Text("Buy ticket"),
                 ),

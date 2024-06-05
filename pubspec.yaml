@@ -47,6 +47,12 @@ flutter:
     - lib/assets/PoodakMenu/Rekomendasi/
     - lib/assets/PoodakMenu/SiomayPempek/
     - lib/icons/
+    - lib/assets/About/A.jpg
+    - lib/assets/About/D.jpg
+    - lib/assets/About/J.jpg
+    - lib/assets/About/K.jpg
+    - lib/assets/About/N.jpeg
+
   fonts:
     - family: Poppins
       fonts:

@@ -25,8 +25,8 @@ class _CartState extends State<Cart> {
             //   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             // ),
             _buildGreeting(),
-            _buildCartCategory(
-                "lib/assets/poodak.jpeg", "Poodak's Cart", CartPoodak(user: widget.user)),
+            _buildCartCategory("lib/assets/poodak.jpeg", "Poodak's Cart",
+                CartPoodak(user: widget.user)),
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: Text(
@@ -34,7 +34,12 @@ class _CartState extends State<Cart> {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
-            _buildCartCategory("lib/assets/uss.jpg", "USS's Cart", CartUSS(user: widget.user,)),
+            _buildCartCategory(
+                "lib/assets/uss.jpg",
+                "USS's Cart",
+                CartUSS(
+                  user: widget.user,
+                )),
           ]),
         )),
       )),
