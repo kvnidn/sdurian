@@ -886,13 +886,3 @@ class UserLogin {
     }
   }
 }
-
-class UserSignUp {
-  final String email;
-  final String password;
-  final String salt;
-
-  UserSignUp(this.email, this.password, this.salt);
-
-  static List<UserSignUp> userList = [];
-}
