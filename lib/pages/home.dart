@@ -7,7 +7,8 @@ import 'package:sdurian/size_config.dart';
 class Home extends StatefulWidget {
   final User user;
   final Function(int) onTabSelected;
-  const Home({Key? key, required this.user, required this.onTabSelected}) : super(key: key);
+  const Home({Key? key, required this.user, required this.onTabSelected})
+      : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -34,7 +35,7 @@ class _HomeState extends State<Home> {
       return price.toInt();
     }
   }
-  
+
   bool isWeekend(DateTime date) {
     return date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
   }
@@ -47,7 +48,8 @@ class _HomeState extends State<Home> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFFFBF00),
         title: Padding(
-          padding: const EdgeInsets.only(left: 5.0), // Adjust the left padding as needed
+          padding: const EdgeInsets.only(
+              left: 5.0), // Adjust the left padding as needed
           child: Text(
             "Hi, " + widget.user.username,
             style: TextStyle(
@@ -59,14 +61,15 @@ class _HomeState extends State<Home> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 15.0), // Adjust the right padding as needed
+            padding: const EdgeInsets.only(
+                right: 15.0), // Adjust the right padding as needed
             child: IconButton(
               icon: const Icon(Icons.settings, color: Colors.black),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Settings(user: widget.user)),
+                      builder: (context) => Settings(user: widget.user)),
                 );
               },
             ),
@@ -78,60 +81,64 @@ class _HomeState extends State<Home> {
           children: [
             // Category section, USS or Poodak
             Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                // constraints: const BoxConstraints(maxWidth: 600),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: _buildCategoryHeader("Categories"),
-                    ),
-                    _buildCategory(),
-                    SizedBox(height: 15,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: _buildCategoryHeader("Today's Recommendations"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: _buildCategorySubHeader("Poodak", 1),
-                    ),
-                    _buildPoodakList(ShopItem.shopItemsRekomendasi),
-                    SizedBox(height: 20,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: _buildCategorySubHeader("USS", 2),
-                    ),
-                    
-                    Container(
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                            _buildTabContent(
-                            "Ticket A, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
-                            "Standard Adult",
-                            adjustPrice(
-                                150000, isWeekend(today.add(Duration(days: 0))))),
-                            _buildTabContent(
-                                "Ticket B, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
-                                "Standard Children",
-                                adjustPrice(
-                                    100000, isWeekend(today.add(Duration(days: 0))))),
-                            _buildTabContent(
-                                "Ticket C, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
-                                "Family Pack (up to 4 people)",
-                                adjustPrice(
-                                    300000, isWeekend(today.add(Duration(days: 0))))),
-                          ],
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    // constraints: const BoxConstraints(maxWidth: 600),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
-                        ],
-                      )
-                    )
-            ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: _buildCategoryHeader("Categories"),
+                        ),
+                        _buildCategory(),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child:
+                              _buildCategoryHeader("Today's Recommendations"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: _buildCategorySubHeader("Poodak", 1),
+                        ),
+                        _buildPoodakList(ShopItem.shopItemsRekomendasi),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: _buildCategorySubHeader("USS", 2),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Column(
+                            children: [
+                              _buildTabContent(
+                                  "Ticket A, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
+                                  "Standard Adult",
+                                  adjustPrice(150000,
+                                      isWeekend(today.add(Duration(days: 0))))),
+                              _buildTabContent(
+                                  "Ticket B, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
+                                  "Standard Children",
+                                  adjustPrice(100000,
+                                      isWeekend(today.add(Duration(days: 0))))),
+                              _buildTabContent(
+                                  "Ticket C, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
+                                  "Family Pack (up to 4 people)",
+                                  adjustPrice(300000,
+                                      isWeekend(today.add(Duration(days: 0))))),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ))),
           ],
         ),
       ),
@@ -190,36 +197,34 @@ class _HomeState extends State<Home> {
 
   Widget _buildCategorySubHeader(String title, int index) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          GestureDetector(
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        GestureDetector(
             onTap: () {
               widget.onTabSelected(index);
             },
-            child: 
-              Row(
-                children: [
-                  Text(
-                    "See More ",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            child: Row(
+              children: [
+                Text(
+                  "See More ",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  ">",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    ">",
-                    style: TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold,
-                      ),
-                    
-                  ),
-              ],)
-          )
-        ],
-      ) 
-    );
+                ),
+              ],
+            ))
+      ],
+    ));
   }
 
   // Category
@@ -281,7 +286,6 @@ class _HomeState extends State<Home> {
     );
   }
 
-  
   Widget _buildPoodakCard(String imagePath, String name, double price,
       String description, String email) {
     // Create a NumberFormat instance
@@ -290,7 +294,7 @@ class _HomeState extends State<Home> {
       symbol: 'Rp. ',
       decimalDigits: 2,
     );
-    
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
       padding: EdgeInsets.only(top: 10),
@@ -358,34 +362,34 @@ class _HomeState extends State<Home> {
             ],
           ),
           Positioned(
-              bottom: 10,
-              right: 10,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.yellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  minimumSize: Size(40, 40),
-                  padding: EdgeInsets.zero,
+            bottom: 10,
+            right: 10,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellow,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                onPressed: () {
-                  CartItem.addItemToPoodakCart(
-                    imgPath: imagePath,
-                    name: name,
-                    price: price,
-                    description: description,
-                    amount: 1.0,
-                    email: email, //Set as 1 for now
-                  );
-                },
-                child: Icon(
-                  Icons.add_shopping_cart,
-                  size: 24,
-                  color: Colors.black,
-                ),
+                minimumSize: Size(40, 40),
+                padding: EdgeInsets.zero,
+              ),
+              onPressed: () {
+                CartItem.addItemToPoodakCart(
+                  imgPath: imagePath,
+                  name: name,
+                  price: price,
+                  description: description,
+                  amount: 1.0,
+                  email: email, //Set as 1 for now
+                );
+              },
+              child: Icon(
+                Icons.add_shopping_cart,
+                size: 24,
+                color: Colors.black,
               ),
             ),
+          ),
         ],
       ),
     );
@@ -393,25 +397,24 @@ class _HomeState extends State<Home> {
 
   Widget _buildPoodakList(List<ShopItem> items) {
     return Container(
-    height: 300,
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.all(10.0),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return Transform.translate(
-          offset: Offset(0.0, 0.0),
-          child: _buildPoodakCard(
-            items[index].imgPath, 
-            items[index].name,
-            items[index].price, 
-            items[index].description, 
-            widget.user.email
-          ),
-        );
-      },
-    ),
-  );
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.all(10.0),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return Transform.translate(
+            offset: Offset(0.0, 0.0),
+            child: _buildPoodakCard(
+                items[index].imgPath,
+                items[index].name,
+                items[index].price,
+                items[index].description,
+                widget.user.email),
+          );
+        },
+      ),
+    );
   }
 
   Widget _buildTabContent(String topic, String description, int price) {
@@ -465,7 +468,7 @@ class _HomeState extends State<Home> {
 
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.transparent,
+                backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
               onPressed: () {},
@@ -493,16 +496,15 @@ class _HomeState extends State<Home> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFFFBF00),
+                    backgroundColor: Color(0xFFFFBF00),
                   ),
                   onPressed: () {
                     CartItemUSS.addItemToCart(
-                      name: topic,
-                      price: price.toDouble(),
-                      description: description,
-                      amount: 1.0,
-                      email: widget.user.email
-                    );
+                        name: topic,
+                        price: price.toDouble(),
+                        description: description,
+                        amount: 1.0,
+                        email: widget.user.email);
                   },
                   child: Text("Buy ticket"),
                 ),
@@ -514,4 +516,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-

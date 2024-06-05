@@ -257,34 +257,34 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
             ],
           ),
           Positioned(
-              bottom: 10,
-              right: 10,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.yellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  minimumSize: Size(40, 40),
-                  padding: EdgeInsets.zero,
+            bottom: 10,
+            right: 10,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellow,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                onPressed: () {
-                  CartItem.addItemToPoodakCart(
-                    imgPath: imagePath,
-                    name: name,
-                    price: price,
-                    description: description,
-                    amount: 1.0,
-                    email: email, //Set as 1 for now
-                  );
-                },
-                child: Icon(
-                  Icons.add_shopping_cart,
-                  size: 24,
-                  color: Colors.black,
-                ),
+                minimumSize: Size(40, 40),
+                padding: EdgeInsets.zero,
+              ),
+              onPressed: () {
+                CartItem.addItemToPoodakCart(
+                  imgPath: imagePath,
+                  name: name,
+                  price: price,
+                  description: description,
+                  amount: 1.0,
+                  email: email, //Set as 1 for now
+                );
+              },
+              child: Icon(
+                Icons.add_shopping_cart,
+                size: 24,
+                color: Colors.black,
               ),
             ),
+          ),
         ],
       ),
     );
