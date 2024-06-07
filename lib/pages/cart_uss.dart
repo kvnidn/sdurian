@@ -4,6 +4,7 @@ import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/history_uss.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/components/default_button.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class CartUSS extends StatefulWidget {
   final User user;
@@ -60,7 +61,8 @@ class _CartUSSState extends State<CartUSS> {
     setState(() {
       item.amount++;
     });
-    CartItemUSS.updateItemAmount(item.name, 1, widget.user.email).then((_) => _updateCart());
+    CartItemUSS.updateItemAmount(item.name, 1, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   void _decrementItem(CartItemUSS item) {
@@ -72,18 +74,20 @@ class _CartUSSState extends State<CartUSS> {
         }
       }
     });
-    CartItemUSS.updateItemAmount(item.name, -1, widget.user.email).then((_) => _updateCart());
+    CartItemUSS.updateItemAmount(item.name, -1, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   void _removeItem(CartItemUSS item) {
-    CartItemUSS.removeItemFromCart(item.name, widget.user.email).then((_) => _updateCart());
+    CartItemUSS.removeItemFromCart(item.name, widget.user.email)
+        .then((_) => _updateCart());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
@@ -100,8 +104,12 @@ class _CartUSSState extends State<CartUSS> {
           IconButton(
             icon: Icon(Icons.history, color: Colors.black),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HistoryUSS(user: widget.user,)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HistoryUSS(
+                            user: widget.user,
+                          )));
             },
           ),
         ],
@@ -322,8 +330,10 @@ class _CartUSSState extends State<CartUSS> {
                     text: "Checkout",
                     press: () {
                       if (ussCart.length > 0) {
-                        CartItemUSS.saveCartDataToHistory(totalPrice, widget.user.email).then(
-                            (_) => CartItemUSS.clearCartDataInFirebase(widget.user.email)
+                        CartItemUSS.saveCartDataToHistory(
+                                totalPrice, widget.user.email)
+                            .then((_) => CartItemUSS.clearCartDataInFirebase(
+                                    widget.user.email)
                                 .then((_) => _clearCart()));
                       } else {
                         print("Cart Empty");

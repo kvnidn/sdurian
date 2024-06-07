@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sdurian/pages/cart_poodak.dart';
 import 'package:sdurian/pages/cart_uss.dart';
 import 'package:sdurian/data.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class Cart extends StatefulWidget {
   final User user;
@@ -101,7 +102,7 @@ class _CartState extends State<Cart> {
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xFFFFBF00),
+                  color: TColors.primary,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topRight: Radius.circular(30),

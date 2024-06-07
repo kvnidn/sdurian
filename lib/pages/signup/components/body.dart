@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sdurian/constants.dart';
+import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/size_config.dart';
 
 import 'signup_form.dart';
@@ -11,8 +11,7 @@ class Body extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: 
-          EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: getProportionateScreenWidth(20),
           ),
           child: SingleChildScrollView(
@@ -39,10 +38,10 @@ class Body extends StatelessWidget {
                   height: getProportionateScreenHeight(10),
                 ),
                 Text(
-                  "Sign up with your email \nor continue with social media",
+                  "Sign up with your email",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: kTextLightColor,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(25)),

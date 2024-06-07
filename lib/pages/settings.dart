@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sdurian/authentication.dart';
+import 'package:sdurian/data.dart';
+import 'package:sdurian/pages/about.dart';
+import 'package:sdurian/pages/edit_profile.dart';
+import 'package:sdurian/pages/splash/splash_screen.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -13,7 +20,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: TColors.primary,
         title: Text("Settings"),
       ),
       backgroundColor: Colors.white,
@@ -51,7 +58,7 @@ class _SettingsState extends State<Settings> {
           ListTileTheme(
             contentPadding: EdgeInsets.symmetric(horizontal: 20),
             child: ListTile(
-              leading: Icon(icon),
+              leading: Icon(icon, color: const Color(0xFF0912C7)),
               title: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Text(title, style: TextStyle(fontSize: 18)),

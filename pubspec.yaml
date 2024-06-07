@@ -12,7 +12,14 @@ dependencies:
   table_calendar: ^3.1.1
   carousel_slider: ^4.2.1
   intl: ^0.19.0
+  intl_phone_field: ^3.1.0
   font_awesome_flutter: ^10.7.0
+  flutter_native_splash: ^2.3.2
+  smooth_page_indicator: ^1.1.0
+
+  # State Management
+  get: ^4.6.5
+  get_storage: ^2.1.1
 
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.7
@@ -23,13 +30,13 @@ dependencies:
   random_string: ^2.3.1
   shared_preferences: ^2.2.3
   fluttertoast: ^8.0.9
+  iconsax: ^0.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
-  flutter_native_splash: ^2.3.2
 
 flutter_native_splash:
   color: "#ffffff"
@@ -42,12 +49,17 @@ flutter:
   uses-material-design: true
   assets:
     - lib/assets/
+    - lib/assets/OnBoardingImages/
     - lib/assets/PoodakMenu/DurianDessert/
     - lib/assets/PoodakMenu/MenuDooren/
     - lib/assets/PoodakMenu/MenuPaketNasi/
     - lib/assets/PoodakMenu/Rekomendasi/
     - lib/assets/PoodakMenu/SiomayPempek/
+    - lib/assets/PromotionalBanner/banner1.png
+    - lib/assets/PromotionalBanner/banner2.jpg
+    - lib/assets/PromotionalBanner/banner3.jpg
     - lib/icons/
+    - lib/icons/categoryIcons/
     - lib/assets/About/A.jpg
     - lib/assets/About/D.jpg
     - lib/assets/About/J.jpg

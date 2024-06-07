@@ -1,7 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sdurian/components/CarouselBuilder/carousel.dart';
 import 'package:sdurian/data.dart';
+import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/constants/image_strings.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class USSState extends StatefulWidget {
@@ -68,11 +72,18 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                       if (showCalendar)
                         _buildCalendar()
                       else
-                        _buildOfferCarousel([
-                          _buildOffers("Special Deals 1", "lib/assets/uss.jpg"),
-                          _buildOffers("Special Deals 2", "lib/assets/uss.jpg"),
-                          _buildOffers("Special Deals 3", "lib/assets/uss.jpg"),
-                        ]),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: TSizes.defaultSpace,
+                              vertical: TSizes.sm),
+                          child: CarouselPromo(
+                            banners: [
+                              TImages.banner1,
+                              TImages.banner2,
+                              TImages.banner3,
+                            ],
+                          ),
+                        ),
                       if (!showCalendar)
                         SizedBox(
                           height: 15,
@@ -230,7 +241,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             child: Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xFFFFBF00),
+                  color: TColors.primary,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     topRight: Radius.circular(30),
@@ -290,7 +301,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
           children: [
             Icon(
               Icons.calendar_month_outlined,
-              color: Color(0xFFFFBF00),
+              color: TColors.primary,
               size: 40,
             ),
           ],
@@ -315,7 +326,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             focusedDay: today,
             calendarStyle: CalendarStyle(
               selectedDecoration: BoxDecoration(
-                color: Color(0xFFFFBF00),
+                color: TColors.primary,
                 shape: BoxShape.circle,
               ),
               todayDecoration: BoxDecoration(
@@ -372,7 +383,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                   day,
                   style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xFFFFBF00),
+                    color: TColors.primary,
                   ),
                 ),
                 Text(
@@ -449,7 +460,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
               child: Text(
                 "See Details",
                 style: TextStyle(
-                  color: Color(0xFFFFBF00),
+                  color: TColors.primary,
                 ),
               ),
             ),
@@ -470,7 +481,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFBF00),
+                    backgroundColor: TColors.primary,
                   ),
                   onPressed: () {
                     CartItemUSS.addItemToCart(

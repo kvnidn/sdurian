@@ -8,5 +8,5 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Body(),
     );
-  }  
+  }
 }

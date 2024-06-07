@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Settings(user: widget.user)),
+                      builder: (context) => Profile(user: widget.user)),
                 );
               },
             ),

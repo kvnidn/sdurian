@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sdurian/constants.dart';
 import 'package:sdurian/pages/signup/signup.dart';
 import '../size_config.dart';
 
@@ -17,7 +16,7 @@ class noAccount extends StatelessWidget {
           "Don't have an account? ",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(12),
-            color: kTextLightColor,
+            color: Colors.black,
           ),
         ),
         GestureDetector(
@@ -27,7 +26,7 @@ class noAccount extends StatelessWidget {
             style: TextStyle(
               fontSize: getProportionateScreenWidth(12),
               fontWeight: FontWeight.bold,
-              color: kTextLightColor,
+              color: Colors.black,
               decoration: TextDecoration.underline,
             ),
           ),

@@ -3,10 +3,11 @@ import 'package:sdurian/authentication.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/forgotpw/forgotpw.dart';
 import 'package:sdurian/pages/loginsuccess/loginscs.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 
 import '../../../components/default_button.dart';
 import '../../../components/form_error.dart';
-import '../../../constants.dart';
+import '../../../utils/constants/constants.dart';
 import '../../../size_config.dart';
 
 import 'package:collection/collection.dart';
@@ -41,7 +42,7 @@ class _LogInFormState extends State<LogInForm> {
       if (user != null) {
         print("User found with email: $email");
 
-        if (ValidatePasswordNull()){
+        if (ValidatePasswordNull()) {
           // Hash the entered password with the stored salt
           String hashedPassword = User.hashPassword(password, user.salt);
           await UserLogin.createUser(
@@ -61,10 +62,12 @@ class _LogInFormState extends State<LogInForm> {
 
               // Passwords match, navigate to success screen
               // Navigator.pushNamed(context, LogInScsScreen.routeName);
-              await Auth().storeUserData(email).then((_) async{
+              await Auth().storeUserData(email).then((_) async {
                 await UserLogin.deleteDocumentWithEmail(email).then((_) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => LogInScsScreen(user: user))));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => LogInScsScreen(user: user))));
                 });
               });
               return;
@@ -82,9 +85,7 @@ class _LogInFormState extends State<LogInForm> {
               errors.add("User not found.");
             });
           }
-
         }
-
       } else {
         print("User not found with email: $email");
         // User doesn't exist
@@ -125,7 +126,8 @@ class _LogInFormState extends State<LogInForm> {
   }
 
   bool ValidateEmailValid() {
-    if ((email != null || email!.isNotEmpty) && !emailValidatorRegExp.hasMatch(email!)) {
+    if ((email != null || email!.isNotEmpty) &&
+        !emailValidatorRegExp.hasMatch(email!)) {
       addError(error: kInvalidEmailError);
       return false;
     }
@@ -179,7 +181,7 @@ class _LogInFormState extends State<LogInForm> {
                     horizontal: getProportionateScreenWidth(8)),
                 child: Checkbox(
                   value: remember,
-                  activeColor: kPrimaryColor,
+                  activeColor: TColors.primary,
                   checkColor: Colors.white,
                   onChanged: (value) {
                     setState(() {
@@ -191,7 +193,7 @@ class _LogInFormState extends State<LogInForm> {
               Text(
                 "Remember me",
                 style: TextStyle(
-                  color: kTextLightColor,
+                  color: Colors.black,
                 ),
               ),
               Spacer(),
@@ -206,7 +208,7 @@ class _LogInFormState extends State<LogInForm> {
                     "Forgot Password",
                     style: TextStyle(
                       decoration: TextDecoration.underline,
-                      color: kTextLightColor,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -221,8 +223,8 @@ class _LogInFormState extends State<LogInForm> {
                   // Setelah data divalidasi dan valid, akan didirect ke tampilan login success
                   // Navigator.pushNamed(context, LogInScsScreen.routeName);
                   errors.clear();
-                  if (ValidateEmailNull()){
-                    if (ValidateEmailValid()){
+                  if (ValidateEmailNull()) {
+                    if (ValidateEmailValid()) {
                       validateUserCredentials(email, password);
                     }
                   }
@@ -266,16 +268,16 @@ class _LogInFormState extends State<LogInForm> {
           return null;
         },
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         decoration: InputDecoration(
           labelText: "Password",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Enter your password",
           hintStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
             fontWeight: FontWeight.w300,
             fontSize: 14,
           ),
@@ -302,7 +304,7 @@ class _LogInFormState extends State<LogInForm> {
           return null;
         },
         style: TextStyle(
-          color: kTextLightColor,
+          color: Colors.black,
         ),
         validator: (value) {
           if ((value == null || value.isEmpty) &&
@@ -322,13 +324,11 @@ class _LogInFormState extends State<LogInForm> {
         decoration: InputDecoration(
           labelText: "Email",
           labelStyle: TextStyle(
-            color: kTextLightColor,
+            color: Colors.black,
           ),
           hintText: "Enter your email",
           hintStyle: TextStyle(
-              color: kTextLightColor,
-              fontWeight: FontWeight.w300,
-              fontSize: 14),
+              color: Colors.black, fontWeight: FontWeight.w300, fontSize: 14),
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ));
   }

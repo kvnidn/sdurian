@@ -12,15 +12,15 @@ import 'package:sdurian/pages/paymentScreen.dart';
 import 'package:sdurian/pages/settings.dart';
 import 'package:sdurian/pages/splash/splash_screen.dart';
 
-class Settings extends StatefulWidget {
+class Profile extends StatefulWidget {
   final User user;
-  const Settings({Key? key, required this.user}) : super(key: key);
+  const Profile({Key? key, required this.user}) : super(key: key);
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _SettingsState extends State<Settings> {
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

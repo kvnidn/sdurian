@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sdurian/constants.dart';
+import 'package:sdurian/utils/constants/colors.dart';
 import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/size_config.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 
 import '../../../components/default_button.dart';
 
@@ -17,18 +18,31 @@ class Body extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            "lib/icons/verified.png",
-            height: SizeConfig.screenHeight * 0.22,
+            "lib/assets/verified.gif",
+            height: SizeConfig.screenHeight * 0.28,
           ),
           SizedBox(
-            height: SizeConfig.screenHeight * 0.08,
+            height: SizeConfig.screenHeight * 0.04,
           ),
-          Text("Register Success",
+          Text("Congratulations! You're in!",
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: getProportionateScreenWidth(30),
                 fontWeight: FontWeight.bold,
-                color: kPrimaryColor,
+                color: TColors.primary,
               )),
+          SizedBox(
+            height: TSizes.spaceBtwItems,
+          ),
+          const Text(
+            "Get ready to indulge in entertainment\nand flavors like never before!\nYour journey of fun and flavor starts now!",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Color(0xFF191716),
+            ),
+            textAlign: TextAlign.center,
+          ),
           SizedBox(
             height: SizeConfig.screenHeight * 0.08,
           ),

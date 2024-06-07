@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/components/form_error.dart';
 import 'package:sdurian/components/no_account.dart';
-import 'package:sdurian/constants.dart';
+import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/size_config.dart';
 
 import '../../../components/default_button.dart';
@@ -36,7 +36,7 @@ class Body extends StatelessWidget {
                   "Please enter your email and we will send \nyou a link to reset your password",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: kTextLightColor,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(25)),
@@ -90,7 +90,7 @@ class _ForgotPwFormState extends State<ForgotPwForm> {
                 return null;
               },
               style: TextStyle(
-                color: kTextLightColor,
+                color: Colors.black,
               ),
               validator: (value) {
                 if ((value == null || value.isEmpty) &&
@@ -110,11 +110,11 @@ class _ForgotPwFormState extends State<ForgotPwForm> {
               decoration: InputDecoration(
                 labelText: "Email",
                 labelStyle: TextStyle(
-                  color: kTextLightColor,
+                  color: Colors.black,
                 ),
                 hintText: "Enter your email",
                 hintStyle: TextStyle(
-                    color: kTextLightColor,
+                    color: Colors.black,
                     fontWeight: FontWeight.w300,
                     fontSize: 14),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
