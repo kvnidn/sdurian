@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
+import 'package:sdurian/components/TicketBuilder/ticketui.dart';
 import 'package:sdurian/components/product_card_vertical.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/navbar.dart';
@@ -35,12 +35,13 @@ class _HomeState extends State<Home> {
 
   DateTime today = DateTime.now();
   String dateFormat = 'dd MMM yyyy';
+  final controller = Get.find<NavbarController>();
 
-  int adjustPrice(double price, bool isWeekend) {
+  double adjustPrice(double price, bool isWeekend) {
     if (isWeekend) {
-      return (1.5 * price).toInt();
+      return 1.5 * price;
     } else {
-      return price.toInt();
+      return price;
     }
   }
 
@@ -77,7 +78,9 @@ class _HomeState extends State<Home> {
                     ),
                     actions: [
                       TCartCounterIcon(
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.selectedIndex.value = 2;
+                        },
                         iconColor: TColors.black,
                       ),
                     ],
@@ -125,25 +128,31 @@ class _HomeState extends State<Home> {
             Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: TSizes.defaultSpace, vertical: TSizes.sm),
-              child: _buildCategorySubHeader("USS", 2),
+              child: _buildCategorySubHeader("USS", 3),
             ),
             Container(
               alignment: Alignment.center,
               child: Column(
                 children: [
                   _buildTabContent(
-                      "Ticket A, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
-                      "Standard Adult",
+                      today.add(Duration(days: 0)),
+                      "19.00 WIB",
+                      "Night Time Ticket",
+                      "2",
                       adjustPrice(
-                          150000, isWeekend(today.add(Duration(days: 0))))),
+                          90000, isWeekend(today.add(Duration(days: 0))))),
                   _buildTabContent(
-                      "Ticket B, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
-                      "Standard Children",
+                      today.add(Duration(days: 0)),
+                      "17.00 WIB",
+                      "Ticket of Duos",
+                      "2",
                       adjustPrice(
-                          100000, isWeekend(today.add(Duration(days: 0))))),
+                          80000, isWeekend(today.add(Duration(days: 0))))),
                   _buildTabContent(
-                      "Ticket C, ${DateFormat(dateFormat).format(today.add(Duration(days: 0)))}",
-                      "Family Pack (up to 4 people)",
+                      today.add(Duration(days: 0)),
+                      "12.00 WIB",
+                      "Family Ticket",
+                      "5",
                       adjustPrice(
                           300000, isWeekend(today.add(Duration(days: 0))))),
                 ],
@@ -340,102 +349,27 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildTabContent(String topic, String description, int price) {
-    final NumberFormat currencyFormatter = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp',
-      decimalDigits: 2,
-    );
+  Widget _buildTabContent(
+      DateTime date, String time, String name, String person, double price) {
+    void addToCart() {
+      CartItemUSS.addItemToCart(
+        date: date,
+        time: time,
+        name: name,
+        person: person,
+        price: price.toDouble(),
+        amount: 1.0,
+        email: widget.user.email,
+      );
+    }
 
-    return Container(
-      margin: EdgeInsets.all(10),
-      width: 380,
-      height: 140,
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 5.0,
-          spreadRadius: 1.0,
-          offset: Offset(0, 4.0),
-        ),
-      ]),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  topic,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 5,
-            // left: 10,
-
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-              ),
-              onPressed: () {},
-              child: Text(
-                "See Details",
-                style: TextStyle(
-                  color: Color(0xFFFFBF00),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 5,
-            right: 8.0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  currencyFormatter.format(price),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.green,
-                  ),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFBF00),
-                  ),
-                  onPressed: () {
-                    CartItemUSS.addItemToCart(
-                        name: topic,
-                        price: price.toDouble(),
-                        description: description,
-                        amount: 1.0,
-                        email: widget.user.email);
-                  },
-                  child: Text("Buy ticket"),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return TicketUi(
+      date: date,
+      time: time,
+      name: name,
+      person: person,
+      price: price,
+      onTap: addToCart,
     );
   }
 }

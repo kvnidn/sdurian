@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sdurian/authentication.dart';
-import 'package:sdurian/data.dart';
-import 'package:sdurian/pages/about.dart';
-import 'package:sdurian/pages/edit_profile.dart';
-import 'package:sdurian/pages/splash/splash_screen.dart';
 import 'package:sdurian/utils/constants/colors.dart';
 
 class Settings extends StatefulWidget {

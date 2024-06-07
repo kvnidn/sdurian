@@ -389,9 +389,11 @@ class CartItemUSS {
   }
 
   static Future<void> addItemToCart(
-      {required String name,
+      {required DateTime date,
+      required String time,
+      required String name,
       required double price,
-      required String description,
+      required String person,
       required double amount,
       required String email}) async {
     CollectionReference ussCart =
@@ -408,9 +410,11 @@ class CartItemUSS {
         print("Item amount incremented");
       } else {
         await ussCart.add({
+          'date': date,
+          'time': time,
           'name': name,
+          'person': person,
           'price': price,
-          'description': description,
           'amount': amount,
           'email': email,
         });

@@ -68,55 +68,6 @@ class _NavBarState extends State<NavBar> {
         ),
       ),
       body: Obx(() => controller.screens[controller.selectedIndex.value]),
-
-      // backgroundColor: Colors.black,
-      // body: PageView.builder(
-      //   controller: _pageController,
-      //   itemCount: screens.length,
-      //   onPageChanged: (index) {
-      //     setState(() {
-      //       _index = index;
-      //     });
-      //   },
-      //   itemBuilder: (context, index) {
-      //     return screens[index];
-      //   },
-      // ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   onTap: (index) {
-      //     setState(() {
-      //       _index = index;
-      //     });
-      //     _pageController.animateToPage(
-      //       index,
-      //       duration: Duration(milliseconds: 400),
-      //       curve: Curves.easeInOut,
-      //     );
-      //   },
-      //   backgroundColor: TColors.primary,
-      //   unselectedItemColor: Colors.white70,
-      //   selectedItemColor: Colors.white,
-      //   currentIndex: _index,
-      //   type: BottomNavigationBarType.fixed,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(FontAwesomeIcons.utensils),
-      //       label: 'Poodak',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(FontAwesomeIcons.earthAsia),
-      //       label: 'USS', // --> Sementara
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(FontAwesomeIcons.cartShopping),
-      //       label: 'Cart',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

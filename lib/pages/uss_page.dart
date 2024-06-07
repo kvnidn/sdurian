@@ -1,10 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:sdurian/components/CarouselBuilder/carousel.dart';
+import 'package:sdurian/components/TicketBuilder/ticketui.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/utils/constants/colors.dart';
-import 'package:sdurian/utils/constants/image_strings.dart';
 import 'package:sdurian/utils/constants/sizes.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -21,8 +21,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
   DateTime selectedDate = DateTime.now();
   DateTime today = DateTime.now();
   bool showCalendar = false; // POP CALENDAR
-
-  String dateFormat = 'dd MMM yyyy';
+  late DatePickerController _datePickerController;
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
@@ -36,6 +35,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 9, vsync: this, initialIndex: 1);
+    _datePickerController = DatePickerController();
   }
 
   //===== Buat harga weekend atau enggak
@@ -43,11 +43,11 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
     return date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
   }
 
-  int adjustPrice(double price, bool isWeekend) {
+  double adjustPrice(double price, bool isWeekend) {
     if (isWeekend) {
-      return (1.5 * price).toInt();
+      return (1.5 * price);
     } else {
-      return price.toInt();
+      return price;
     }
   }
   // ======
@@ -61,152 +61,148 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              backgroundColor: TColors.secondary,
+              expandedHeight: showCalendar ? 400.0 : 260.0,
+              floating: false,
+              pinned: true,
+              automaticallyImplyLeading: false,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: TSizes.defaultSpace, vertical: TSizes.lg * 2),
+                  child: Column(
                     children: [
-                      if (showCalendar)
-                        _buildCalendar()
-                      else
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: TSizes.defaultSpace,
-                              vertical: TSizes.sm),
-                          child: CarouselPromo(
-                            banners: [
-                              TImages.banner1,
-                              TImages.banner2,
-                              TImages.banner3,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${DateFormat('EEEE').format(DateTime.now())},',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge!
+                                    .apply(color: TColors.white),
+                              ),
+                              Text(
+                                DateFormat('dd MMM yyyy')
+                                    .format(DateTime.now()),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .apply(color: TColors.white),
+                              ),
                             ],
                           ),
-                        ),
-                      if (!showCalendar)
-                        SizedBox(
-                          height: 15,
-                        ),
-                      if (!showCalendar)
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 15),
-                              child: Text(
-                                "Available Tickets",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '${DateFormat.Hm().format(DateTime.now())} WIB',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge!
+                                      .apply(
+                                          fontSizeFactor: 1.2,
+                                          color: TColors.white),
+                                )
+                              ],
                             ),
-                          ],
-                        ),
-                    ]),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _SliverAppBarDelegate(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 3,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                      color: Colors.white,
-                    ),
-                    child: TabBar(
-                      controller: _tabController,
-                      isScrollable: true,
-                      indicator: BoxDecoration(),
-                      tabs: <Widget>[
-                        Tab(
-                          child: _buildCalendarCategory("calendar"),
-                        ),
-                        for (int i = 0; i <= 7; i++)
-                          Tab(
-                            child: _buildDate(
-                              i == 0
-                                  ? "Today"
-                                  : DateFormat('EEEE').format(
-                                      DateTime.now().add(Duration(days: i))),
-                              DateFormat("dd MMM").format(
-                                  DateTime.now().add(Duration(days: i))),
-                            ),
-                          ),
-                      ],
-                    ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(height: 10),
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(showCalendar ? 280.0 : 120.0),
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(
+                        TSizes.defaultSpace,
+                        TSizes.xs,
+                        TSizes.defaultSpace,
+                        TSizes.spaceBtwItems,
+                      ),
+                      child: Column(
+                        children: [
+                          if (showCalendar) _buildCalendar() else _buildDays(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ];
-          },
-          // Tab bar calendar
-          body: TabBarView(
-            controller: _tabController,
-            children: <Widget>[
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 10),
+            ),
+          ];
+        },
+        // Tab bar calendar
+        body: TabBarView(
+          controller: _tabController,
+          children: <Widget>[
+            _buildItemList([
+              _buildTabContent(selectedDate, "15.00 WIB", "Personal Ticket",
+                  "1", adjustPrice(50000, isWeekend(selectedDate))),
+              _buildTabContent(selectedDate, "17.00 WIB", "Ticket of Duos", "2",
+                  adjustPrice(80000, isWeekend(selectedDate))),
+              _buildTabContent(selectedDate, "10.00 WIB", "Trio Gang", "3",
+                  adjustPrice(120000, isWeekend(selectedDate))),
+              _buildTabContent(selectedDate, "12.00 WIB", "Family Ticket", "5",
+                  adjustPrice(300000, isWeekend(selectedDate))),
+              _buildTabContent(selectedDate, "21.00 WIB", "Night Time Ticket",
+                  "2", adjustPrice(90000, isWeekend(selectedDate))),
+            ]),
+            for (int i = 0; i <= 7; i++)
               _buildItemList([
                 _buildTabContent(
-                    "Ticket A, ${DateFormat(dateFormat).format(selectedDate)}",
-                    "Standard Adult",
-                    adjustPrice(150000, isWeekend(selectedDate))),
+                    DateTime.now().add(Duration(days: i)),
+                    "13.00 WIB",
+                    "Personal Ticket",
+                    "1",
+                    adjustPrice(50000,
+                        isWeekend(DateTime.now().add(Duration(days: i))))),
                 _buildTabContent(
-                    "Ticket B, ${DateFormat(dateFormat).format(selectedDate)}",
-                    "Standard Children",
-                    adjustPrice(100000, isWeekend(selectedDate))),
+                    DateTime.now().add(Duration(days: i)),
+                    "17.00 WIB",
+                    "Ticket of Duos",
+                    "2",
+                    adjustPrice(80000,
+                        isWeekend(DateTime.now().add(Duration(days: i))))),
                 _buildTabContent(
-                    "Ticket C, ${DateFormat(dateFormat).format(selectedDate)}",
-                    "Family Pack (up to 4 people)",
-                    adjustPrice(300000, isWeekend(selectedDate))),
+                    DateTime.now().add(Duration(days: i)),
+                    "10.00 WIB",
+                    "Trio Gang",
+                    "3",
+                    adjustPrice(120000,
+                        isWeekend(DateTime.now().add(Duration(days: i))))),
                 _buildTabContent(
-                    "Ticket D, ${DateFormat(dateFormat).format(selectedDate)}",
-                    "Couples Special (2 adults)",
-                    adjustPrice(250000, isWeekend(selectedDate))),
+                    DateTime.now().add(Duration(days: i)),
+                    "12.00 WIB",
+                    "Family Ticket",
+                    "5",
+                    adjustPrice(300000,
+                        isWeekend(DateTime.now().add(Duration(days: i))))),
                 _buildTabContent(
-                    "Ticket E, ${DateFormat(dateFormat).format(selectedDate)}",
-                    "Luxury Pack (includes hotel stay, meals, and more)",
-                    adjustPrice(500000, isWeekend(selectedDate))),
+                    DateTime.now().add(Duration(days: i)),
+                    "21.00 WIB",
+                    "Night Time Ticket",
+                    "2",
+                    adjustPrice(90000,
+                        isWeekend(DateTime.now().add(Duration(days: i))))),
               ]),
-              for (int i = 0; i <= 7; i++)
-                _buildItemList([
-                  _buildTabContent(
-                      "Ticket A, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}",
-                      "Standard Adult",
-                      adjustPrice(
-                          150000, isWeekend(today.add(Duration(days: i))))),
-                  _buildTabContent(
-                      "Ticket B, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}",
-                      "Standard Children",
-                      adjustPrice(
-                          100000, isWeekend(today.add(Duration(days: i))))),
-                  _buildTabContent(
-                      "Ticket C, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}",
-                      "Family Pack (up to 4 people)",
-                      adjustPrice(
-                          300000, isWeekend(today.add(Duration(days: i))))),
-                  _buildTabContent(
-                      "Ticket D, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}",
-                      "Couples Special (2 adults)",
-                      adjustPrice(
-                          250000, isWeekend(today.add(Duration(days: i))))),
-                  _buildTabContent(
-                      "Ticket E, ${DateFormat(dateFormat).format(today.add(Duration(days: i)))}",
-                      "Luxury Pack (includes hotel stay, meals, and more)",
-                      adjustPrice(
-                          500000, isWeekend(today.add(Duration(days: i))))),
-                ]),
-            ],
-          ),
+          ],
         ),
       ),
     );
@@ -221,95 +217,6 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildOffers(String offer, String imagePath) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.cover,
-              width: 360,
-              height: 230,
-            ),
-          ),
-          Positioned(
-            bottom: 1.2,
-            left: 0,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: TColors.primary,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    topRight: Radius.circular(30),
-                  )),
-              child: Text(
-                offer,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildOfferCarousel(List<Widget> offers) {
-    return Container(
-      child: CarouselSlider.builder(
-        itemCount: offers.length,
-        options: CarouselOptions(
-          autoPlay: true,
-          viewportFraction: 1.0,
-        ),
-        itemBuilder: (context, index, realIndex) {
-          return offers[index];
-        },
-      ),
-    );
-  }
-
-  // Button ICON calendar
-  Widget _buildCalendarCategory(String name) {
-    return GestureDetector(
-      onTap: () {
-        if (name == "calendar") {
-          setState(() {
-            showCalendar = !showCalendar; // Toggle calendar visibility
-          });
-        }
-      },
-      child: Container(
-        decoration: BoxDecoration(color: Color(0xFFF6F6F6), boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5.0,
-            spreadRadius: 0.1,
-            offset: Offset(0, 4.0),
-          )
-        ]),
-        padding: EdgeInsets.all(5),
-        alignment: Alignment.center,
-        child: Row(
-          children: [
-            Icon(
-              Icons.calendar_month_outlined,
-              color: TColors.primary,
-              size: 40,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   // buat table calendar
   Widget _buildCalendar() {
     return Column(
@@ -319,22 +226,33 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
           child: TableCalendar(
             locale: "en_US",
             rowHeight: 30,
-            headerStyle:
-                HeaderStyle(formatButtonVisible: false, titleCentered: true),
+            headerStyle: HeaderStyle(
+              formatButtonVisible: false,
+              titleCentered: true,
+              titleTextStyle: TextStyle(color: TColors.white),
+              leftChevronIcon: Icon(Icons.chevron_left, color: TColors.white),
+              rightChevronIcon: Icon(Icons.chevron_right, color: TColors.white),
+            ),
             availableGestures: AvailableGestures.all,
             selectedDayPredicate: (day) => isSameDay(day, today),
             focusedDay: today,
             calendarStyle: CalendarStyle(
+              outsideTextStyle: TextStyle(color: TColors.darkerGrey),
+              disabledTextStyle: TextStyle(color: TColors.darkerGrey),
               selectedDecoration: BoxDecoration(
-                color: TColors.primary,
+                color: TColors.white,
                 shape: BoxShape.circle,
               ),
               todayDecoration: BoxDecoration(
-                color: Color.fromARGB(176, 226, 208, 154),
+                color: TColors.darkGrey,
                 shape: BoxShape.circle,
               ),
-              defaultTextStyle: TextStyle(color: Colors.black),
-              weekendTextStyle: TextStyle(color: Colors.red),
+              selectedTextStyle:
+                  TextStyle(color: TColors.dark, fontWeight: FontWeight.w900),
+              defaultTextStyle:
+                  TextStyle(color: TColors.white, fontWeight: FontWeight.w700),
+              weekendTextStyle:
+                  TextStyle(color: Colors.red, fontWeight: FontWeight.w700),
             ),
             firstDay: DateTime.utc(2024, 1, 11),
             lastDay: DateTime.utc(2030, 1, 01),
@@ -344,190 +262,105 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
             enabledDayPredicate: (day) => !isBeforeToday(day),
           ),
         ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFFFBF00),
-          ),
-          onPressed: () {
-            setState(() {
-              showCalendar = false;
-            });
-          },
-          child: Text('OK'),
-        ),
+        TextButton(
+            onPressed: () {
+              setState(() {
+                showCalendar = false;
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Iconsax.close_circle, color: TColors.white),
+                SizedBox(width: TSizes.sm),
+                Text(
+                  'Close',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .apply(color: TColors.white, fontWeightDelta: 1),
+                ),
+              ],
+            )),
       ],
     );
   }
 
   // Tab bar
-  Widget _buildDate(String day, String date) {
-    return Container(
-      decoration: BoxDecoration(color: Color(0xFFF6F6F6), boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 5.0,
-          spreadRadius: 0.1,
-          offset: Offset(0, 4.0),
-        )
-      ]),
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      alignment: Alignment.center,
-      child: IntrinsicWidth(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
+  Widget _buildDays() {
+    return Column(
+      children: [
+        // Original DatePicker widget
+        DatePicker(
+          DateTime.now(),
+          height: 100,
+          width: 80,
+          daysCount: 7,
+          initialSelectedDate: DateTime.now(),
+          monthTextStyle: TextStyle(color: TColors.white),
+          dayTextStyle: TextStyle(color: TColors.white),
+          selectedTextColor: TColors.black,
+          selectionColor: TColors.white,
+          dateTextStyle: Theme.of(context)
+              .textTheme
+              .headlineMedium!
+              .apply(color: TColors.white),
+          controller: _datePickerController,
+          onDateChange: (date) {
+            setState(() {
+              selectedDate = date;
+              today = date;
+              _tabController.animateTo(0);
+            });
+          },
+        ),
+
+        // Button to show TableCalendar
+        TextButton(
+            onPressed: () {
+              setState(() {
+                showCalendar = !showCalendar; // Toggle calendar visibility
+              });
+            },
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Icon(Iconsax.calendar_1, color: TColors.white),
+                SizedBox(width: TSizes.sm),
                 Text(
-                  day,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: TColors.primary,
-                  ),
-                ),
-                Text(
-                  date,
-                  style: TextStyle(
-                    height: 1,
-                    fontSize: 13,
-                    color: Color.fromARGB(255, 139, 137, 132),
-                  ),
+                  'Show Calendar',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .apply(color: TColors.white, fontWeightDelta: 1),
                 ),
               ],
-            ),
-          ],
-        ),
-      ),
+            )),
+      ],
     );
   }
 
-  Widget _buildTabContent(String topic, String description, int price) {
-    final NumberFormat currencyFormatter = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp. ',
-      decimalDigits: 2,
-    );
+  Widget _buildTabContent(
+      DateTime date, String time, String name, String person, double price) {
+    void addToCart() {
+      CartItemUSS.addItemToCart(
+        date: date,
+        time: time,
+        name: name,
+        person: person,
+        price: price.toDouble(),
+        amount: 1.0,
+        email: widget.user.email,
+      );
+    }
 
-    return Container(
-      margin: EdgeInsets.all(10),
-      width: 380,
-      height: 140,
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-          color: Colors.grey,
-          blurRadius: 5.0,
-          spreadRadius: 1.0,
-          offset: Offset(0, 4.0),
-        ),
-      ]),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  topic,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 5,
-            // left: 10,
-
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-              ),
-              onPressed: () {},
-              child: Text(
-                "See Details",
-                style: TextStyle(
-                  color: TColors.primary,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 5,
-            right: 8.0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  currencyFormatter.format(price),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.green,
-                  ),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: TColors.primary,
-                  ),
-                  onPressed: () {
-                    CartItemUSS.addItemToCart(
-                        name: topic,
-                        price: price.toDouble(),
-                        description: description,
-                        amount: 1.0,
-                        email: widget.user.email);
-                  },
-                  child: Text("Buy ticket"),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return TicketUi(
+      date: date,
+      time: time,
+      name: name,
+      person: person,
+      price: price,
+      onTap: addToCart,
     );
   }
-}
-
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate({
-    required this.child,
-  });
-
-  final Widget child;
-
-  @override
-  double get minExtent => child.preferredSize.height;
-  @override
-  double get maxExtent => child.preferredSize.height;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(child: child);
-  }
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
-  }
-}
-
-extension on Widget {
-  Size get preferredSize => (this is PreferredSizeWidget)
-      ? (this as PreferredSizeWidget).preferredSize
-      : Size(double.infinity, kToolbarHeight);
 }

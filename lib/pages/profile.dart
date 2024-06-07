@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,7 +5,6 @@ import 'package:sdurian/authentication.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/about.dart';
 import 'package:sdurian/pages/edit_profile.dart';
-import 'package:sdurian/pages/login/login.dart';
 import 'package:sdurian/pages/paymentScreen.dart';
 import 'package:sdurian/pages/settings.dart';
 import 'package:sdurian/pages/splash/splash_screen.dart';
