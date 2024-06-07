@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sdurian/data.dart';
-import 'package:sdurian/pages/settings.dart';
+import 'package:sdurian/pages/profile.dart';
 import 'package:sdurian/size_config.dart';
 
 class Home extends StatefulWidget {

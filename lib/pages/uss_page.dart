@@ -335,8 +335,8 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-              // primary: Color(0xFFFFBF00),
-              ),
+            backgroundColor: Color(0xFFFFBF00),
+          ),
           onPressed: () {
             setState(() {
               showCalendar = false;
