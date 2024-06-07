@@ -10,6 +10,5 @@ class TTexts {
       "Exclusive Deals and\nThrilling Offers Await You";
 
   // Home
-  static const String homeAppBarTitle = "Enjoy the Best of Both Worlds,";
-  static const String homeAppBarSubTitle = "SDurian User!";
+  static const String homeAppBarTitle = "Enjoy the Best of Both Worlds";
 }

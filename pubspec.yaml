@@ -29,6 +29,7 @@ dependencies:
   crypto: ^3.0.3
   random_string: ^2.3.1
   shared_preferences: ^2.2.3
+  iconsax: ^0.0.8
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +54,11 @@ flutter:
     - lib/assets/PoodakMenu/MenuPaketNasi/
     - lib/assets/PoodakMenu/Rekomendasi/
     - lib/assets/PoodakMenu/SiomayPempek/
+    - lib/assets/PromotionalBanner/banner1.png
+    - lib/assets/PromotionalBanner/banner2.jpg
+    - lib/assets/PromotionalBanner/banner3.jpg
     - lib/icons/
+    - lib/icons/categoryIcons/
     - lib/assets/About/A.jpg
     - lib/assets/About/D.jpg
     - lib/assets/About/J.jpg

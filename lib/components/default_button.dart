@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/utils/constants/colors.dart';
-import 'package:sdurian/utils/constants/constants.dart';
 
 class DefaultButton extends StatelessWidget {
   const DefaultButton({

@@ -1,8 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sdurian/components/CarouselBuilder/carousel.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/constants/image_strings.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class USSState extends StatefulWidget {
@@ -69,11 +72,18 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
                       if (showCalendar)
                         _buildCalendar()
                       else
-                        _buildOfferCarousel([
-                          _buildOffers("Special Deals 1", "lib/assets/uss.jpg"),
-                          _buildOffers("Special Deals 2", "lib/assets/uss.jpg"),
-                          _buildOffers("Special Deals 3", "lib/assets/uss.jpg"),
-                        ]),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: TSizes.defaultSpace,
+                              vertical: TSizes.sm),
+                          child: CarouselPromo(
+                            banners: [
+                              TImages.banner1,
+                              TImages.banner2,
+                              TImages.banner3,
+                            ],
+                          ),
+                        ),
                       if (!showCalendar)
                         SizedBox(
                           height: 15,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/utils/constants/colors.dart';
-import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/utils/constants/sizes.dart';

@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sdurian/pages/onboarding/controllers/onboarding_controller.dart';
-import 'package:sdurian/utils/constants/colors.dart';
 import 'package:sdurian/utils/constants/image_strings.dart';
-import 'package:sdurian/utils/constants/sizes.dart';
 import 'package:sdurian/utils/constants/text_strings.dart';
-import 'package:sdurian/utils/device/device_utility.dart';
-import 'package:sdurian/utils/helpers/helper_functions.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'widgets/onboarding_dot_navigation.dart';
 import 'widgets/onboarding_next.dart';
