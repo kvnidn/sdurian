@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sdurian/components/widgets/product_price_text.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/history_uss.dart';
 import 'package:sdurian/size_config.dart';
@@ -23,12 +24,6 @@ class _CartUSSState extends State<CartUSS> {
       ussCart = CartItemUSS.cartList;
     });
   }
-
-  final NumberFormat currencyFormatter = NumberFormat.currency(
-    locale: 'id_ID',
-    symbol: 'Rp. ',
-    decimalDigits: 2,
-  );
 
   @override
   void initState() {
@@ -89,20 +84,20 @@ class _CartUSSState extends State<CartUSS> {
       appBar: AppBar(
         backgroundColor: TColors.primary,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        title: Text(
-          "USS's Cart",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
-        ),
+        title: Text("USS's Cart",
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .apply(fontWeightDelta: 2)),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.history, color: Colors.black),
+            icon: const Icon(Icons.history, color: Colors.black),
             onPressed: () {
               Navigator.push(
                   context,
@@ -171,10 +166,17 @@ class _CartUSSState extends State<CartUSS> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Text(
+                      (list[index].date).toString(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Container(
                       constraints: BoxConstraints(maxWidth: 350),
                       child: Text(
-                        list[index].description,
+                        list[index].person,
                       ),
                     ),
                     SizedBox(height: 20),
@@ -216,17 +218,11 @@ class _CartUSSState extends State<CartUSS> {
             ),
           ),
           Positioned(
-            bottom: 10,
-            right: 10,
-            child: Text(
-              '${currencyFormatter.format((list[index].price * list[index].amount))}',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
-              ),
-            ),
-          ),
+              bottom: 10,
+              right: 10,
+              child: TProductPriceText(
+                price: list[index].price * list[index].amount,
+              )),
           Positioned(
             top: 2,
             right: 10,
@@ -303,12 +299,9 @@ class _CartUSSState extends State<CartUSS> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Text(
-                        '${currencyFormatter.format(totalPrice)}',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900,
-                        ),
+                      TProductPriceText(
+                        price: totalPrice,
+                        isLarge: true,
                       ),
                     ],
                   ),

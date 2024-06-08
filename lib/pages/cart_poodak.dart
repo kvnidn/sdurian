@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:sdurian/components/widgets/circular_icon.dart';
+import 'package:sdurian/components/widgets/product_price_text.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/history_poodak.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/components/default_button.dart';
 import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 
 class CartPoodak extends StatefulWidget {
   final User user;
@@ -23,12 +26,6 @@ class _CartPoodakState extends State<CartPoodak> {
       poodakCart = CartItem.cartList;
     });
   }
-
-  final NumberFormat currencyFormatter = NumberFormat.currency(
-    locale: 'id_ID',
-    symbol: 'Rp. ',
-    decimalDigits: 2,
-  );
 
   @override
   void initState() {
@@ -95,11 +92,11 @@ class _CartPoodakState extends State<CartPoodak> {
             Navigator.of(context).pop();
           },
         ),
-        title: const Text(
-          "Poodak's Cart",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18),
-        ),
+        title: Text("Poodak's Cart",
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .apply(fontWeightDelta: 2)),
         centerTitle: true,
         actions: [
           IconButton(
@@ -178,43 +175,76 @@ class _CartPoodakState extends State<CartPoodak> {
                     const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      list[index].name,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      width: 200,
+                      child: Text(
+                        list[index].name,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .apply(fontWeightDelta: 1),
                       ),
                     ),
-                    SizedBox(height: 28),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            _decrementItem(list[index]);
-                            setState(() {
-                              amount--;
-                            });
-                          },
-                          child: Icon(Icons.remove_circle),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          (amount.toInt()).toString(),
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(width: 10),
-                        InkWell(
-                          onTap: () {
-                            _incrementItem(list[index]);
-                            setState(() {
-                              amount++;
-                            });
-                          },
-                          child: Icon(Icons.add_circle),
-                        ),
-                      ],
+                    Container(
+                      width: 200,
+                      child: Text(
+                        list[index].description,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .apply(fontSizeFactor: 0.8),
+                      ),
+                    ),
+                    SizedBox(height: TSizes.spaceBtwItems),
+                    Container(
+                      padding: EdgeInsets.only(bottom: TSizes.xs * 1.5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TCircularIcon(
+                            icon: Icons.remove,
+                            width: 28,
+                            height: 28,
+                            size: TSizes.sm * 1.5,
+                            color: TColors.black,
+                            backgroundColor: TColors.light,
+                            onPressed: () {
+                              _decrementItem(list[index]);
+                              setState(() {
+                                amount--;
+                              });
+                            },
+                          ),
+                          SizedBox(width: TSizes.spaceBtwItems),
+                          Text(
+                            (amount.toInt()).toString(),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(width: TSizes.spaceBtwItems),
+                          TCircularIcon(
+                            icon: Iconsax.add,
+                            width: 28,
+                            height: 28,
+                            size: TSizes.sm * 1.5,
+                            color: TColors.black,
+                            backgroundColor: TColors.primary,
+                            onPressed: () {
+                              _incrementItem(list[index]);
+                              setState(() {
+                                amount++;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -222,20 +252,15 @@ class _CartPoodakState extends State<CartPoodak> {
             ],
           ),
           Positioned(
-            bottom: 10,
-            right: 10,
-            child: Text(
-              '${currencyFormatter.format((list[index].price * list[index].amount))}',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
-              ),
+            bottom: 12,
+            right: 14,
+            child: TProductPriceText(
+              price: list[index].price * list[index].amount,
             ),
           ),
           Positioned(
             top: 2,
-            right: 10,
+            right: 14,
             child: InkWell(
               onTap: () {
                 _removeItem(list[index]);
@@ -309,12 +334,9 @@ class _CartPoodakState extends State<CartPoodak> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Text(
-                        '${currencyFormatter.format(totalPrice)}',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900,
-                        ),
+                      TProductPriceText(
+                        price: totalPrice,
+                        isLarge: true,
                       ),
                     ],
                   ),

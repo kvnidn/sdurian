@@ -35,7 +35,7 @@ class _NavBarState extends State<NavBar> {
     fetchUserData();
   }
 
-  // int _index = 0;
+  int _index = 0;
   final PageController _pageController = PageController();
 
   @override
@@ -44,51 +44,66 @@ class _NavBarState extends State<NavBar> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.put(NavbarController(user: widget.user));
-
-    return Scaffold(
-      bottomNavigationBar: Obx(
-        () => NavigationBar(
-          height: 80,
-          elevation: 0,
-          selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (index) =>
-              controller.selectedIndex.value = index,
-          backgroundColor: Colors.white,
-          indicatorColor: TColors.black.withOpacity(0.15),
-          destinations: const [
-            NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-            NavigationDestination(icon: Icon(Iconsax.reserve), label: 'Poodak'),
-            NavigationDestination(icon: Icon(Iconsax.bag_2), label: 'Cart'),
-            NavigationDestination(icon: Icon(Iconsax.ticket), label: 'USS'),
-            NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
-          ],
-        ),
-      ),
-      body: Obx(() => controller.screens[controller.selectedIndex.value]),
+  void setPage(int index) {
+    setState(() {
+      _index = index;
+    });
+    _pageController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
     );
   }
-}
-
-class NavbarController extends GetxController {
-  final Rx<int> selectedIndex = 0.obs;
-  final User user;
-
-  NavbarController({required this.user});
-
-  final List<Widget> screens = [];
 
   @override
-  void onInit() {
-    screens.addAll([
-      Home(user: user),
-      Poodak(user: user),
-      Cart(user: user),
-      USSState(user: user),
-      Profile(user: user),
-    ]);
-    super.onInit();
+  Widget build(BuildContext context) {
+    final List<Widget> screens = [
+      Home(
+        user: widget.user,
+        onTabSelected: setPage,
+      ),
+      Poodak(
+        user: widget.user,
+      ),
+      Cart(
+        user: widget.user,
+      ),
+      USSState(
+        user: widget.user,
+      ),
+      Profile(
+        user: widget.user,
+      )
+    ];
+
+    return Scaffold(
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: screens.length,
+        onPageChanged: (index) {
+          setState(() {
+            _index = index;
+          });
+        },
+        itemBuilder: (context, index) {
+          return screens[index];
+        },
+      ),
+      bottomNavigationBar: NavigationBar(
+        height: 80,
+        elevation: 0,
+        selectedIndex: _index,
+        onDestinationSelected: (index) => setPage(index),
+        backgroundColor: Colors.white,
+        indicatorColor: TColors.black.withOpacity(0.15),
+        destinations: const [
+          NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
+          NavigationDestination(icon: Icon(Iconsax.reserve), label: 'Poodak'),
+          NavigationDestination(icon: Icon(Iconsax.bag_2), label: 'Cart'),
+          NavigationDestination(icon: Icon(Iconsax.ticket), label: 'USS'),
+          NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
+        ],
+      ),
+    );
   }
 }

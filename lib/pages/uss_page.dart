@@ -342,25 +342,23 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
 
   Widget _buildTabContent(
       DateTime date, String time, String name, String person, double price) {
-    void addToCart() {
-      CartItemUSS.addItemToCart(
-        date: date,
-        time: time,
-        name: name,
-        person: person,
-        price: price.toDouble(),
-        amount: 1.0,
-        email: widget.user.email,
-      );
-    }
-
     return TicketUi(
       date: date,
       time: time,
       name: name,
       person: person,
       price: price,
-      onTap: addToCart,
+      onTap: () {
+        CartItemUSS.addItemToCart(
+          date: date,
+          time: time,
+          name: name,
+          person: person,
+          price: price.toDouble(),
+          amount: 1.0,
+          email: widget.user.email,
+        );
+      },
     );
   }
 }

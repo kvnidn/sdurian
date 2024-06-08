@@ -336,12 +336,15 @@ class HistoryItem {
 // ==============================================
 class CartItemUSS {
   final String name;
+  final DateTime date;
+  final String time;
+  final String person;
   final double price;
-  final String description;
   late double amount;
   late String email;
 
-  CartItemUSS(this.name, this.price, this.description, this.amount, this.email);
+  CartItemUSS(this.name, this.date, this.time, this.person, this.price,
+      this.amount, this.email);
 
   static List<CartItemUSS> cartList = [];
 
@@ -362,7 +365,9 @@ class CartItemUSS {
           } else {
             price = document['price'];
           }
-          String description = document['description'];
+          DateTime date = (document['date'] as Timestamp).toDate();
+          String time = document['time'];
+          String person = document['person'];
           double amount;
           if (document['amount'] is int) {
             amount = (document['amount'] as int).toDouble();
@@ -372,7 +377,7 @@ class CartItemUSS {
           String email = document['email'];
 
           CartItemUSS item =
-              CartItemUSS(name, price, description, amount, email);
+              CartItemUSS(name, date, time, person, price, amount, email);
 
           cartList.add(item);
         }
@@ -400,8 +405,10 @@ class CartItemUSS {
         FirebaseFirestore.instance.collection('uss_cart');
 
     try {
-      QuerySnapshot querySnapshot =
-          await ussCart.where('name', isEqualTo: name).get();
+      QuerySnapshot querySnapshot = await ussCart
+          .where('name', isEqualTo: name)
+          .where('date', isEqualTo: date)
+          .get();
       if (querySnapshot.docs.isNotEmpty) {
         DocumentReference docRef = querySnapshot.docs.first.reference;
         await docRef.update({
@@ -499,9 +506,11 @@ class CartItemUSS {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'date': date,
+      'time': time,
+      'person': person,
       'price': price,
       'amount': amount,
-      'description': description,
       'email': email
     };
   }
@@ -542,7 +551,7 @@ class HistoryItemUSS {
 
       if (querySnapshot.size > 0) {
         for (QueryDocumentSnapshot document in querySnapshot.docs) {
-          Timestamp timestamp = document['timestamp'];
+          Timestamp timestamp = (document['timestamp'] as Timestamp);
           double totalPrice;
           if (document['total_price'] is int) {
             totalPrice = (document['total_price'] as int).toDouble();
@@ -553,8 +562,14 @@ class HistoryItemUSS {
           List<dynamic> cartItemsData = document['cart_items'];
 
           List<CartItemUSS> cartItems = cartItemsData.map((data) {
-            return CartItemUSS(data['name'], data['price'], data['description'],
-                data['amount'], data['email']);
+            return CartItemUSS(
+                data['name'],
+                (data['date'] as Timestamp).toDate(),
+                data['time'],
+                data['person'],
+                data['price'],
+                data['amount'],
+                data['email']);
           }).toList();
 
           // Create a new ShopItem and add it to the respective list

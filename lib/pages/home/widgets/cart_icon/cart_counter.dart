@@ -24,23 +24,24 @@ class TCartCounterIcon extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 0,
+          right: 8,
+          top: 6,
           child: Container(
-            width: 18,
-            height: 18,
+            width: 10,
+            height: 10,
             decoration: BoxDecoration(
               color: TColors.secondary,
               borderRadius: BorderRadius.circular(100),
             ),
-            child: Center(
-              child: Text(
-                '0',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .apply(color: TColors.white, fontSizeFactor: 0.8),
-              ),
-            ),
+            // child: Center(
+            //   child: Text(
+            //     '0',
+            //     style: Theme.of(context)
+            //         .textTheme
+            //         .labelLarge!
+            //         .apply(color: TColors.white, fontSizeFactor: 0.8),
+            //   ),
+            // ),
           ),
         )
       ],

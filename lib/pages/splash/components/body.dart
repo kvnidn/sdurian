@@ -45,7 +45,7 @@ class _BodyState extends State<Body> {
   // Function to check authentication state
   Future<void> checkLoggedInStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    final authToken = prefs.getString('authToken');
+    final authToken = prefs.getString('email');
     setState(() {
       _isLoggedIn = authToken != null;
     });

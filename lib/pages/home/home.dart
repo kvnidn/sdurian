@@ -16,7 +16,9 @@ import 'package:sdurian/utils/device/device_utility.dart';
 
 class Home extends StatefulWidget {
   final User user;
-  const Home({Key? key, required this.user}) : super(key: key);
+  final Function(int) onTabSelected;
+  const Home({Key? key, required this.user, required this.onTabSelected})
+      : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -35,7 +37,6 @@ class _HomeState extends State<Home> {
 
   DateTime today = DateTime.now();
   String dateFormat = 'dd MMM yyyy';
-  final controller = Get.find<NavbarController>();
 
   double adjustPrice(double price, bool isWeekend) {
     if (isWeekend) {
@@ -79,7 +80,7 @@ class _HomeState extends State<Home> {
                     actions: [
                       TCartCounterIcon(
                         onPressed: () {
-                          controller.selectedIndex.value = 2;
+                          widget.onTabSelected(2);
                         },
                         iconColor: TColors.black,
                       ),
@@ -214,7 +215,6 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildCategorySubHeader(String title, int index) {
-    final controller = Get.find<NavbarController>();
     return Container(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -225,7 +225,7 @@ class _HomeState extends State<Home> {
         ),
         GestureDetector(
             onTap: () {
-              controller.selectedIndex.value = index;
+              widget.onTabSelected(index);
             },
             child: Row(
               children: [
@@ -261,12 +261,10 @@ class _HomeState extends State<Home> {
 
   // Category Item
   Widget _buildCategoryItem(String title, String imagePath, int index) {
-    final controller = Get.find<NavbarController>();
-
     return InkWell(
       // Navigation Link
       onTap: () {
-        controller.selectedIndex.value = index;
+        widget.onTabSelected(index);
       },
       child: Stack(
         children: [
@@ -351,25 +349,23 @@ class _HomeState extends State<Home> {
 
   Widget _buildTabContent(
       DateTime date, String time, String name, String person, double price) {
-    void addToCart() {
-      CartItemUSS.addItemToCart(
-        date: date,
-        time: time,
-        name: name,
-        person: person,
-        price: price.toDouble(),
-        amount: 1.0,
-        email: widget.user.email,
-      );
-    }
-
     return TicketUi(
       date: date,
       time: time,
       name: name,
       person: person,
       price: price,
-      onTap: addToCart,
+      onTap: () {
+        CartItemUSS.addItemToCart(
+          date: date,
+          time: time,
+          name: name,
+          person: person,
+          price: price.toDouble(),
+          amount: 1.0,
+          email: widget.user.email,
+        );
+      },
     );
   }
 }
