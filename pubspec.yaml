@@ -33,12 +33,12 @@ dependencies:
   iconsax: ^0.0.8
   date_picker_timeline: ^1.2.6
   elegant_notification: ^2.1.2
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: ^0.13.1
 
 flutter_native_splash:
   color: "#ffffff"
@@ -46,6 +46,12 @@ flutter_native_splash:
   android: true
   android_12:
     image: lib/assets/durian_king.png
+
+flutter_launcher_icons:
+  android: true
+  image_path: "lib/assets/durian_king.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "lib/assets/play_store_512.png"
 
 flutter:
   uses-material-design: true
