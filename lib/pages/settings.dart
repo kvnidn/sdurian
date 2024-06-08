@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sdurian/pages/about.dart';
 import 'package:sdurian/utils/constants/colors.dart';
 
 class Settings extends StatefulWidget {
@@ -15,9 +16,21 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: TColors.primary,
-        title: Text("Settings"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          "Settings",
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .apply(fontWeightDelta: 2),
+        ),
+        centerTitle: true,
       ),
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.only(bottom: 25),
         child: Align(
@@ -39,6 +52,7 @@ class _SettingsState extends State<Settings> {
               _showTermsConditions),
           _buildSettingsItem(
               "Privacy Policy", Icons.privacy_tip_outlined, _showPrivacyPolicy),
+          _buildSettingsItem("About Us", Icons.info_outline, _showAboutUs)
         ],
       ),
     );
@@ -52,12 +66,13 @@ class _SettingsState extends State<Settings> {
           ListTileTheme(
             contentPadding: EdgeInsets.symmetric(horizontal: 20),
             child: ListTile(
-              leading: Icon(icon, color: const Color(0xFF0912C7)),
+              leading: Icon(icon, color: TColors.black),
               title: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Text(title, style: TextStyle(fontSize: 18)),
+                child: Text(title,
+                    style: Theme.of(context).textTheme.headlineSmall),
               ),
-              trailing: Icon(Icons.arrow_forward),
+              trailing: Icon(Icons.chevron_right),
               onTap: onTap,
             ),
           ),
@@ -81,8 +96,12 @@ class _SettingsState extends State<Settings> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("FAQ"),
+          title: Text(
+            "FAQ",
+            textAlign: TextAlign.center,
+          ),
           content: SingleChildScrollView(
+            padding: EdgeInsets.all(8),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -112,8 +131,12 @@ class _SettingsState extends State<Settings> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Terms & Conditions"),
+          title: Text(
+            "Terms & Conditions",
+            textAlign: TextAlign.center,
+          ),
           content: SingleChildScrollView(
+            padding: EdgeInsets.all(8),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,19 +221,18 @@ class _SettingsState extends State<Settings> {
     _showToast("Privacy Policy");
   }
 
+  void _showAboutUs() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => About()));
+  }
+
   void _showToast(String message) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
+      backgroundColor: TColors.grey,
+      textColor: TColors.black,
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: Settings(),
-  ));
 }

@@ -55,10 +55,12 @@ class _HistoryPoodakState extends State<HistoryPoodak> {
             Navigator.of(context).pop();
           },
         ),
-        title: const Text(
+        title: Text(
           "Order History",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .apply(fontWeightDelta: 2),
         ),
         centerTitle: true,
       ),

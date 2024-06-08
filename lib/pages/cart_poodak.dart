@@ -1,3 +1,5 @@
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sdurian/components/widgets/circular_icon.dart';
@@ -364,7 +366,40 @@ class _CartPoodakState extends State<CartPoodak> {
                                     widget.user.email)
                                 .then((_) =>
                                     _clearCart())); // Save cart data to history
+                        ElegantNotification(
+                          position: Alignment.topCenter,
+                          animation: AnimationType.fromTop,
+                          width: 360,
+                          height: 60,
+                          description: Text(
+                            "Checkout Succesfully!",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .apply(fontWeightDelta: 2),
+                            textAlign: TextAlign.center,
+                          ),
+                          icon: const Icon(
+                            Icons.check_circle,
+                            color: TColors.primary,
+                          ),
+                          progressIndicatorColor: TColors.primary,
+                        ).show(context);
                       } else {
+                        ElegantNotification.error(
+                          position: Alignment.topCenter,
+                          animation: AnimationType.fromTop,
+                          width: 360,
+                          height: 60,
+                          description: Text(
+                            "The cart is empyty!",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .apply(fontWeightDelta: 2),
+                            textAlign: TextAlign.center,
+                          ),
+                        ).show(context);
                         print("Cart is Empty");
                       }
                     },

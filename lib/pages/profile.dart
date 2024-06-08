@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdurian/authentication.dart';
 import 'package:sdurian/data.dart';
-import 'package:sdurian/pages/about.dart';
 import 'package:sdurian/pages/edit_profile.dart';
+import 'package:sdurian/pages/onboarding/screen/onboarding.dart';
 import 'package:sdurian/pages/paymentScreen.dart';
 import 'package:sdurian/pages/settings.dart';
 import 'package:sdurian/pages/splash/splash_screen.dart';
+import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 
 class Profile extends StatefulWidget {
   final User user;
@@ -22,24 +23,20 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFBF00),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: const Text(
+        backgroundColor: TColors.primary,
+        automaticallyImplyLeading: false,
+        title: Text(
           "Profile",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .apply(fontWeightDelta: 2),
         ),
         centerTitle: true,
       ),
       body: SafeArea(
-          child: Center(
-        child: SafeArea(
-            child: Container(
+        child: Center(
+            child: SafeArea(
           child: Column(children: [
             const SizedBox(height: 30),
             Stack(
@@ -57,47 +54,58 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 20),
             Text(
               widget.user.username,
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.phone, size: 20, color: Colors.black),
                 SizedBox(width: 10),
-                Text(widget.user.phoneNumber, style: TextStyle(fontSize: 16)),
+                Text(widget.user.phoneNumber,
+                    style: Theme.of(context).textTheme.titleMedium),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.email, size: 20, color: Colors.blue),
+                Icon(Icons.email, size: 20, color: Colors.black),
                 SizedBox(width: 10),
                 Text(widget.user.email,
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.blue,
+                    style: Theme.of(context).textTheme.titleMedium!.apply(
+                        color: TColors.secondary,
                         decoration: TextDecoration.underline)),
               ],
             ),
             SizedBox(height: 20),
-            SizedBox(
-              width: 200,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
+            Container(
+              width: 140,
+              height: 40,
+              decoration: BoxDecoration(
+                color: TColors.primary,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: GestureDetector(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => EditProfile(user: widget.user)),
                   );
                 },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFBF00),
-                    side: BorderSide.none,
-                    shape: const StadiumBorder()),
-                child: const Text('Edit Profile',
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Edit Profile',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .apply(fontWeightDelta: 1, color: TColors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -112,17 +120,16 @@ class _ProfileState extends State<Profile> {
               Icons.credit_card,
               PaymentsScreen(),
             ),
-            _buildSettingsMenu("About Us", FontAwesomeIcons.question, About()),
             _buildSettingsMenu("Settings", FontAwesomeIcons.gear, Settings()),
           ]),
         )),
-      )),
+      ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 20.0),
         child: _buildSettingsMenuLogOut(
           "Log Out",
-          FontAwesomeIcons.signOutAlt,
-          SplashScreen(),
+          Icons.logout,
+          OnBoardingScreen(),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -138,6 +145,7 @@ class _ProfileState extends State<Profile> {
         );
       },
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: TSizes.sm),
         width: 300,
         height: 70,
         child: Row(
@@ -149,21 +157,23 @@ class _ProfileState extends State<Profile> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(360),
-                color: Color.fromARGB(255, 225, 223, 255),
+                color: TColors.grey,
               ),
               child: Icon(
                 icon,
                 size: 20,
-                color: const Color(0xFF0912C7),
+                color: TColors.black,
               ),
             ),
-            SizedBox(width: 10), // Add some space between icon and text
+            SizedBox(
+                width: TSizes.spaceBtwItems *
+                    1.2), // Add some space between icon and text
             // Text
             Expanded(
               child: Text(
                 name,
                 textAlign: TextAlign.left, // Center the text horizontally
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             Container(
@@ -175,9 +185,9 @@ class _ProfileState extends State<Profile> {
                 color: Colors.grey.withOpacity(0.1),
               ),
               child: Icon(
-                Icons.arrow_forward,
+                Icons.chevron_right,
                 size: 20,
-                color: Colors.black.withOpacity(0.3),
+                color: TColors.black,
               ),
             ),
           ],
@@ -188,29 +198,33 @@ class _ProfileState extends State<Profile> {
 
   Widget _buildSettingsMenuLogOut(
       String name, IconData icon, Widget destination) {
-    return SizedBox(
-      width: 200,
+    return Container(
+      width: 160,
       height: 50,
-      child: ElevatedButton.icon(
-        onPressed: () {
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: GestureDetector(
+        onTap: () {
           Auth().logout();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => destination),
           );
         },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.red,
-          side: BorderSide.none,
-          shape: const StadiumBorder(),
-        ),
-        icon: Icon(icon, color: Colors.white),
-        label: Text(
-          name,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(icon, color: Colors.white),
+            SizedBox(width: TSizes.spaceBtwItems),
+            Text(name,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .apply(color: TColors.white, fontWeightDelta: 2)),
+          ],
         ),
       ),
     );

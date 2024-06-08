@@ -7,9 +7,11 @@ class DefaultButton extends StatelessWidget {
     super.key,
     this.text,
     this.press,
+    this.isPrimary = true,
   });
   final String? text;
   final Function? press;
+  final bool isPrimary;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class DefaultButton extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           foregroundColor: Colors.white,
-          backgroundColor: TColors.primary,
+          backgroundColor: isPrimary ? TColors.primary : TColors.secondary,
         ),
         onPressed: press as void Function()?,
         child: Text(

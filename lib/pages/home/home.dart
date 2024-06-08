@@ -1,10 +1,10 @@
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sdurian/components/TicketBuilder/ticketui.dart';
 import 'package:sdurian/components/product_card_vertical.dart';
 import 'package:sdurian/data.dart';
-import 'package:sdurian/navbar.dart';
 import 'package:sdurian/pages/home/widgets/cart_icon/cart_counter.dart';
 import 'package:sdurian/pages/home/widgets/container/primary_header_container.dart';
 import 'package:sdurian/pages/home/widgets/home_appbar/appbar.dart';
@@ -320,6 +320,25 @@ class _HomeState extends State<Home> {
             amount: 1.0,
             email: email, // Set as 1 for now
           );
+          ElegantNotification(
+            position: Alignment.topCenter,
+            animation: AnimationType.fromTop,
+            width: 360,
+            height: 60,
+            description: Text(
+              "$name added to cart",
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .apply(fontWeightDelta: 2),
+              textAlign: TextAlign.center,
+            ),
+            icon: const Icon(
+              Icons.check_circle,
+              color: TColors.primary,
+            ),
+            progressIndicatorColor: TColors.primary,
+          ).show(context);
         });
   }
 
@@ -365,6 +384,25 @@ class _HomeState extends State<Home> {
           amount: 1.0,
           email: widget.user.email,
         );
+        ElegantNotification(
+          position: Alignment.topCenter,
+          animation: AnimationType.fromTop,
+          width: 360,
+          height: 60,
+          description: Text(
+            "$name added to cart",
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium!
+                .apply(fontWeightDelta: 2),
+            textAlign: TextAlign.center,
+          ),
+          icon: const Icon(
+            Icons.check_circle,
+            color: TColors.secondary,
+          ),
+          progressIndicatorColor: TColors.secondary,
+        ).show(context);
       },
     );
   }

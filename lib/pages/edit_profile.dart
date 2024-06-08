@@ -1,3 +1,5 @@
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sdurian/data.dart';
@@ -97,7 +99,10 @@ class _EditProfileState extends State<EditProfile> {
         ),
         title: Text(
           "Edit Profile",
-          style: TTextTheme.textTheme.headlineMedium,
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .apply(fontWeightDelta: 2),
         ),
         centerTitle: true,
       ),
@@ -275,14 +280,33 @@ class _EditProfileState extends State<EditProfile> {
               context,
               MaterialPageRoute(
                   builder: (context) => NavBar(user: widget.user)));
+
+          ElegantNotification(
+            position: Alignment.topCenter,
+            animation: AnimationType.fromTop,
+            width: 200,
+            height: 60,
+            description: Text(
+              "Settings Saved",
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .apply(fontWeightDelta: 2),
+              textAlign: TextAlign.center,
+            ),
+            icon: const Icon(
+              Icons.check_circle,
+              color: TColors.primary,
+            ),
+            progressIndicatorColor: TColors.primary,
+          ).show(context);
         }, // Pending
         child: Text(
           "Save",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .apply(color: TColors.white),
         ),
       ),
     );

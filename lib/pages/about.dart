@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 
 class About extends StatefulWidget {
   const About({Key? key}) : super(key: key);
@@ -43,10 +44,12 @@ class _AboutState extends State<About> {
             Navigator.of(context).pop();
           },
         ),
-        title: const Text(
-          "About",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18),
+        title: Text(
+          "About Us",
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .apply(fontWeightDelta: 2),
         ),
         centerTitle: true,
       ),
@@ -57,13 +60,12 @@ class _AboutState extends State<About> {
             Center(
               child: Text(
                 "Meet Our Team",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
             ),
-            SizedBox(height: 20), // Spacing between title and developer list
+            SizedBox(
+                height: TSizes
+                    .spaceBtwItems), // Spacing between title and developer list
             ...developers.map((developer) {
               return Column(
                 children: [
@@ -86,28 +88,30 @@ class _AboutState extends State<About> {
                               vertical: 15.0), // Padding around the text
                           child: Text(
                             developer['name']!,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .apply(fontWeightDelta: 1),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 10), // Spacing between developer cards
+                  SizedBox(
+                      height: TSizes.xs), // Spacing between developer cards
                 ],
               );
             }).toList(),
             SizedBox(
-                height:
-                    30), // Spacing between the last developer and the final text
+                height: TSizes
+                    .spaceBtwItems), // Spacing between the last developer and the final text
             Center(
               child: Text(
                 "This app was developed with love and dedication to provide the best experience for our users.",
-                style: TextStyle(fontSize: 16),
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: 20), // Additional spacing at the bottom
           ],
         ),
       ),

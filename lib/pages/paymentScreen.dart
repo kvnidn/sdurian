@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentsScreen extends StatefulWidget {
@@ -42,10 +44,16 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFBF00),
-        title: Text("Payments"),
+        backgroundColor: TColors.primary,
+        title: Text(
+          "Payments",
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .apply(fontWeightDelta: 2),
+        ),
+        centerTitle: true,
       ),
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _buildPaymentsScreen(),
@@ -82,11 +90,11 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         children: [
           _buildPaymentsItem("Kartu Debit/Kredit", Icons.credit_card),
           if (selectedPayment == "Kartu Debit/Kredit" && isExpanded) ...[
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildCreditCardImage(),
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildCreditCardForm(),
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildSaveButton(),
           ],
           _buildDivider(),
@@ -95,29 +103,29 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
               showPoints: true),
           if (selectedPayment == "Universal Poodak Studio Poin" &&
               isExpanded) ...[
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildUPSCreditsInfo(),
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildSaveUPSCreditsButton(),
           ],
           _buildDivider(),
           _buildPaymentsItem("Vouchers", Icons.confirmation_num),
           if (selectedPayment == "Vouchers" && isExpanded) ...[
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildVouchersForm(),
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildSaveVouchersButton(),
           ],
           _buildDivider(),
           _buildPaymentsItem("Claim Voucher", Icons.card_giftcard),
           if (selectedPayment == "Claim Voucher" && isExpanded) ...[
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildGiftCardsInstructions(),
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildGiftCardImage(),
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildGiftCardCodeInput(),
-            SizedBox(height: 16.0),
+            const SizedBox(height: TSizes.spaceBtwItems),
             _buildRedeemGiftCardButton(),
           ],
           _buildDivider(),
@@ -135,19 +143,19 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         leading: Icon(
           iconData,
           size: 36.0,
-          color: const Color(0xFF0912C7),
+          color: TColors.black,
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               item,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             if (showPoints)
               Text(
                 "Poin yang kamu miliki: $UPSCreditsPoints",
-                style: TextStyle(fontSize: 13),
+                style: Theme.of(context).textTheme.bodySmall,
               ),
           ],
         ),
@@ -187,7 +195,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
             labelText: "Card Number",
           ),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: TSizes.spaceBtwItems),
         Row(
           children: [
             Expanded(
@@ -200,7 +208,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                 ),
               ),
             ),
-            SizedBox(width: 16.0),
+            const SizedBox(width: TSizes.spaceBtwItems),
             Expanded(
               child: TextField(
                 onChanged: (value) {
@@ -225,27 +233,24 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           msg: "Your card data has been successfully saved",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: const Color(0xFFFFBF00),
-          textColor: Colors.white,
+          backgroundColor: TColors.primary,
+          textColor: TColors.white,
           fontSize: 16.0,
         );
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
       ),
       child: Text(
         "Save",
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        style:
+            Theme.of(context).textTheme.bodySmall!.apply(color: TColors.white),
       ),
     );
   }
 
   Widget _buildDivider() {
-    return SizedBox(height: 16.0);
+    return const SizedBox(height: TSizes.spaceBtwItems);
   }
 
   Widget _buildUPSCreditsInfo() {
@@ -255,11 +260,14 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Flexible(
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: TSizes.md),
+              width: 360,
               child: Text(
                 "You have $UPSCreditsPoints Universal Poodak Studio points",
-                style: TextStyle(fontSize: 16.0),
+                style: Theme.of(context).textTheme.titleSmall,
                 overflow: TextOverflow.ellipsis,
+                maxLines: 3,
               ),
             ),
           ],
@@ -280,55 +288,56 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         return Card(
           elevation: 4.0,
           color: isExpired ? Colors.grey : Colors.white,
-          child: ListTile(
-            title: Text(
-              voucher['name'],
-              style: TextStyle(fontSize: 18.0),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: TSizes.sm),
+            child: ListTile(
+              title: Text(
+                voucher['name'],
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    voucher['description'],
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  Text(
+                    'Expires on: ${voucher['expiryDate'].toString().split(' ')[0]}',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  Text(
+                    'Status: ${voucher['used'] ? 'Used' : 'Not Used'}',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+              onTap: () {
+                if (!isExpired && !voucher['used']) {
+                  setState(() {
+                    voucher['used'] = true;
+                  });
+                  Fluttertoast.showToast(
+                    msg: "Voucher '${voucher['name']}' has been used",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: TColors.grey,
+                    textColor: TColors.black,
+                  );
+                } else {
+                  setState(() {
+                    voucher['used'] = false;
+                  });
+                  Fluttertoast.showToast(
+                    msg: "Voucher '${voucher['name']}' has not been used",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: TColors.grey,
+                    textColor: TColors.black,
+                  );
+                }
+              },
             ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  voucher['description'],
-                  style: TextStyle(fontSize: 14.0),
-                ),
-                Text(
-                  'Expires on: ${voucher['expiryDate'].toString().split(' ')[0]}',
-                  style: TextStyle(fontSize: 12.0),
-                ),
-                Text(
-                  'Status: ${voucher['used'] ? 'Used' : 'Not Used'}',
-                  style: TextStyle(fontSize: 12.0),
-                ),
-              ],
-            ),
-            onTap: () {
-              if (!isExpired && !voucher['used']) {
-                setState(() {
-                  voucher['used'] = true;
-                });
-                Fluttertoast.showToast(
-                  msg: "Voucher '${voucher['name']}' has been used",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: const Color(0xFFFFBF00),
-                  textColor: Colors.white,
-                  fontSize: 16.0,
-                );
-              } else {
-                setState(() {
-                  voucher['used'] = false;
-                });
-                Fluttertoast.showToast(
-                  msg: "Voucher '${voucher['name']}' has not been used",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: const Color(0xFFFFBF00),
-                  textColor: Colors.white,
-                  fontSize: 16.0,
-                );
-              }
-            },
           ),
         );
       }).toList(),
@@ -342,29 +351,28 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           msg: "Voucher data has been successfully saved",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: const Color(0xFFFFBF00),
-          textColor: Colors.white,
-          fontSize: 16.0,
+          backgroundColor: TColors.grey,
+          textColor: TColors.black,
         );
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
       ),
       child: Text(
         "Save Vouchers",
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        style:
+            Theme.of(context).textTheme.bodySmall!.apply(color: TColors.white),
       ),
     );
   }
 
   Widget _buildGiftCardsInstructions() {
-    return Text(
-      "Enter your voucher code below:",
-      style: TextStyle(fontSize: 18.0),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: TSizes.md),
+      child: Text(
+        "Enter your voucher code below:",
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
     );
   }
 
@@ -401,28 +409,18 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           msg: "Voucher has been redeemed",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: const Color(0xFFFFBF00),
-          textColor: Colors.white,
-          fontSize: 16.0,
+          backgroundColor: TColors.grey,
+          textColor: TColors.black,
         );
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFFFBF00),
+        backgroundColor: TColors.primary,
       ),
       child: Text(
         "Redeem Now",
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
+        style:
+            Theme.of(context).textTheme.bodySmall!.apply(color: TColors.white),
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: PaymentsScreen(),
-  ));
 }

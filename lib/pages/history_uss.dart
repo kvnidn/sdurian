@@ -46,18 +46,18 @@ class _HistoryUSSState extends State<HistoryUSS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: TColors.primary,
+        backgroundColor: TColors.secondary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        title: const Text(
-          "Order History",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18),
-        ),
+        title: Text("Order History",
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .apply(fontWeightDelta: 2, color: TColors.white)),
         centerTitle: true,
       ),
       body: Center(

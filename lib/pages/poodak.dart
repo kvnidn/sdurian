@@ -1,3 +1,5 @@
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:sdurian/components/CarouselBuilder/carousel.dart';
 import 'package:sdurian/components/product_card_vertical.dart';
@@ -126,6 +128,25 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
             amount: 1.0,
             email: email, // Set as 1 for now
           );
+          ElegantNotification(
+            position: Alignment.topCenter,
+            animation: AnimationType.fromTop,
+            width: 360,
+            height: 60,
+            description: Text(
+              "$name added to cart",
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .apply(fontWeightDelta: 2),
+              textAlign: TextAlign.center,
+            ),
+            icon: const Icon(
+              Icons.check_circle,
+              color: TColors.primary,
+            ),
+            progressIndicatorColor: TColors.primary,
+          ).show(context);
         });
   }
 

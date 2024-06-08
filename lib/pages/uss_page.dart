@@ -1,4 +1,6 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -358,6 +360,25 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
           amount: 1.0,
           email: widget.user.email,
         );
+        ElegantNotification(
+          position: Alignment.topCenter,
+          animation: AnimationType.fromTop,
+          width: 360,
+          height: 60,
+          description: Text(
+            "$name added to cart",
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium!
+                .apply(fontWeightDelta: 2),
+            textAlign: TextAlign.center,
+          ),
+          icon: const Icon(
+            Icons.check_circle,
+            color: TColors.secondary,
+          ),
+          progressIndicatorColor: TColors.secondary,
+        ).show(context);
       },
     );
   }

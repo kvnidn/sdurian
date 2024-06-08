@@ -1,11 +1,18 @@
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:sdurian/components/TicketBuilder/widget/border_painter.dart';
+import 'package:sdurian/components/TicketBuilder/widget/ticket_clipper.dart';
 import 'package:sdurian/components/widgets/product_price_text.dart';
+import 'package:sdurian/components/widgets/square_icon.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/history_uss.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/components/default_button.dart';
 import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 
 class CartUSS extends StatefulWidget {
   final User user;
@@ -82,9 +89,9 @@ class _CartUSSState extends State<CartUSS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: TColors.primary,
+        backgroundColor: TColors.secondary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: TColors.white),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -93,11 +100,11 @@ class _CartUSSState extends State<CartUSS> {
             style: Theme.of(context)
                 .textTheme
                 .titleMedium!
-                .apply(fontWeightDelta: 2)),
+                .apply(fontWeightDelta: 2, color: TColors.white)),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.history, color: Colors.black),
+            icon: const Icon(Icons.history, color: TColors.white),
             onPressed: () {
               Navigator.push(
                   context,
@@ -130,125 +137,190 @@ class _CartUSSState extends State<CartUSS> {
 
   Widget _buildItemCard(List<CartItemUSS> list, int index) {
     double amount = list[index].amount;
+    double ticketHeight = 150;
 
     return Container(
-      padding: EdgeInsets.only(top: 10),
-      margin: EdgeInsets.only(top: 14, left: 10, right: 10),
-      width: 360,
-      height: 130,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 5,
-            spreadRadius: 1,
-            offset: Offset(0, 0.5),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      list[index].name,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+      padding: EdgeInsets.symmetric(
+          horizontal: TSizes.defaultSpace, vertical: TSizes.spaceBtwItems),
+      child: PhysicalShape(
+        color: TColors.white,
+        elevation: 4,
+        shadowColor: Color(0xFFE4E4E4).withOpacity(0.5),
+        clipper: TicketClipper(),
+        child: Stack(
+          children: <Widget>[
+            ClipPath(
+              clipper: TicketClipper(),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: ticketHeight,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 5,
+                      spreadRadius: 1,
+                      offset: Offset(0, 0.5),
                     ),
-                    Text(
-                      (list[index].date).toString(),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 350),
-                      child: Text(
-                        list[index].person,
-                      ),
-                    ),
-                    SizedBox(height: 20),
                   ],
                 ),
               ),
-            ],
-          ),
-          Positioned(
-            bottom: 10,
-            left: 20,
-            child: Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    _decrementItem(list[index]);
-                    setState(() {
-                      amount--;
-                    });
-                  },
-                  child: Icon(Icons.remove_circle),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  (amount.toInt()).toString(),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-                SizedBox(width: 10),
-                InkWell(
-                  onTap: () {
-                    _incrementItem(list[index]);
-                    setState(() {
-                      amount++;
-                    });
-                  },
-                  child: Icon(Icons.add_circle),
-                ),
-              ],
             ),
-          ),
-          Positioned(
-              bottom: 10,
-              right: 10,
-              child: TProductPriceText(
-                price: list[index].price * list[index].amount,
-              )),
-          Positioned(
-            top: 2,
-            right: 10,
-            child: InkWell(
-              onTap: () {
-                _removeItem(list[index]);
-                ussCart.remove(list[index]);
-              },
+            CustomPaint(
+              painter: BorderPainter(),
               child: Container(
-                width: 35,
-                height: 35,
-                decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  borderRadius: BorderRadius.circular(9),
+                height: ticketHeight,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
+            Positioned.fill(
+              child: Container(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          list[index].name,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .apply(fontWeightDelta: 2),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 8),
+                                Text(
+                                  'Date: ${DateFormat('dd MMM yyyy').format(list[index].date).toString()}',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                Text(
+                                  'Time: ${list[index].time}',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                Text(
+                                  'No. of Visitors: ${list[index].person}',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                SizedBox(height: TSizes.xs),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Price : ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    ),
+                                    TProductPriceText(
+                                        price: list[index].price *
+                                            list[index].amount),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.delete_forever_outlined,
-                    size: 24,
-                    color: Colors.redAccent,
+              ),
+            ),
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                width: 70,
+                height: ticketHeight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TSquareIcon(
+                            icon: Iconsax.add,
+                            width: 35,
+                            height: 35,
+                            size: TSizes.sm * 1.5,
+                            color: TColors.white,
+                            backgroundColor: TColors.secondary,
+                            onPressed: () {
+                              _incrementItem(list[index]);
+                              setState(() {
+                                amount++;
+                              });
+                            },
+                          ),
+                          SizedBox(height: TSizes.spaceBtwItems),
+                          Text(
+                            (amount.toInt()).toString(),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(height: TSizes.spaceBtwItems),
+                          TSquareIcon(
+                            icon: Icons.remove,
+                            width: 35,
+                            height: 35,
+                            size: TSizes.sm * 1.5,
+                            color: TColors.black,
+                            backgroundColor: TColors.light,
+                            onPressed: () {
+                              _decrementItem(list[index]);
+                              setState(() {
+                                amount--;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            /// Delete Item Icon
+            Positioned(
+              top: 57.5,
+              right: 57.5,
+              child: InkWell(
+                onTap: () {
+                  _removeItem(list[index]);
+                  ussCart.remove(list[index]);
+                },
+                child: Container(
+                  width: 35,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.delete_forever_outlined,
+                      size: 24,
+                      color: Colors.redAccent,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -321,6 +393,7 @@ class _CartUSSState extends State<CartUSS> {
                   ),
                   child: DefaultButton(
                     text: "Checkout",
+                    isPrimary: false,
                     press: () {
                       if (ussCart.length > 0) {
                         CartItemUSS.saveCartDataToHistory(
@@ -328,7 +401,40 @@ class _CartUSSState extends State<CartUSS> {
                             .then((_) => CartItemUSS.clearCartDataInFirebase(
                                     widget.user.email)
                                 .then((_) => _clearCart()));
+                        ElegantNotification(
+                          position: Alignment.topCenter,
+                          animation: AnimationType.fromTop,
+                          width: 360,
+                          height: 60,
+                          description: Text(
+                            "Checkout Succesfully!",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .apply(fontWeightDelta: 2),
+                            textAlign: TextAlign.center,
+                          ),
+                          icon: const Icon(
+                            Icons.check_circle,
+                            color: TColors.secondary,
+                          ),
+                          progressIndicatorColor: TColors.secondary,
+                        ).show(context);
                       } else {
+                        ElegantNotification.error(
+                          position: Alignment.topCenter,
+                          animation: AnimationType.fromTop,
+                          width: 360,
+                          height: 60,
+                          description: Text(
+                            "The cart is empyty!",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .apply(fontWeightDelta: 2),
+                            textAlign: TextAlign.center,
+                          ),
+                        ).show(context);
                         print("Cart Empty");
                       }
                     },

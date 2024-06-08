@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sdurian/pages/cart.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/home/home.dart';
 import 'package:sdurian/pages/profile.dart';
-import 'package:sdurian/pages/settings.dart';
 import 'package:sdurian/pages/uss_page.dart';
 import 'package:sdurian/pages/poodak.dart';
 import 'package:sdurian/utils/constants/colors.dart';
