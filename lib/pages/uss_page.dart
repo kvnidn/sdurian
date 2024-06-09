@@ -67,7 +67,7 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              backgroundColor: TColors.secondary,
+              backgroundColor: TColors.primary,
               expandedHeight: showCalendar ? 400.0 : 260.0,
               floating: false,
               pinned: true,
@@ -375,9 +375,9 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
           ),
           icon: const Icon(
             Icons.check_circle,
-            color: TColors.secondary,
+            color: TColors.primary,
           ),
-          progressIndicatorColor: TColors.secondary,
+          progressIndicatorColor: TColors.primary,
         ).show(context);
       },
     );

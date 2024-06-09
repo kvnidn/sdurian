@@ -399,9 +399,9 @@ class _HomeState extends State<Home> {
           ),
           icon: const Icon(
             Icons.check_circle,
-            color: TColors.secondary,
+            color: TColors.primary,
           ),
-          progressIndicatorColor: TColors.secondary,
+          progressIndicatorColor: TColors.primary,
         ).show(context);
       },
     );

@@ -46,7 +46,7 @@ class _HistoryUSSState extends State<HistoryUSS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: TColors.secondary,
+        backgroundColor: TColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {

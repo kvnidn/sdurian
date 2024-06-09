@@ -89,7 +89,7 @@ class _CartUSSState extends State<CartUSS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: TColors.secondary,
+        backgroundColor: TColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: TColors.white),
           onPressed: () {
@@ -256,7 +256,7 @@ class _CartUSSState extends State<CartUSS> {
                             height: 35,
                             size: TSizes.sm * 1.5,
                             color: TColors.white,
-                            backgroundColor: TColors.secondary,
+                            backgroundColor: TColors.primary,
                             onPressed: () {
                               _incrementItem(list[index]);
                               setState(() {
@@ -416,9 +416,9 @@ class _CartUSSState extends State<CartUSS> {
                           ),
                           icon: const Icon(
                             Icons.check_circle,
-                            color: TColors.secondary,
+                            color: TColors.primary,
                           ),
-                          progressIndicatorColor: TColors.secondary,
+                          progressIndicatorColor: TColors.primary,
                         ).show(context);
                       } else {
                         ElegantNotification.error(

@@ -130,7 +130,7 @@ class TicketUi extends StatelessWidget {
                     onTap: onTap,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: TColors.secondary,
+                          color: TColors.primary,
                           borderRadius: BorderRadius.circular(12)),
                       child: Center(
                         child: Icon(

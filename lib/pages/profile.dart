@@ -71,7 +71,7 @@ class _ProfileState extends State<Profile> {
                 SizedBox(width: 10),
                 Text(widget.user.email,
                     style: Theme.of(context).textTheme.titleMedium!.apply(
-                        color: TColors.secondary,
+                        color: TColors.primary,
                         decoration: TextDecoration.underline)),
               ],
             ),

@@ -84,7 +84,7 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
                       controller: _tabController,
                       isScrollable: true,
                       labelStyle: Theme.of(context).textTheme.titleMedium,
-                      indicatorColor: TColors.secondary,
+                      indicatorColor: TColors.primary,
                       labelColor: TColors.white,
                       unselectedLabelColor: TColors
                           .darkerGrey, // Set the color for unselected tabs
