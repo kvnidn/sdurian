@@ -260,47 +260,45 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Widget _buildSaveButton(List<User> user) {
-    return Container(
-      alignment: Alignment.center,
-      width: 100,
-      height: 40,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: TColors.primary,
-      ),
-      child: GestureDetector(
-        onTap: () async {
-          updateUser();
-          await fetchUserData().then((_) {
-            setState(() {
-              widget.user = User.currentUser[0] as User;
-            });
+    return GestureDetector(
+      onTap: () async {
+        updateUser();
+        await fetchUserData().then((_) {
+          setState(() {
+            widget.user = User.currentUser[0] as User;
           });
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => NavBar(user: widget.user)));
+        });
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => NavBar(user: widget.user)));
 
-          ElegantNotification(
-            position: Alignment.topCenter,
-            animation: AnimationType.fromTop,
-            width: 200,
-            height: 60,
-            description: Text(
-              "Settings Saved",
-              style: Theme.of(context)
-                  .textTheme
-                  .labelMedium!
-                  .apply(fontWeightDelta: 2),
-              textAlign: TextAlign.center,
-            ),
-            icon: const Icon(
-              Icons.check_circle,
-              color: TColors.primary,
-            ),
-            progressIndicatorColor: TColors.primary,
-          ).show(context);
-        }, // Pending
+        ElegantNotification(
+          position: Alignment.topCenter,
+          animation: AnimationType.fromTop,
+          width: 200,
+          height: 60,
+          description: Text(
+            "Settings Saved",
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium!
+                .apply(fontWeightDelta: 2),
+            textAlign: TextAlign.center,
+          ),
+          icon: const Icon(
+            Icons.check_circle,
+            color: TColors.primary,
+          ),
+          progressIndicatorColor: TColors.primary,
+        ).show(context);
+      }, // Pending
+      child: Container(
+        alignment: Alignment.center,
+        width: 100,
+        height: 40,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: TColors.primary,
+        ),
         child: Text(
           "Save",
           style: Theme.of(context)

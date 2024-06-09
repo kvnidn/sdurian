@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdurian/authentication.dart';
 import 'package:sdurian/data.dart';
 import 'package:sdurian/pages/edit_profile.dart';
-import 'package:sdurian/pages/onboarding/screen/onboarding.dart';
 import 'package:sdurian/pages/paymentScreen.dart';
 import 'package:sdurian/pages/settings.dart';
 import 'package:sdurian/pages/splash/splash_screen.dart';
@@ -77,21 +76,21 @@ class _ProfileState extends State<Profile> {
               ],
             ),
             SizedBox(height: 20),
-            Container(
-              width: 140,
-              height: 40,
-              decoration: BoxDecoration(
-                color: TColors.primary,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EditProfile(user: widget.user)),
-                  );
-                },
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EditProfile(user: widget.user)),
+                );
+              },
+              child: Container(
+                width: 140,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: TColors.primary,
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +128,7 @@ class _ProfileState extends State<Profile> {
         child: _buildSettingsMenuLogOut(
           "Log Out",
           Icons.logout,
-          OnBoardingScreen(),
+          SplashScreen(),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -198,14 +197,7 @@ class _ProfileState extends State<Profile> {
 
   Widget _buildSettingsMenuLogOut(
       String name, IconData icon, Widget destination) {
-    return Container(
-      width: 160,
-      height: 50,
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: GestureDetector(
+    return GestureDetector(
         onTap: () {
           Auth().logout();
           Navigator.pushReplacement(
@@ -213,20 +205,26 @@ class _ProfileState extends State<Profile> {
             MaterialPageRoute(builder: (context) => destination),
           );
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(icon, color: Colors.white),
-            SizedBox(width: TSizes.spaceBtwItems),
-            Text(name,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .apply(color: TColors.white, fontWeightDelta: 2)),
-          ],
-        ),
-      ),
-    );
+        child: Container(
+          width: 160,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(icon, color: Colors.white),
+              SizedBox(width: TSizes.spaceBtwItems),
+              Text(name,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .apply(color: TColors.white, fontWeightDelta: 2)),
+            ],
+          ),
+        ));
   }
 }
