@@ -129,9 +129,63 @@ class _BodyState extends State<Body> {
                   ),
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black,
+                  ),
+                  children: _buildDeveloperText(),
+                ),
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  List<TextSpan> _buildDeveloperText() {
+    return [
+      TextSpan(text: "Developed by "),
+      _highlightedText("SDurian\n"),
+      _highlightedText("JASON"),
+      _normalText("Permana"),
+      _highlightedText("ARYA"),
+      _normalText("Wira Kristanto"),
+      _highlightedText("DEVIN"),
+      _normalText("Saputra Wijaya \n"),
+      _highlightedText("NICHOLAS"),
+      _normalText("Martin"),
+      _highlightedText("KEVIN"),
+      _normalText("Jonathan JM"),
+    ];
+  }
+
+  TextSpan _highlightedText(String text) {
+    return TextSpan(
+      text: text + " ",
+      style: TextStyle(
+        fontSize: 14,
+        color: Color(0xFFFFBF00),
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  TextSpan _normalText(String text) {
+    return TextSpan(
+      text: text + " ",
+      style: TextStyle(
+        fontSize: 10,
       ),
     );
   }
