@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
                               const EdgeInsets.symmetric(horizontal: TSizes.lg),
                           child: _buildCategoryHeader("Popular Categories"),
                         ),
-                        _buildCategory()
+                        _buildCategory(),
                       ],
                     ),
                   ),

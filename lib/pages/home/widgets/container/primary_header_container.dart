@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sdurian/pages/home/widgets/container/circular_container.dart';
 import 'package:sdurian/pages/home/widgets/curved_edges/curve_edges_widget.dart';
 import 'package:sdurian/utils/constants/colors.dart';
+import 'package:sdurian/utils/constants/sizes.dart';
 
 class TPrimaryHeaderContainer extends StatelessWidget {
   const TPrimaryHeaderContainer({
@@ -16,9 +17,9 @@ class TPrimaryHeaderContainer extends StatelessWidget {
     return TCurvedEdgesWidget(
       child: Container(
         color: TColors.primary,
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
         child: SizedBox(
-          height: 350,
+          height: 330,
           child: Stack(
             children: [
               Positioned(
