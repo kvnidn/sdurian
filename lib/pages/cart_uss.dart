@@ -91,7 +91,7 @@ class _CartUSSState extends State<CartUSS> {
       appBar: AppBar(
         backgroundColor: TColors.primary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: TColors.white),
+          icon: const Icon(Icons.arrow_back, color: TColors.black),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -100,11 +100,11 @@ class _CartUSSState extends State<CartUSS> {
             style: Theme.of(context)
                 .textTheme
                 .titleMedium!
-                .apply(fontWeightDelta: 2, color: TColors.white)),
+                .apply(fontWeightDelta: 2, color: TColors.black)),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.history, color: TColors.white),
+            icon: const Icon(Icons.history, color: TColors.black),
             onPressed: () {
               Navigator.push(
                   context,

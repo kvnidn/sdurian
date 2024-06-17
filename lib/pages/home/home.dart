@@ -5,9 +5,11 @@ import 'package:iconsax/iconsax.dart';
 import 'package:sdurian/components/TicketBuilder/ticketui.dart';
 import 'package:sdurian/components/product_card_vertical.dart';
 import 'package:sdurian/data.dart';
+import 'package:sdurian/pages/detail/detail_screen.dart';
 import 'package:sdurian/pages/home/widgets/cart_icon/cart_counter.dart';
 import 'package:sdurian/pages/home/widgets/container/primary_header_container.dart';
 import 'package:sdurian/pages/home/widgets/home_appbar/appbar.dart';
+import 'package:sdurian/search.dart';
 import 'package:sdurian/size_config.dart';
 import 'package:sdurian/utils/constants/colors.dart';
 import 'package:sdurian/utils/constants/sizes.dart';
@@ -36,7 +38,7 @@ class _HomeState extends State<Home> {
   }
 
   DateTime today = DateTime.now();
-  String dateFormat = 'dd MMM yyyy';
+  String date = 'dd MMM yyyy';
 
   double adjustPrice(double price, bool isWeekend) {
     if (isWeekend) {
@@ -88,7 +90,17 @@ class _HomeState extends State<Home> {
                   ),
                   // -- Search Bar --
                   const SizedBox(height: TSizes.smd),
-                  _buildSearchBar(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchBarA(
+                                    email: widget.user.email,
+                                  )));
+                    },
+                    child: _buildSearchBar(),
+                  ),
                   // Category section, USS or Poodak
                   const SizedBox(height: TSizes.spaceBtwItems),
                   Container(
@@ -137,18 +149,18 @@ class _HomeState extends State<Home> {
                 children: [
                   _buildTabContent(
                       today.add(Duration(days: 0)),
-                      "19.00 WIB",
-                      "Night Time Ticket",
-                      "2",
-                      adjustPrice(
-                          90000, isWeekend(today.add(Duration(days: 0))))),
-                  _buildTabContent(
-                      today.add(Duration(days: 0)),
                       "17.00 WIB",
                       "Ticket of Duos",
                       "2",
                       adjustPrice(
                           80000, isWeekend(today.add(Duration(days: 0))))),
+                  _buildTabContent(
+                      today.add(Duration(days: 0)),
+                      "19.00 WIB",
+                      "Night Time Ticket",
+                      "2",
+                      adjustPrice(
+                          90000, isWeekend(today.add(Duration(days: 0))))),
                   _buildTabContent(
                       today.add(Duration(days: 0)),
                       "12.00 WIB",
@@ -353,14 +365,27 @@ class _HomeState extends State<Home> {
         itemCount: items.length,
         itemBuilder: (context, index) {
           return Transform.translate(
-            offset: Offset(0.0, 0.0),
-            child: _buildPoodakCard(
-                items[index].imgPath,
-                items[index].name,
-                items[index].price,
-                items[index].description,
-                widget.user.email),
-          );
+              offset: Offset(0.0, 0.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DetailsScreen(
+                                imgPath: items[index].imgPath,
+                                name: items[index].name,
+                                price: items[index].price,
+                                description: items[index].description,
+                                email: widget.user.email,
+                              )));
+                },
+                child: _buildPoodakCard(
+                    items[index].imgPath,
+                    items[index].name,
+                    items[index].price,
+                    items[index].description,
+                    widget.user.email),
+              ));
         },
       ),
     );

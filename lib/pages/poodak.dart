@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sdurian/components/CarouselBuilder/carousel.dart';
 import 'package:sdurian/components/product_card_vertical.dart';
 import 'package:sdurian/data.dart';
+import 'package:sdurian/pages/detail/detail_screen.dart';
 import 'package:sdurian/utils/constants/colors.dart';
 import 'package:sdurian/utils/constants/image_strings.dart';
 import 'package:sdurian/utils/constants/sizes.dart';
@@ -162,8 +163,25 @@ class _PoodakState extends State<Poodak> with TickerProviderStateMixin {
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return _buildItemCard(items[index].imgPath, items[index].name,
-            items[index].price, items[index].description, widget.user.email);
+        return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailsScreen(
+                            imgPath: items[index].imgPath,
+                            name: items[index].name,
+                            price: items[index].price,
+                            description: items[index].description,
+                            email: widget.user.email,
+                          )));
+            },
+            child: _buildItemCard(
+                items[index].imgPath,
+                items[index].name,
+                items[index].price,
+                items[index].description,
+                widget.user.email));
       },
       shrinkWrap: true,
       physics:

@@ -58,6 +58,12 @@ class ShopItem {
             shopItemsRekomendasi.add(item);
           }
         }
+        // Sort each list by price in ascending order
+        shopItemsPaket.sort((a, b) => a.price.compareTo(b.price));
+        shopItemsSiomay.sort((a, b) => a.price.compareTo(b.price));
+        shopItemsDessert.sort((a, b) => a.price.compareTo(b.price));
+        shopItemsDooren.sort((a, b) => a.price.compareTo(b.price));
+        shopItemsRekomendasi.sort((a, b) => a.price.compareTo(b.price));
       } else {
         print('No documents found in Firestore');
       }

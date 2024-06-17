@@ -48,7 +48,7 @@ class _HistoryUSSState extends State<HistoryUSS> {
       appBar: AppBar(
         backgroundColor: TColors.primary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -57,7 +57,7 @@ class _HistoryUSSState extends State<HistoryUSS> {
             style: Theme.of(context)
                 .textTheme
                 .titleMedium!
-                .apply(fontWeightDelta: 2, color: TColors.white)),
+                .apply(fontWeightDelta: 2, color: TColors.black)),
         centerTitle: true,
       ),
       body: Center(
