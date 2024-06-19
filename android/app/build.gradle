@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.example.sdurian"
+    namespace "com.sdurian"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -57,8 +57,10 @@ android {
         // minSdkVersion flutter.minSdkVersion
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        // versionCode flutterVersionCode.toInteger()
+        // versionName flutterVersionName
+        versionCode 2  // Ganti dengan angka yang lebih tinggi dari versi sebelumnya
+        versionName "1.1"  // Ganti dengan versi baru sesuai kebutuhan
     }
 
     // buildTypes {
