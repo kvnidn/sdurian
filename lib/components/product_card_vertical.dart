@@ -88,7 +88,7 @@ class TProductCardVertical extends StatelessWidget {
                         ),
                       ),
 
-                      SizedBox(height: TSizes.spaceBtwItems, width: TSizes.xs),
+                      SizedBox(height: TSizes.sm * 0.8107, width: TSizes.xs),
 
                       /// - Product Price and Add to cart
                       Row(
@@ -96,19 +96,26 @@ class TProductCardVertical extends StatelessWidget {
                         children: [
                           /// Price
                           TProductPriceText(price: price),
+                          SizedBox(
+                            width: TSizes.md,
+                          ),
 
                           /// - Add to cart button
-                          GestureDetector(
-                            onTap: onPressed,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: TColors.primary,
+                          Flexible(
+                            child: ElevatedButton(
+                              onPressed: onPressed,
+                              style: ElevatedButton.styleFrom(
+                                primary: TColors.primary,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
                                     topLeft:
                                         Radius.circular(TSizes.cardRadiusMd),
                                     bottomRight: Radius.circular(
                                         TSizes.productImageRadius),
-                                  )),
+                                  ),
+                                ),
+                                padding: EdgeInsets.zero,
+                              ),
                               child: SizedBox(
                                 width: TSizes.iconLg * 1.2,
                                 height: TSizes.iconLg * 1.2,

@@ -16,8 +16,8 @@ class TImages {
 
   // Carousel Images
   static const String banner1 = "lib/assets/PromotionalBanner/banner1.png";
-  static const String banner2 = "lib/assets/PromotionalBanner/banner2.jpg";
-  static const String banner3 = "lib/assets/PromotionalBanner/banner3.jpg";
+  static const String banner2 = "lib/assets/PromotionalBanner/banner2.png";
+  static const String banner3 = "lib/assets/PromotionalBanner/banner3.png";
 
   // Category Icons
   static const String dessert = "lib/icons/categoryIcons/icons8-dessert-96.png";

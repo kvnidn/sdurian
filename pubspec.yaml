@@ -65,8 +65,8 @@ flutter:
     - lib/assets/PoodakMenu/Rekomendasi/
     - lib/assets/PoodakMenu/SiomayPempek/
     - lib/assets/PromotionalBanner/banner1.png
-    - lib/assets/PromotionalBanner/banner2.jpg
-    - lib/assets/PromotionalBanner/banner3.jpg
+    - lib/assets/PromotionalBanner/banner2.png
+    - lib/assets/PromotionalBanner/banner3.png
     - lib/icons/
     - lib/icons/categoryIcons/
     - lib/assets/About/A.jpg
