@@ -9,6 +9,7 @@ import 'package:sdurian/size_config.dart';
 // import 'package:sdurian/utils/theme/custom_themes/appbar_theme.dart';
 // import 'package:sdurian/utils/theme/custom_themes/text_theme.dart';
 import 'package:sdurian/utils/theme/theme.dart';
+import 'package:change_app_package_name/change_app_package_name.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

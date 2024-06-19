@@ -1,4 +1,4 @@
-package com.example.sdurian
+package com.sdurian
 
 import io.flutter.embedding.android.FlutterActivity
 
