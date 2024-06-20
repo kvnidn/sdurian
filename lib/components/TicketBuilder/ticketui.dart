@@ -123,24 +123,25 @@ class TicketUi extends StatelessWidget {
               top: 0,
               right: 0,
               child: Container(
-                width: 70,
-                height: ticketHeight,
-                // margin: EdgeInsets.only(right: 10.0),
-                child: GestureDetector(
-                    onTap: onTap,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: TColors.primary,
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Center(
-                        child: Icon(
-                          Iconsax.add,
-                          color: TColors.white,
-                          size: TSizes.xl,
-                        ),
+                  width: 70,
+                  height: ticketHeight,
+                  // margin: EdgeInsets.only(right: 10.0),
+                  child: ElevatedButton(
+                    onPressed: onTap,
+                    style: ElevatedButton.styleFrom(
+                      primary: TColors.primary, // background color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    )),
-              ),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Iconsax.add,
+                        color: TColors.white,
+                        size: TSizes.xl,
+                      ),
+                    ),
+                  )),
             ),
           ],
         ),
