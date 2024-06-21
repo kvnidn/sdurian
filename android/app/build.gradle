@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.sdurian"
+    namespace "com.sdur"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -51,7 +51,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.sdurian"
+        applicationId "com.sdur"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         // minSdkVersion flutter.minSdkVersion
@@ -59,8 +59,8 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         // versionCode flutterVersionCode.toInteger()
         // versionName flutterVersionName
-        versionCode 2  // Ganti dengan angka yang lebih tinggi dari versi sebelumnya
-        versionName "1.1"  // Ganti dengan versi baru sesuai kebutuhan
+        versionCode 1  // Ganti dengan angka yang lebih tinggi dari versi sebelumnya
+        versionName "1.0"  // Ganti dengan versi baru sesuai kebutuhan
     }
 
     // buildTypes {

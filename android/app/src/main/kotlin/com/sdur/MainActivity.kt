@@ -1,4 +1,4 @@
-package com.sdurian
+package com.sdur
 
 import io.flutter.embedding.android.FlutterActivity
 

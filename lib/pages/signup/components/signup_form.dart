@@ -202,11 +202,11 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(
             height: getProportionateScreenHeight(20),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenWidth(62),
-            ),
-            child: FormError(errors: errors),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FormError(errors: errors),
+            ],
           ),
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
