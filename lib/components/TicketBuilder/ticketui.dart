@@ -125,7 +125,6 @@ class TicketUi extends StatelessWidget {
               child: Container(
                   width: 70,
                   height: ticketHeight,
-                  // margin: EdgeInsets.only(right: 10.0),
                   child: ElevatedButton(
                     onPressed: onTap,
                     style: ElevatedButton.styleFrom(

@@ -50,7 +50,6 @@ class Body extends StatelessWidget {
           DefaultButton(
             text: "Let's explore!",
             press: () {
-              // Navigator.pushNamed(context, NavBar.routeName);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => NavBar(user: user)));
             },

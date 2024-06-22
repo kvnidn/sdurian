@@ -33,15 +33,6 @@ class TCartCounterIcon extends StatelessWidget {
               color: TColors.primary,
               borderRadius: BorderRadius.circular(100),
             ),
-            // child: Center(
-            //   child: Text(
-            //     '0',
-            //     style: Theme.of(context)
-            //         .textTheme
-            //         .labelLarge!
-            //         .apply(color: TColors.white, fontSizeFactor: 0.8),
-            //   ),
-            // ),
           ),
         )
       ],

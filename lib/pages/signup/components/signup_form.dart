@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdurian/components/default_button.dart';
 import 'package:sdurian/components/have_account.dart';
-// import 'package:sdurian/components/social_card.dart';
 import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/pages/complete_profile/cpscreen.dart';
 import 'package:sdurian/data.dart';
@@ -22,12 +21,6 @@ class _SignUpFormState extends State<SignUpForm> {
   String? password;
   String? confirm_password;
   final List<String> errors = [];
-
-  // String hashPassword(String password, String salt) {
-  //   var bytes = utf8.encode(password + salt);
-  //   var digest = sha256.convert(bytes);
-  //   return digest.toString();
-  // }
 
   void addError({required String error}) {
     if (!errors.contains(error)) {
@@ -63,10 +56,8 @@ class _SignUpFormState extends State<SignUpForm> {
       if (user != null) {
         // User found, email is registered
         // Proceed with your logic, e.g., show error or navigate to login screen
-        // isEmailExist = true;
         setState(() {
           errors.add(kEmailExistError);
-          // errors.add("ini true");
         });
       } else {
         if (ValidatePasswordNull()) {
@@ -114,33 +105,6 @@ class _SignUpFormState extends State<SignUpForm> {
     }
     return true;
   }
-
-  // bool ValidateEmailExist() {
-  // if (!isEmailExist){
-  // addError(error: kEmailExistError);
-  // return false;
-  // }
-  // if (errors.isNotEmpty) {
-  //   addError(error: "Ada error");
-  //   return false;
-  // }
-  // if (errors.contains(kEmailExistError)) {
-  //   addError(error: "Error bang");
-  //   return false;
-  // }
-  // User? user = User.userList.firstWhereOrNull((user) => user.email == email);
-  // if (user != null) {
-  //   addError(error: "Error bang");
-  // }
-  //   return true;
-  // }
-
-  // bool ValidateEmailExist() {
-  //   if (errors.contains(kEmailExistError)) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
 
   bool ValidatePasswordNull() {
     if (password == null || password!.isEmpty) {
@@ -214,66 +178,15 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // removeError(error: kInvalidEmailError);
-                // removeError(error: kEmailNullError);
-                // removeError(error: kEmailExistError);
-                // removeError(error: kPassNullError);
-                // removeError(error: kMatchPassError);
                 errors.clear();
                 if (ValidateEmailNull()) {
                   if (ValidateEmailValid()) {
                     validateUserCredentials(email!, password!);
-                    // if (ValidateEmailExist()){
-                    // if (ValidatePasswordNull()){
-                    //   if (validatePasswordMatch()){
-                    //     String salt = randomAlphaNumeric(16);
-
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => CompleteProfileScreen(
-                    //           email: email!,
-                    //           hashedPassword: User.hashPassword(password!, salt),
-                    //           salt: salt,
-                    //         ),
-                    //       ),
-                    //     );
-                    //   }
-                    // }
-                    // }
                   }
                 }
               }
             },
           ),
-          // SizedBox(
-          //   height: getProportionateScreenHeight(25),
-          // ),
-          // Text(
-          //   "or using",
-          //   textAlign: TextAlign.center,
-          //   style: TextStyle(
-          //     color: kTextLightColor,
-          //   ),
-          // ),
-          // SizedBox(height: getProportionateScreenHeight(25)),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     SocialCard(
-          //       icon: "lib/icons/facebook.png",
-          //       press: () {},
-          //     ),
-          //     SocialCard(
-          //       icon: "lib/icons/google.png",
-          //       press: () {},
-          //     ),
-          //     SocialCard(
-          //       icon: "lib/icons/instagram.png",
-          //       press: () {},
-          //     ),
-          //   ],
-          // ),
           SizedBox(height: getProportionateScreenHeight(30)),
           haveAccount(),
           SizedBox(height: getProportionateScreenHeight(30)),

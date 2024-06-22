@@ -61,7 +61,6 @@ class _LogInFormState extends State<LogInForm> {
               print("Password matched, navigating to success screen");
 
               // Passwords match, navigate to success screen
-              // Navigator.pushNamed(context, LogInScsScreen.routeName);
               await Auth().storeUserData(email).then((_) async {
                 await UserLogin.deleteDocumentWithEmail(email).then((_) {
                   Navigator.push(
@@ -90,7 +89,7 @@ class _LogInFormState extends State<LogInForm> {
         print("User not found with email: $email");
         // User doesn't exist
         setState(() {
-          errors.add("User not found."); // Ini ya
+          errors.add("User not found.");
         });
       }
     } catch (error) {
@@ -221,7 +220,6 @@ class _LogInFormState extends State<LogInForm> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   // Setelah data divalidasi dan valid, akan didirect ke tampilan login success
-                  // Navigator.pushNamed(context, LogInScsScreen.routeName);
                   errors.clear();
                   if (ValidateEmailNull()) {
                     if (ValidateEmailValid()) {

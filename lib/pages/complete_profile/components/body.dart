@@ -154,19 +154,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     return true;
   }
 
-  // bool ValidateFormNull() {
-  //   if ((username == null || username!.isEmpty) ||
-  //       (firstName == null || firstName!.isEmpty) ||
-  //       (lastName == null || lastName!.isEmpty) ||
-  //       (phoneNumber == null || phoneNumber!.isEmpty) ||
-  //       (address == null || address!.isEmpty)) {
-  //         addError(error: kProfileNotCompleted);
-  //         return false;
-  //       }
-
-  //   return true;
-  // }
-
   Future<void> _createUser() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -336,24 +323,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   }
 
   IntlPhoneField buildPNFormField() {
-    // return TextFormField(
-    //     keyboardType: TextInputType.phone,
-    //     onSaved: (newValue) => phoneNumber = newValue!,
-    //     style: TextStyle(
-    //       color: Colors.black,
-    //     ),
-    //     decoration: InputDecoration(
-    //       labelText: "Phone Number",
-    //       labelStyle: TextStyle(
-    //         color: Colors.black,
-    //       ),
-    //       hintText: "Enter your phone number",
-    //       hintStyle: TextStyle(
-    //           color: Colors.black,
-    //           fontWeight: FontWeight.w300,
-    //           fontSize: 14),
-    //       floatingLabelBehavior: FloatingLabelBehavior.always,
-    //     ));
 
     return IntlPhoneField(
       keyboardType: TextInputType.phone,

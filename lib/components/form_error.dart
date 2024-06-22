@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:sdurian/utils/constants/constants.dart';
 import 'package:sdurian/size_config.dart';
 
 class FormError extends StatelessWidget {

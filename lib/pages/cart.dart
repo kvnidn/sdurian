@@ -21,10 +21,6 @@ class _CartState extends State<Cart> {
         child: SafeArea(
             child: Container(
           child: Column(children: [
-            // Text(
-            //   "Check your order details",
-            //   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            // ),
             _buildGreeting(),
             _buildCartCategory("lib/assets/poodak.jpeg", "Poodak's Cart",
                 CartPoodak(user: widget.user)),
@@ -49,7 +45,6 @@ class _CartState extends State<Cart> {
 
   Widget _buildGreeting() {
     return Container(
-      // constraints: BoxConstraints(maxWidth: 280),
       alignment: Alignment.center,
       child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
         Image.asset(

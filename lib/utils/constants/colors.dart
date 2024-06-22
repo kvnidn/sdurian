@@ -19,12 +19,6 @@ class TColors {
     ],
   );
 
-  // const kPrimaryGradientColor = LinearGradient(
-  //   begin: Alignment.topLeft,
-  //   end: Alignment.bottomRight,
-  //   colors: [Color(0xFFFFBF00), Color(0xFFFFECB3)],
-  // );
-
   // Text Colors
   static const Color textPrimary = Color(0xFF333333);
   static const Color textSecondary = Color(0xFF6C757D);

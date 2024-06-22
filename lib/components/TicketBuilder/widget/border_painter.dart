@@ -8,7 +8,6 @@ class BorderPainter extends CustomPainter {
       ..strokeWidth = 1.0
       ..color = Colors.grey[300]!;
     Path path = Path();
-//    uncomment this and will get the border for all lines
     path.lineTo(size.width * 3 / 4, 0.0);
     path.relativeArcToPoint(const Offset(20, 0),
         radius: const Radius.circular(10.0), largeArc: true, clockwise: false);

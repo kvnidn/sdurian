@@ -5,8 +5,6 @@ import 'components/body.dart';
 class ForgotPwScreen extends StatelessWidget {
   static String routeName = "/forgotpw";
 
-  // const ForgotPwScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -126,7 +126,6 @@ class _USSState extends State<USSState> with TickerProviderStateMixin {
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(showCalendar ? 280.0 : 120.0),
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       padding: EdgeInsets.fromLTRB(

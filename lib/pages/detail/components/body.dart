@@ -130,15 +130,6 @@ class _BodyState extends State<Body> {
                                 progressIndicatorColor: TColors.primary,
                               ).show(context);
                             },
-                            // child: Container(
-                            //   margin: EdgeInsets.only(bottom: 20),
-                            //   padding: EdgeInsets.only(left: 16, right: 16),
-                            //   width: 240,
-                            //   height: 60,
-                            //   decoration: BoxDecoration(
-                            //     color: TColors.primary,
-                            //     borderRadius: BorderRadius.circular(30),
-                            //   ),
                             child: Center(
                               child: Text(
                                 "Add To Cart",
@@ -175,7 +166,7 @@ class _BodyState extends State<Body> {
             aspectRatio: 1,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(
-                  15.0), // You can adjust the radius value as needed
+                  15.0),
               child: Image.asset(imgPath),
             ),
           ),

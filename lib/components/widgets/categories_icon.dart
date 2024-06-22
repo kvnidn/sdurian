@@ -45,7 +45,6 @@ class TCategories extends StatelessWidget {
             /// - Text
             SizedBox(height: TSizes.spaceBtwItems / 4),
             Center(
-              // width: 55,
               child: Text(
                 name,
                 style: Theme.of(context).textTheme.labelMedium,

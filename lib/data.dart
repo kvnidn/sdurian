@@ -71,10 +71,6 @@ class ShopItem {
       print('Error fetching data: $e');
     }
 
-    // Testing data fetch
-    // for (var item in ShopItem.shopItemsPaket) {
-    //   print(item.name);
-    // }
   }
 }
 
@@ -656,11 +652,6 @@ class User {
     } catch (e) {
       print('Error fetching data: $e');
     }
-
-    // Testing data fetch
-    // for (var item in ShopItem.shopItemsPaket) {
-    //   print(item.name);
-    // }
   }
 
   static Future<void> fetchUserByEmail(String email) async {
@@ -697,10 +688,6 @@ class User {
       print('Error fetching data: $e');
     }
 
-    // Testing data fetch
-    // for (var item in ShopItem.shopItemsPaket) {
-    //   print(item.name);
-    // }
   }
 
   static Future<void> createUser({
@@ -849,10 +836,6 @@ class UserLogin {
       print('Error fetching data: $e');
     }
 
-    // Testing data fetch
-    // for (var item in ShopItem.shopItemsPaket) {
-    //   print(item.name);
-    // }
   }
 
   static Future<String?> fetchPasswordByEmail(String email) async {

@@ -39,7 +39,6 @@ class _BodyState extends State<Body> {
     super.initState();
     // Check authentication state when the widget initializes
     _loadUserData();
-    // checkLoggedInStatus();
   }
 
   // Function to check authentication state
@@ -96,7 +95,6 @@ class _BodyState extends State<Body> {
             ),
             GestureDetector(
               onTap: () {
-                // Auth().logout();
                 // Navigate based on authentication state
                 if (_isLoggedIn && user != null) {
                   Navigator.push(
